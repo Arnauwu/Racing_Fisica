@@ -7,7 +7,9 @@
 
 ModuleGame::ModuleGame(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
-	
+
+
+
 }
 
 ModuleGame::~ModuleGame()
@@ -33,5 +35,8 @@ bool ModuleGame::CleanUp()
 // Update: draw background
 update_status ModuleGame::Update()
 {
+
+
+
 	return UPDATE_CONTINUE;
 }
