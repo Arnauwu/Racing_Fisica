@@ -7,6 +7,7 @@
 
 #include "raylib.h"
 #include <vector>
+#include <set>
 
 class PhysBody;
 class PhysicEntity;
@@ -21,8 +22,23 @@ public:
 	bool Start();
 	update_status Update();
 	bool CleanUp();
+	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
 
 public:
 
-	
+	std::vector<PhysicEntity*> entities;
+
+	PhysBody* sensor;
+	bool sensed;
+
+	Texture2D circle;
+	Texture2D box;
+	Texture2D rick;
+
+	uint32 bonus_fx;
+
+	vec2<int> ray;
+	bool ray_on;
+
+	std::set<std::set<PhysicEntity*>> collidingEntities;
 };
