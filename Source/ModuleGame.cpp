@@ -104,6 +104,14 @@ update_status ModuleGame::Update()
 
 	// All draw functions ------------------------------------------------------
 
+	if (IsKeyPressed(KEY_A))
+	{
+
+	}
+
+	if (IsKeyPressed(KEY_D))
+	{
+	}
 
 	for (PhysicEntity* entity : entities)
 	{
