@@ -28,9 +28,6 @@
     <ClCompile Include="Source\ModuleGame.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="Entity.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source/p2Point.h">
@@ -63,7 +60,7 @@
     <ClInclude Include="Source\ModuleGame.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="Entity.h">
+    <ClInclude Include="Source\Entity.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>
