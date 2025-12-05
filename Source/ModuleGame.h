@@ -2,16 +2,13 @@
 
 #include "Globals.h"
 #include "Module.h"
+#include "Entity.h"
 
 #include "p2Point.h"
 
 #include "raylib.h"
 #include <vector>
 #include <set>
-
-class PhysBody;
-class PhysicEntity;
-
 
 class ModuleGame : public Module
 {
@@ -26,7 +23,7 @@ public:
 
 public:
 
-	std::vector<PhysicEntity*> entities;
+	std::vector<Entity*> entities;
 
 	PhysBody* sensor;
 	bool sensed;
@@ -40,5 +37,5 @@ public:
 	vec2<int> ray;
 	bool ray_on;
 
-	std::set<std::set<PhysicEntity*>> collidingEntities;
+	std::set<std::set<Entity*>> collidingEntities;
 };

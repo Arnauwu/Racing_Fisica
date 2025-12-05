@@ -5,31 +5,6 @@
 #include "ModuleAudio.h"
 #include "ModulePhysics.h"
 
-class PhysicEntity
-{
-protected:
-
-	PhysicEntity(PhysBody* _body, Module* _listener)
-		: body(_body)
-		, listener(_listener)
-	{
-		body->listener = listener;
-	}
-
-public:
-	virtual ~PhysicEntity() = default;
-	virtual void Update() = 0;
-
-	virtual int RayHit(vec2<int> ray, vec2<int> mouse, vec2<float>& normal)
-	{
-		return 0;
-	}
-
-public:
-	PhysBody* body;
-	Module* listener;
-};
-
 ModuleGame::ModuleGame(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	ray_on = false;
@@ -83,14 +58,13 @@ update_status ModuleGame::Update()
 
 	if (IsKeyPressed(KEY_A))
 	{
-
 	}
 
 	if (IsKeyPressed(KEY_D))
 	{
 	}
 
-	for (PhysicEntity* entity : entities)
+	for (Entity* entity : entities)
 	{
 		entity->Update();
 		if (ray_on)
@@ -128,7 +102,7 @@ update_status ModuleGame::Update()
 		b2Vec2 position;
 		momentum.x = 0.0f;
 		momentum.y = 0.0f;
-		for (PhysicEntity* entity : collision)
+		for (Entity* entity : collision)
 		{
 			const b2Fixture* fixture = entity->body->body->GetFixtureList();
 			const b2CircleShape* circle = dynamic_cast<const b2CircleShape*>(fixture->GetShape());
@@ -193,9 +167,9 @@ void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 
 	if (isCircle1 && isCircle2)
 	{
-		std::set<PhysicEntity*> colliding;
+		std::set<Entity*> colliding;
 		//Delete both bodies
-		for (PhysicEntity* entity : entities)
+		for (Entity* entity : entities)
 		{
 			if (entity->body == bodyA || entity->body == bodyB)
 			{
