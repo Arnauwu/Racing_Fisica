@@ -70,29 +70,6 @@ bool ModuleGame::CleanUp()
 // Update: draw background
 update_status ModuleGame::Update()
 {
-	if (IsKeyPressed(KEY_SPACE))
-	{
-		ray_on = !ray_on;
-		ray.x = GetMouseX();
-		ray.y = GetMouseY();
-	}
-
-	if (IsKeyPressed(KEY_ONE))
-	{
-		
-
-	}
-
-	if (IsKeyPressed(KEY_TWO))
-	{
-		
-	}
-
-	if (IsKeyPressed(KEY_THREE))
-	{
-		
-	}
-
 	// Prepare for raycast ------------------------------------------------------
 
 	vec2i mouse;
