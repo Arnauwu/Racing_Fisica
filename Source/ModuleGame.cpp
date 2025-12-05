@@ -36,6 +36,14 @@ bool ModuleGame::CleanUp()
 update_status ModuleGame::Update()
 {
 
+	if (IsKeyPressed(KEY_A))
+	{
+
+	}
+
+	if (IsKeyPressed(KEY_D))
+	{
+	}
 
 
 	return UPDATE_CONTINUE;
