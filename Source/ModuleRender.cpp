@@ -1,7 +1,9 @@
 #include "Globals.h"
 #include "Application.h"
+#include "ModuleGame.h"
 #include "ModuleWindow.h"
 #include "ModuleRender.h"
+#include "UIButton.h"
 #include <math.h>
 
 ModuleRender::ModuleRender(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -53,6 +55,15 @@ update_status ModuleRender::PostUpdate()
 }
 
 // Called before quitting
+void ModuleRender::ClearUI()
+{
+    for (UIElement* element : uiElements)
+    {
+        delete element;
+    }
+    uiElements.clear();
+}
+
 bool ModuleRender::CleanUp()
 {
 	return true;
@@ -61,6 +72,17 @@ bool ModuleRender::CleanUp()
 void ModuleRender::SetBackgroundColor(Color color)
 {
 	background = color;
+}
+
+UIElement* ModuleRender::CreateButton(int id, Rectangle bounds, const char* text, Module* observer)
+{
+    UIButton* newButton = new UIButton(id, bounds, text);
+
+    newButton->SetObserver(observer);
+
+    uiElements.push_back(newButton);
+
+    return newButton;
 }
 
 // Draw to screen

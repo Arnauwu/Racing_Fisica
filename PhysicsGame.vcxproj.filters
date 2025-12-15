@@ -28,6 +28,12 @@
     <ClCompile Include="Source\ModuleGame.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Menu.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UIButton.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source/p2Point.h">
@@ -61,6 +67,15 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="Source\Entity.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Menu.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\UIButton.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\UIElement.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

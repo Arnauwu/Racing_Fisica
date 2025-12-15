@@ -4,6 +4,8 @@
 
 class Application;
 class PhysBody;
+class UIElement;
+
 
 class Module
 {
@@ -75,4 +77,5 @@ public:
 	virtual void OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	{
 	}
+	virtual void OnUIMouseClickEvent(UIElement* element) {}
 };
