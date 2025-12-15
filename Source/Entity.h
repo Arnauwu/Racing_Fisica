@@ -2,6 +2,7 @@
 
 #include "Globals.h"
 #include "Module.h"
+#include "ModulePhysics.h"
 
 #include "p2Point.h"
 
