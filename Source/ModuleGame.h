@@ -3,6 +3,7 @@
 #include "Globals.h"
 #include "Module.h"
 #include "Entity.h"
+#include "Player.h"
 
 #include "p2Point.h"
 
@@ -38,4 +39,6 @@ public:
 	bool ray_on;
 
 	std::set<std::set<Entity*>> collidingEntities;
+
+	ModulePlayer* player;
 };

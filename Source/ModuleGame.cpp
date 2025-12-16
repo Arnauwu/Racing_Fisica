@@ -9,6 +9,7 @@ ModuleGame::ModuleGame(Application* app, bool start_enabled) : Module(app, start
 {
 	ray_on = false;
 	sensed = false;
+	player = new ModulePlayer(App);
 }
 
 ModuleGame::~ModuleGame()

@@ -1,10 +1,10 @@
 #include "Globals.h"
 #include "Application.h"
-#include "ModulePlayer.h"
+#include "Player.h"
+#include "ModuleGame.h"
 
 ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled)
-{
-}
+{}
 
 ModulePlayer::~ModulePlayer()
 {}
@@ -13,6 +13,9 @@ ModulePlayer::~ModulePlayer()
 bool ModulePlayer::Start()
 {
 	LOG("Loading player");
+	carText = LoadTexture("Assets/crate.png");
+	myCar = new Car(App->physics, 400, 400, this, carText);
+	App->scene_intro->entities.emplace_back(myCar);
 	return true;
 }
 
