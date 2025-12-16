@@ -13,6 +13,8 @@ public:
 	bool Start();
 	update_status Update();
 	bool CleanUp();
+	void Input();
+
 	Car* myCar;
 	Texture2D carText;
 };
