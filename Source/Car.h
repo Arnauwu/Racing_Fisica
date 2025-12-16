@@ -27,4 +27,8 @@ private:
 	b2Vec2 limitV = { 0.0f, -1.0f };
 	b2Vec2 velocity;
 	b2Vec2 impulse = { 0.0f, -0.05f };
+	
+	float carRotation = 0;
+	float car_x = 0.0f;
+	float car_y = 0.1f;
 };
