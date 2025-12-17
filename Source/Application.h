@@ -10,7 +10,6 @@ class ModuleRender;
 class ModuleAudio;
 class ModulePhysics;
 class ModuleGame;
-class Menu;
 
 class Application
 {
@@ -21,7 +20,6 @@ public:
 	ModuleAudio* audio;
 	ModulePhysics* physics;
 	ModuleGame* scene_intro;
-	Menu* menu;
 
 private:
 

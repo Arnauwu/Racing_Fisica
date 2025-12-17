@@ -9,6 +9,7 @@ ModuleGame::ModuleGame(Application* app, bool start_enabled) : Module(app, start
 {
 	ray_on = false;
 	sensed = false;
+	player = new ModulePlayer(App);
 }
 
 ModuleGame::~ModuleGame()
@@ -55,14 +56,6 @@ update_status ModuleGame::Update()
 	vec2f normal(0.0f, 0.0f);
 
 	// All draw functions ------------------------------------------------------
-
-	if (IsKeyPressed(KEY_A))
-	{
-	}
-
-	if (IsKeyPressed(KEY_D))
-	{
-	}
 
 	for (Entity* entity : entities)
 	{

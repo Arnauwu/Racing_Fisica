@@ -28,10 +28,13 @@
     <ClCompile Include="Source\ModuleGame.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Menu.cpp">
+    <ClCompile Include="Source\UIButton.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="Source\UIButton.cpp">
+    <ClCompile Include="Source\Player.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Car.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
   </ItemGroup>
@@ -69,13 +72,16 @@
     <ClInclude Include="Source\Entity.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Menu.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
     <ClInclude Include="Source\UIButton.h">
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="Source\UIElement.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Player.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Car.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

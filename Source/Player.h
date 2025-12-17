@@ -2,6 +2,7 @@
 #include "Module.h"
 #include "Globals.h"
 #include "p2Point.h"
+#include "Car.h"
 
 class ModulePlayer : public Module
 {
@@ -12,7 +13,8 @@ public:
 	bool Start();
 	update_status Update();
 	bool CleanUp();
+	void Input();
 
-public:
-
+	Car* myCar;
+	Texture2D carText;
 };

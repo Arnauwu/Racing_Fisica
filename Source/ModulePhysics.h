@@ -6,7 +6,7 @@
 #include "box2d\box2d.h"
 
 #define GRAVITY_X 0.0f
-#define GRAVITY_Y -7.0f
+#define GRAVITY_Y 0.0f
 
 #define PIXELS_PER_METER 50.0f // if touched change METER_PER_PIXEL too
 #define METER_PER_PIXEL 0.02f // this is 1 / PIXELS_PER_METER !
@@ -56,10 +56,11 @@ public:
 	// b2ContactListener ---
 	void BeginContact(b2Contact* contact);
 
+	b2World* world;
+
 private:
 
 	bool debug;
-	b2World* world;
 	b2MouseJoint* mouse_joint;
 	b2Body* ground;
 };
