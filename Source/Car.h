@@ -21,14 +21,16 @@ public:
 
 	void Move();
 
-private:
-	Texture2D texture;
-	int textTiles;
-	b2Vec2 limitV = { 0.0f, -1.0f };
-	b2Vec2 velocity;
-	b2Vec2 impulse = { 0.0f, -0.05f };
-	
 	float carRotation = 0;
 	float car_x = 0.0f;
 	float car_y = 0.1f;
+	b2Vec2 impulse = { 0.0f, -0.1f };
+private:
+	Texture2D texture;
+	int textTiles;
+	b2Vec2 limitV = { 1.0f, -1.0f };
+	b2Vec2 velocity;
+	float direction;
+	//b2Vec2 impulseA = { -0.5f, 0.0f };
+	//b2Vec2 impulseD = { 0.5f, 0.0f };
 };

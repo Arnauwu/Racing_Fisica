@@ -23,25 +23,34 @@ int Car::RayHit(vec2<int> ray, vec2<int> mouse, vec2<float>& normal)
 void Car::Move() {
 	int x, y;
 	body->GetPhysicPosition(x, y);
-	body->body->SetAngularVelocity(5);
-	if (body->body->GetLinearVelocity().y > -1.0f) {
-		body->body->ApplyLinearImpulse({ car_x, car_y }, { float(x), float(y)}, true);
-	}
-
-	float radians = carRotation * DEG2RAD;
-	float vx = cosf(radians);
-	float vy = sinf(radians);
-
-	car_x += vx * 0.1f;
-	car_y -= vy * 0.1f;
 
 	if (carRotation >= 360) { carRotation = 0; }
+	if (carRotation < 0) { carRotation = 359; }
 
-	if (IsKeyDown(KEY_A))
-	{
-		carRotation -= 5.0f;
-	}
-	else if (!IsKeyDown(KEY_D)) {
-		carRotation += 5.0f;
-	}
+	//float impX, impY;
+
+	//float direction = carRotation / 360;
+
+	//impX = impulse.x + direction;
+	//impY = impulse.y + direction;
+
+	//if (body->body->GetLinearVelocity().x > limitV.x || body->body->GetLinearVelocity().x < -limitV.x) {
+	//	/*impX = 0;*/
+	//	impX = impulse.x + direction;
+	//}
+	//else {
+	//	impX = impulse.x + direction;
+	//}
+
+	//if (body->body->GetLinearVelocity().y > -limitV.y || body->body->GetLinearVelocity().y < limitV.y) {
+	//	/*impY = 0;*/
+	//	impY = impulse.y + direction;
+	//}
+	//else {
+	//	impY = impulse.y + direction;
+	//}
+
+	//impulse = { impX, impY};
+
+	body->body->SetLinearVelocity(impulse);
 }

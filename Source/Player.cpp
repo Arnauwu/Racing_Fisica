@@ -37,22 +37,34 @@ void ModulePlayer::Input() {
 	b2Body* carBody = myCar->body->body;
 	if (IsKeyDown(KEY_A))
 	{
-		if (carBody->GetAngularVelocity() >= -0.5f) {
-			carBody->SetAngularVelocity(carBody->GetAngularVelocity() - 0.5f);
+		myCar->carRotation -= 5.0f;
+		if (myCar->carRotation < 360 && myCar->carRotation > 270) {
+			myCar->impulse.x -= 0.2;
+		}
+		else if (myCar->carRotation < 270 && myCar->carRotation > 180) {
+			myCar->impulse.x += 0.2;
+		}
+		else if (myCar->carRotation < 180 && myCar->carRotation > 90) {
+			myCar->impulse.x += 0.2;
+		}
+		else {
+			myCar->impulse.x -= 0.2;
 		}
 	}
-	else if(!IsKeyDown(KEY_D)){
-		carBody->SetAngularVelocity(0.0f);
-	}
-
-	if (IsKeyDown(KEY_D))
-	{
-		if (carBody->GetAngularVelocity() <= 0.5f) {
-			carBody->SetAngularVelocity(carBody->GetAngularVelocity() + 0.5f);
+	else if (IsKeyDown(KEY_D)) {
+		myCar->carRotation += 5.0f;
+		if (myCar->carRotation < 360 && myCar->carRotation > 270) {
+			myCar->impulse.x += 0.2;
 		}
-	}
-	else if (!IsKeyDown(KEY_A)) {
-		carBody->SetAngularVelocity(0.0f);
+		else if (myCar->carRotation < 270 && myCar->carRotation > 180) {
+			myCar->impulse.x -= 0.2;
+		}
+		else if (myCar->carRotation < 180 && myCar->carRotation > 90) {
+			myCar->impulse.x -= 0.2;
+		}
+		else {
+			myCar->impulse.x += 0.2;
+		}
 	}
 
 	if(IsKeyDown(KEY_SPACE))
