@@ -28,4 +28,6 @@ public:
 private:
 	Texture2D texture;
 	int textTiles;
+	int frameCount = 0;
+	int drawFrame = 0;
 };

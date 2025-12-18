@@ -108,7 +108,7 @@ bool ModuleRender::Draw(Texture2D texture, int x, int y, const Rectangle* sectio
     else {
         int textTiles = texture.width / 32;
 
-        DrawTexturePro(texture, Rectangle{ 0, 0, (float)texture.width / textTiles, (float)texture.height },
+        DrawTexturePro(texture, *section,
             Rectangle{ (float)x, (float)y, (float)texture.width, (float)texture.height },
             Vector2{ (float)texture.width / textTiles, (float)texture.height / textTiles }, (float)*angle, WHITE);
     }

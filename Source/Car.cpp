@@ -10,9 +10,17 @@ void Car::Update()
 	int x, y;
 	body->GetPhysicPosition(x, y);
 
+	if (frameCount > 30) {
+		frameCount = 0;
+		drawFrame += 32;
+	}
+	if (drawFrame / 32 > textTiles || body->body->GetLinearVelocity() == b2Vec2_zero) {
+		drawFrame = 0;
+	}
 	Move();
-	const Rectangle section = { 0, 0, (float)texture.width / textTiles, (float)texture.height };
+	const Rectangle section = { drawFrame, 0, (float)texture.width / textTiles, (float)texture.height };
 	App->renderer->Draw(texture, x, y, &section, &carRotation);
+	frameCount++;
 }
 
 int Car::RayHit(vec2<int> ray, vec2<int> mouse, vec2<float>& normal)
