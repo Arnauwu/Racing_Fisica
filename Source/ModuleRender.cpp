@@ -9,7 +9,8 @@
 
 ModuleRender::ModuleRender(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
-    background = GRAY;
+
+
 }
 
 // Destructor
@@ -19,16 +20,21 @@ ModuleRender::~ModuleRender()
 // Called before render is available
 bool ModuleRender::Init()
 {
-	LOG("Creating Renderer context");
 	bool ret = true;
+
+    background = GRAY;
+    backgroundTexture = LoadTexture("Assets/Maps/MossGrotto.png");
 
 	return ret;
 }
 
+
 // PreUpdate: clear buffer
 update_status ModuleRender::PreUpdate()
 {
-	return UPDATE_CONTINUE;
+    Rectangle rectangleBg = { 0,0,1280,1280 };
+    
+    return UPDATE_CONTINUE;
 }
 
 // Update: debug camera
@@ -40,7 +46,9 @@ update_status ModuleRender::Update()
     // maximum performance, all consecutive Draw() calls are
     // not processed until EndDrawing() is called
     BeginDrawing();
+    DrawFPS(10, 10);
     BeginMode2D(camera);
+    DrawTexture(backgroundTexture, 0, 0, WHITE);
 
 	return UPDATE_CONTINUE;
 }
@@ -49,10 +57,9 @@ update_status ModuleRender::Update()
 update_status ModuleRender::PostUpdate()
 {
     // Draw everything in our batch!
-    DrawFPS(10, 10);
    /* DrawTexture("Assets/Maps/MossGrotto_Tileset_OFICIAL.png");*/
     Map map;
-    map.LoadFromPNG("Assets/Maps/MossGrotto_Tileset_OFICIAL.png");
+    //map.LoadFromPNG("Assets/Maps/MossGrotto_Tileset_OFICIAL.png");
     EndDrawing();
 
 	return UPDATE_CONTINUE;
