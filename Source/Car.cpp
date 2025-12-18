@@ -24,33 +24,27 @@ void Car::Move() {
 	int x, y;
 	body->GetPhysicPosition(x, y);
 
-	if (carRotation >= 360) { carRotation = 0; }
-	if (carRotation < 0) { carRotation = 359; }
-
-	//float impX, impY;
-
-	//float direction = carRotation / 360;
-
-	//impX = impulse.x + direction;
-	//impY = impulse.y + direction;
-
-	//if (body->body->GetLinearVelocity().x > limitV.x || body->body->GetLinearVelocity().x < -limitV.x) {
-	//	/*impX = 0;*/
-	//	impX = impulse.x + direction;
-	//}
-	//else {
-	//	impX = impulse.x + direction;
-	//}
-
-	//if (body->body->GetLinearVelocity().y > -limitV.y || body->body->GetLinearVelocity().y < limitV.y) {
-	//	/*impY = 0;*/
-	//	impY = impulse.y + direction;
-	//}
-	//else {
-	//	impY = impulse.y + direction;
-	//}
-
-	//impulse = { impX, impY};
+	if (carRotation >= 360) 
+	{ 
+		carRotation = 0; 
+		impulse.y = -1.8f;
+		impulse.x = 0;
+	}
+	if (carRotation < 0) 
+	{ 
+		carRotation = 359; 
+		impulse.y = -1.7f;
+		impulse.x = -0.1f;
+	}
+	if (carRotation == 270)
+	{
+		impulse.y = 0;
+		impulse.x = -1.8f;
+	}
+	else if (carRotation == 90){
+		impulse.y = 0;
+		impulse.x = 1.8f;
+	}
 
 	body->body->SetLinearVelocity(impulse);
 }

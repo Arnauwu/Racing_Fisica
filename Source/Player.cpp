@@ -39,31 +39,39 @@ void ModulePlayer::Input() {
 	{
 		myCar->carRotation -= 5.0f;
 		if (myCar->carRotation < 360 && myCar->carRotation > 270) {
-			myCar->impulse.x -= 0.2;
+			myCar->impulse.x -= 0.1;
+			myCar->impulse.y += 0.1;
 		}
 		else if (myCar->carRotation < 270 && myCar->carRotation > 180) {
-			myCar->impulse.x += 0.2;
+			myCar->impulse.x += 0.1;
+			myCar->impulse.y += 0.1;
 		}
 		else if (myCar->carRotation < 180 && myCar->carRotation > 90) {
-			myCar->impulse.x += 0.2;
+			myCar->impulse.x += 0.1;
+			myCar->impulse.y -= 0.1;
 		}
 		else {
-			myCar->impulse.x -= 0.2;
+			myCar->impulse.x -= 0.1;
+			myCar->impulse.y -= 0.1;
 		}
 	}
 	else if (IsKeyDown(KEY_D)) {
 		myCar->carRotation += 5.0f;
 		if (myCar->carRotation < 360 && myCar->carRotation > 270) {
-			myCar->impulse.x += 0.2;
+			myCar->impulse.x += 0.1;
+			myCar->impulse.y -= 0.1;
 		}
 		else if (myCar->carRotation < 270 && myCar->carRotation > 180) {
-			myCar->impulse.x -= 0.2;
+			myCar->impulse.x -= 0.1;
+			myCar->impulse.y -= 0.1;
 		}
 		else if (myCar->carRotation < 180 && myCar->carRotation > 90) {
-			myCar->impulse.x -= 0.2;
+			myCar->impulse.x -= 0.1;
+			myCar->impulse.y += 0.1;
 		}
 		else {
-			myCar->impulse.x += 0.2;
+			myCar->impulse.x += 0.1;
+			myCar->impulse.y += 0.1;
 		}
 	}
 
