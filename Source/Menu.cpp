@@ -16,7 +16,7 @@ bool Menu::Start()
 	LOG("Loading Menu Assets");
 	bool ret = true;
 
-	bgTexture = LoadTexture("Assets/menu_bg.png");
+	bgTexture = LoadTexture("Assets/placeholder.png");
 
 	return ret;
 }

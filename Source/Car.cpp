@@ -19,6 +19,7 @@ void Car::Update()
 	}
 	Move();
 	const Rectangle section = { drawFrame, 0, (float)texture.width / textTiles, (float)texture.height };
+	int playerX, playerY;
 	App->renderer->Draw(texture, x, y, &section, &carRotation);
 	frameCount++;
 }
@@ -57,4 +58,6 @@ void Car::Move() {
 	}
 
 	body->body->SetLinearVelocity(impulse);
+
+
 }

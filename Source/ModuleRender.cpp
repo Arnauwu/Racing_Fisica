@@ -39,6 +39,7 @@ update_status ModuleRender::Update()
     // maximum performance, all consecutive Draw() calls are
     // not processed until EndDrawing() is called
     BeginDrawing();
+    BeginMode2D(camera);
 
 	return UPDATE_CONTINUE;
 }
@@ -71,7 +72,7 @@ bool ModuleRender::CleanUp()
 
 void ModuleRender::SetBackgroundColor(Color color)
 {
-	background = color;
+	//background = color;
 }
 
 UIElement* ModuleRender::CreateButton(int id, Rectangle bounds, const char* text, Module* observer)
@@ -96,8 +97,8 @@ bool ModuleRender::Draw(Texture2D texture, int x, int y, const Rectangle* sectio
 
     if (section != NULL) rect = *section;
 
-    position.x = (float)(x-pivot_x) * scale + camera.x;
-    position.y = (float)(y-pivot_y) * scale + camera.y;
+    position.x = (float)(x-pivot_x) * scale;
+    position.y = (float)(y-pivot_y) * scale;
 
 	rect.width *= scale;
 	rect.height *= scale;

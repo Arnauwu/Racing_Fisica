@@ -22,9 +22,16 @@ bool ModuleGame::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
-	App->renderer->camera.x = App->renderer->camera.y = 0;
+	//App->renderer->camera.x = App->renderer->camera.y = 0;
+
+	App->renderer->camera.zoom = 1.0f;
+	App->renderer->camera.target = { 0.0f, 0.0f };
+	App->renderer->camera.offset = { 0.0f, 0.0f };
+	App->renderer->camera.rotation = 0.0f;
 
 	bonus_fx = App->audio->LoadFx("Assets/bonus.wav");
+
+	App->physics->CreateRectangle(100,100,200,500);
 
 	return ret;
 }
@@ -42,8 +49,21 @@ update_status ModuleGame::Update()
 {
 	int playerX, playerY;
 	player->myCar->body->GetPhysicPosition(playerX, playerY);
-	App->renderer->camera.x = playerX;
-	App->renderer->camera.y = playerY;
+
+	float currentZoom = App->renderer->camera.zoom = 1.5f;
+
+	float halfScreenWidth = SCREEN_WIDTH / 2.0f;
+	float halfScreenHeight = SCREEN_HEIGHT / 2.0f;
+
+	float visibleHalfWidth = halfScreenWidth / currentZoom;
+	float visibleHalfHeight = halfScreenHeight / currentZoom;
+
+	App->renderer->camera.offset = Vector2{ halfScreenWidth, halfScreenHeight };
+
+	float targetX = (float)playerX;
+	float targetY = (float)playerY;
+
+	App->renderer->camera.target = Vector2{ targetX, targetY };
 
 	// Prepare for raycast ------------------------------------------------------
 
