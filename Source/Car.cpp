@@ -1,5 +1,7 @@
 #include "Car.h"
 #include "math.h"
+#include "Application.h"
+#include "ModuleRender.h"
 void Car::Update()
 {
 	if (textTiles == 0) {
@@ -9,10 +11,8 @@ void Car::Update()
 	body->GetPhysicPosition(x, y);
 
 	Move();
-
-	DrawTexturePro(texture, Rectangle{ 0, 0, (float)texture.width/textTiles, (float)texture.height },
-		Rectangle{ (float)x, (float)y, (float)texture.width, (float)texture.height },
-		Vector2{ (float)texture.width / 2.0f, (float)texture.height / 2.0f }, carRotation, WHITE);
+	const Rectangle section = { 0, 0, (float)texture.width / textTiles, (float)texture.height };
+	App->renderer->Draw(texture, x, y, &section, &carRotation);
 }
 
 int Car::RayHit(vec2<int> ray, vec2<int> mouse, vec2<float>& normal)
@@ -27,23 +27,25 @@ void Car::Move() {
 	if (carRotation >= 360) 
 	{ 
 		carRotation = 0; 
-		impulse.y = -1.8f;
+		impulse.y = -maxVelocity;
 		impulse.x = 0;
 	}
 	if (carRotation < 0) 
 	{ 
 		carRotation = 359; 
-		impulse.y = -1.7f;
-		impulse.x = -0.1f;
 	}
 	if (carRotation == 270)
 	{
 		impulse.y = 0;
-		impulse.x = -1.8f;
+		impulse.x = -maxVelocity;
 	}
 	else if (carRotation == 90){
 		impulse.y = 0;
-		impulse.x = 1.8f;
+		impulse.x = maxVelocity;
+	}
+	else if (carRotation == 180) {
+		impulse.y = maxVelocity;
+		impulse.x = 0;
 	}
 
 	body->body->SetLinearVelocity(impulse);

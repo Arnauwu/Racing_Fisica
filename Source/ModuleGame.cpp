@@ -24,13 +24,7 @@ bool ModuleGame::Start()
 
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
-	circle = LoadTexture("Assets/wheel.png");
-	box = LoadTexture("Assets/crate.png");
-	rick = LoadTexture("Assets/rick_head.png");
-
 	bonus_fx = App->audio->LoadFx("Assets/bonus.wav");
-
-	sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50);
 
 	return ret;
 }
@@ -46,6 +40,11 @@ bool ModuleGame::CleanUp()
 // Update: draw background
 update_status ModuleGame::Update()
 {
+	int playerX, playerY;
+	player->myCar->body->GetPhysicPosition(playerX, playerY);
+	App->renderer->camera.x = playerX;
+	App->renderer->camera.y = playerY;
+
 	// Prepare for raycast ------------------------------------------------------
 
 	vec2i mouse;
