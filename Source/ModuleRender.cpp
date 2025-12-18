@@ -4,6 +4,7 @@
 #include "ModuleWindow.h"
 #include "ModuleRender.h"
 #include "UIButton.h"
+#include "Map.h"
 #include <math.h>
 
 ModuleRender::ModuleRender(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -49,7 +50,9 @@ update_status ModuleRender::PostUpdate()
 {
     // Draw everything in our batch!
     DrawFPS(10, 10);
-
+   /* DrawTexture("Assets/Maps/MossGrotto_Tileset_OFICIAL.png");*/
+    Map map;
+    map.LoadFromPNG("Assets/Maps/MossGrotto_Tileset_OFICIAL.png");
     EndDrawing();
 
 	return UPDATE_CONTINUE;
