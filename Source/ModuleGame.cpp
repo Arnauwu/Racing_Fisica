@@ -63,6 +63,7 @@ update_status ModuleGame::Update()
 	float targetX = (float)playerX;
 	float targetY = (float)playerY;
 
+
 	App->renderer->camera.target = Vector2{ targetX, targetY };
 
 	// Prepare for raycast ------------------------------------------------------

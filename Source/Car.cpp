@@ -19,8 +19,7 @@ void Car::Update()
 	}
 	Move();
 	const Rectangle section = { drawFrame, 0, (float)texture.width / textTiles, (float)texture.height };
-	int playerX, playerY;
-	App->renderer->Draw(texture, x, y, &section, &carRotation);
+	App->renderer->Draw(texture, SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f, &section, &carRotation);
 	frameCount++;
 }
 
