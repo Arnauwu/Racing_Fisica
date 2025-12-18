@@ -4,6 +4,7 @@
 #include "ModuleRender.h"
 void Car::Update()
 {
+	CheckFinishLane();
 	if (textTiles == 0) {
 		textTiles = texture.width / 32;
 	}
@@ -21,6 +22,12 @@ void Car::Update()
 	const Rectangle section = { drawFrame, 0, (float)texture.width / textTiles, (float)texture.height };
 	App->renderer->Draw(texture, SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f, &section, &carRotation);
 	frameCount++;
+
+	if (IsKeyPressed(KEY_E))
+	{
+		checkPointCounter++;
+		printf("Checkpoints : %d\n",checkPointCounter);
+	}
 }
 
 int Car::RayHit(vec2<int> ray, vec2<int> mouse, vec2<float>& normal)
@@ -59,4 +66,11 @@ void Car::Move() {
 	body->body->SetLinearVelocity(impulse);
 
 
+}
+
+void Car::CheckFinishLane() {
+	if (checkPointCounter == 4) 
+	{
+		printf("META META META MET A META\n");
+	}
 }

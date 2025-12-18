@@ -21,10 +21,13 @@ public:
 
 	void Move();
 
+	void CheckFinishLane();
+
 	Application* App;
 	double carRotation = 0;
 	float maxVelocity = 1.8f;
 	b2Vec2 impulse = { 0.0f, -maxVelocity };
+	int checkPointCounter = 0;
 private:
 	Texture2D texture;
 	int textTiles;

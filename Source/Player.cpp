@@ -46,6 +46,7 @@ void ModulePlayer::Input() {
 		else if (myCar->carRotation < 270 && myCar->carRotation > 180) {//Direction Left - Down case
 			myCar->impulse.x += 0.05;
 			myCar->impulse.y += 0.05;
+
 		}
 		else if (myCar->carRotation < 180 && myCar->carRotation > 90) {//Direction Right - Down case
 			myCar->impulse.x += 0.05;
@@ -79,5 +80,10 @@ void ModulePlayer::Input() {
 	{
 		carBody->SetLinearVelocity({ 0,0 });
 	}
+	if (IsKeyReleased(KEY_SPACE)) 
+	{
+
+	}
+
 }
 

@@ -31,7 +31,13 @@ bool ModuleGame::Start()
 
 	bonus_fx = App->audio->LoadFx("Assets/bonus.wav");
 
-	App->physics->CreateRectangle(100,100,200,500);
+	App->physics->CreateRectangle(700,700,500,500);
+
+	App->physics->CreateRectangle(400, 100, 2000, 200);
+	App->physics->CreateRectangle(100, 700, 200, 1000);
+	App->physics->CreateRectangle(1200, 700, 200, 1000);
+	App->physics->CreateRectangle(2000, 700, 200, 1000);
+
 
 	return ret;
 }
