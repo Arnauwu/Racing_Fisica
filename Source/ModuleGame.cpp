@@ -31,13 +31,18 @@ bool ModuleGame::Start()
 
 	bonus_fx = App->audio->LoadFx("Assets/bonus.wav");
 
-	App->physics->CreateRectangle(700,700,500,500);
+	PhysBody* rect1 = App->physics->CreateRectangle(700,700,500,500);
 
-	App->physics->CreateRectangle(400, 100, 2000, 200);
-	App->physics->CreateRectangle(100, 700, 200, 1000);
-	App->physics->CreateRectangle(1200, 700, 200, 1000);
-	App->physics->CreateRectangle(2000, 700, 200, 1000);
+	PhysBody* rect2 = App->physics->CreateRectangle(400, 100, 2000, 200);
+	PhysBody* rect3 = App->physics->CreateRectangle(100, 700, 200, 1000);
+	PhysBody* rect4 = App->physics->CreateRectangle(1200, 700, 200, 1000);
+	PhysBody* rect5 = App->physics->CreateRectangle(2000, 700, 200, 1000);
 
+	rect1->body->SetType(b2_staticBody);
+	rect2->body->SetType(b2_staticBody);
+	rect3->body->SetType(b2_staticBody);
+	rect4->body->SetType(b2_staticBody);
+	rect5->body->SetType(b2_staticBody);
 
 	return ret;
 }
