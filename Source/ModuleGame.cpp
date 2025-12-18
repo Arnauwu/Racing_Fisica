@@ -39,10 +39,13 @@ bool ModuleGame::Start()
 	PhysBody* rect5 = App->physics->CreateRectangle(2000, 700, 200, 1000);
 
 	rect1->body->SetType(b2_staticBody);
+	rect1->body->GetFixtureList()->IsSensor();
 	rect2->body->SetType(b2_staticBody);
 	rect3->body->SetType(b2_staticBody);
 	rect4->body->SetType(b2_staticBody);
 	rect5->body->SetType(b2_staticBody);
+
+
 
 	return ret;
 }
