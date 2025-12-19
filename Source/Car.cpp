@@ -11,7 +11,7 @@ void Car::Update()
 	int x, y;
 	body->GetPhysicPosition(x, y);
 
-	if (frameCount > 30) {
+	if (frameCount > 2) {
 		frameCount = 0;
 		drawFrame += 32;
 	}
