@@ -107,11 +107,10 @@ UIElement* ModuleRender::CreateButton(int id, Rectangle bounds, const char* text
 }
 
 // Draw to screen
-bool ModuleRender::Draw(Texture2D texture, int x, int y, const Rectangle* section, double* angle, int pivot_x, int pivot_y) const
+bool ModuleRender::Draw(Texture2D texture, int x, int y, const Rectangle* section, double* angle, float scale, int pivot_x, int pivot_y) const
 {
 	bool ret = true;
 
-	float scale = 1.0f;
     Vector2 position = { (float)x, (float)y };
     Rectangle rect = { 0.f, 0.f, (float)texture.width, (float)texture.height };
 
@@ -129,8 +128,8 @@ bool ModuleRender::Draw(Texture2D texture, int x, int y, const Rectangle* sectio
     else {
         int textTiles = texture.width / 32;
         DrawTexturePro(texture, *section,
-            Rectangle{ (float)x, (float)y, 32, 32 },
-            Vector2{ 16, 16 }, (float)*angle, WHITE);
+            Rectangle{ (float)x, (float)y, scale * 32, scale * 32 },
+            Vector2{ scale * 16, scale * 16 }, (float)*angle, WHITE);
     }
 
 	return ret;

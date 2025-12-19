@@ -13,7 +13,7 @@ class Car : public Entity
 {
 public:
 	Car();
-	Car(ModulePhysics* physics, int _x, int _y, Module* _listener, Texture2D _texture) : Entity(physics->CreateRectangle(_x, _y, 32, 32), _listener), texture(_texture){}
+	Car(ModulePhysics* physics, int _x, int _y, Module* _listener, Texture2D _texture) : Entity(physics->CreateRectangle(_x, _y, 16, 16), _listener), texture(_texture){}
 
 	void Update() override;
 
@@ -23,8 +23,12 @@ public:
 
 	void CheckFinishLane();
 
+	void Jump();
+	bool jumping = false;
+
 	Application* App;
 	double carRotation = 0;
+	float scale = 1;
 	float maxVelocity = 3.6f;
 	b2Vec2 impulse = { 0.0f, -maxVelocity };
 	int checkPointCounter = 0;
@@ -34,4 +38,5 @@ private:
 	int textTiles;
 	int frameCount = 0;
 	int drawFrame = 0;
+	bool landing = false;
 };

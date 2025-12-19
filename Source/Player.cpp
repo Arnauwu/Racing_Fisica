@@ -108,6 +108,7 @@ void ModulePlayer::Action()
 	switch (character)
 	{
 	case KNIGHT:
+		myCar->jumping = true;
 		break;
 	case HORNET:
 		if (carBody->GetType() != b2_staticBody) {

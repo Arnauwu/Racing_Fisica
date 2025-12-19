@@ -21,7 +21,7 @@ void Car::Update()
 	int charFrame = (int)*character;
 	printf("%d\n", charFrame);
 	const Rectangle section = { drawFrame, charFrame * 32, 32, 32 };
-	App->renderer->Draw(texture, x, y, &section, &carRotation);
+	App->renderer->Draw(texture, x, y, &section, &carRotation, scale);
 	frameCount++;
 	Move();
 	if (IsKeyPressed(KEY_E))
@@ -66,12 +66,28 @@ void Car::Move() {
 
 	body->body->SetLinearVelocity(impulse);
 
-
+	if (jumping) Jump();
 }
 
 void Car::CheckFinishLane() {
 	if (checkPointCounter == 4) 
 	{
 		printf("META META META MET A META\n");
+	}
+}
+
+void Car::Jump() {
+	if (scale >= 2.0f) {
+		landing = true;
+	}
+	if (!landing) {
+		scale += 0.1f;
+	}
+	else if (scale > 1.0f){
+		scale -= 0.1f;
+	}
+	else {
+		jumping = false;
+		landing = false;
 	}
 }
