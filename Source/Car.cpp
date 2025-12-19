@@ -19,7 +19,6 @@ void Car::Update()
 		drawFrame = 0;
 	}
 	int charFrame = (int)*character;
-	printf("%d\n", charFrame);
 	const Rectangle section = { drawFrame, charFrame * 32, 32, 32 };
 	App->renderer->Draw(texture, x, y, &section, &carRotation, scale);
 	frameCount++;
