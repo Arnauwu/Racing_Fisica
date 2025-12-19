@@ -52,7 +52,7 @@ update_status ModuleRender::Update()
 
     //NOT CAMERA, UP
     DrawTextureEx(icons, { 1230, 0 }, 0, 3, WHITE);
-    DrawTextEx(GetFontDefault(),"1", {1200,0}, 45,0, RAYWHITE);
+    DrawTextEx(GetFontDefault(),"1", {1205,0}, 45,0, RAYWHITE);
     DrawTextEx(GetFontDefault(), "2", { 1200,50 }, 45, 0, RAYWHITE);
     DrawTextEx(GetFontDefault(), "3", { 1200,100 }, 45, 0, RAYWHITE);
     DrawTextEx(GetFontDefault(), "4", { 1200,150 }, 45, 0, RAYWHITE);
