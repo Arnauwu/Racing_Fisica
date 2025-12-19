@@ -28,6 +28,7 @@ public:
 	float maxVelocity = 3.6f;
 	b2Vec2 impulse = { 0.0f, -maxVelocity };
 	int checkPointCounter = 0;
+	Characters* character;
 private:
 	Texture2D texture;
 	int textTiles;

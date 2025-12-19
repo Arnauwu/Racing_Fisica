@@ -18,11 +18,12 @@ void Car::Update()
 	if (drawFrame / 32 > textTiles || body->body->GetLinearVelocity() == b2Vec2_zero) {
 		drawFrame = 0;
 	}
-	Move();
-	const Rectangle section = { drawFrame, 0, (float)texture.width / textTiles, (float)texture.height };
+	int charFrame = (int)*character;
+	printf("%d\n", charFrame);
+	const Rectangle section = { drawFrame, charFrame * 32, 32, 32 };
 	App->renderer->Draw(texture, x, y, &section, &carRotation);
 	frameCount++;
-
+	Move();
 	if (IsKeyPressed(KEY_E))
 	{
 		checkPointCounter++;

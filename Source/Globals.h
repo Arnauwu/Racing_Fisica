@@ -39,3 +39,13 @@ enum update_status
 #define WIN_FULLSCREEN_DESKTOP false
 #define VSYNC				true
 #define TITLE "Pablo Kart"
+
+enum Characters
+{
+	KNIGHT,
+	HORNET,
+	ZOTE,
+	SHERMA,
+	P_KING,
+	PABLO
+};

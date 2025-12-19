@@ -14,7 +14,10 @@ public:
 	update_status Update();
 	bool CleanUp();
 	void Input();
+	void Action();
 
 	Car* myCar;
 	Texture2D carText;
+
+	Characters character = HORNET;
 };

@@ -13,10 +13,11 @@ ModulePlayer::~ModulePlayer()
 bool ModulePlayer::Start()
 {
 	LOG("Loading player");
-	carText = LoadTexture("Assets/Characters/Hornet.png");
+	carText = LoadTexture("Assets/Characters/karts_spritesheet.png");
 	myCar = new Car(App->physics, 490, 400, this, carText);
 	myCar->App = App;
 	myCar->body->body->SetFixedRotation(true);
+	myCar->character = &character;
 	App->scene_intro->entities.emplace_back(myCar);
 	return true;
 }
@@ -77,9 +78,52 @@ void ModulePlayer::Input() {
 			myCar->impulse.y += 0.1;
 		}
 	}
-	if(IsKeyDown(KEY_SPACE))
+	if(IsKeyPressed(KEY_SPACE))
 	{
-		carBody->SetLinearVelocity({ 0,0 });
+		Action();
+	}
+	if (IsKeyPressed(KEY_ONE)) {
+		character = KNIGHT;
+	}
+	if (IsKeyPressed(KEY_TWO)) {
+		character = HORNET;
+	}
+	if (IsKeyPressed(KEY_THREE)) {
+		character = ZOTE;
+	}
+	if (IsKeyPressed(KEY_FOUR)) {
+		character = SHERMA;
+	}
+	if (IsKeyPressed(KEY_FIVE)) {
+		character = P_KING;
+	}
+	if (IsKeyPressed(KEY_SIX)) {
+		character = PABLO;
 	}
 }
 
+void ModulePlayer::Action() 
+{
+	b2Body* carBody = myCar->body->body;
+	switch (character)
+	{
+	case KNIGHT:
+		break;
+	case HORNET:
+		if (carBody->GetType() != b2_staticBody) {
+			carBody->SetType(b2_staticBody);
+		}
+		else {
+			carBody->SetType(b2_dynamicBody);
+		}
+		break;
+	case ZOTE:
+		break;
+	case SHERMA:
+		break;
+	case P_KING:
+		break;
+	case PABLO:
+		break;
+	}
+}
