@@ -51,7 +51,13 @@ update_status ModuleRender::Update()
     EndMode2D();
 
     //NOT CAMERA, UP
-    DrawTextureEx(icons, {1230, 0},0,3, WHITE);
+    DrawTextureEx(icons, { 1230, 0 }, 0, 3, WHITE);
+    DrawTextEx(GetFontDefault(),"1", {1200,0}, 45,0, RAYWHITE);
+    DrawTextEx(GetFontDefault(), "2", { 1200,50 }, 45, 0, RAYWHITE);
+    DrawTextEx(GetFontDefault(), "3", { 1200,100 }, 45, 0, RAYWHITE);
+    DrawTextEx(GetFontDefault(), "4", { 1200,150 }, 45, 0, RAYWHITE);
+    DrawTextEx(GetFontDefault(), "5", { 1200,200 }, 45, 0, RAYWHITE);
+    DrawTextEx(GetFontDefault(), "6", { 1200,250 }, 45, 0, RAYWHITE);
     DrawFPS(10, 10);
 
     //CAMERA
