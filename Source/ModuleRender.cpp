@@ -9,8 +9,6 @@
 
 ModuleRender::ModuleRender(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
-
-
 }
 
 // Destructor
@@ -21,7 +19,6 @@ ModuleRender::~ModuleRender()
 bool ModuleRender::Init()
 {
 	bool ret = true;
-
     background = GRAY;
     backgroundTexture = LoadTexture("Assets/Maps/MossGrotto.png");
 
@@ -33,7 +30,7 @@ bool ModuleRender::Init()
 update_status ModuleRender::PreUpdate()
 {
     Rectangle rectangleBg = { 0,0,1280,1280 };
-    
+
     return UPDATE_CONTINUE;
 }
 
@@ -57,9 +54,6 @@ update_status ModuleRender::Update()
 update_status ModuleRender::PostUpdate()
 {
     // Draw everything in our batch!
-   /* DrawTexture("Assets/Maps/MossGrotto_Tileset_OFICIAL.png");*/
-    Map map;
-    //map.LoadFromPNG("Assets/Maps/MossGrotto_Tileset_OFICIAL.png");
     EndDrawing();
 
 	return UPDATE_CONTINUE;
@@ -136,3 +130,4 @@ bool ModuleRender::DrawText(const char * text, int x, int y, Font font, int spac
 
     return ret;
 }
+

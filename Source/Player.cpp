@@ -14,7 +14,7 @@ bool ModulePlayer::Start()
 {
 	LOG("Loading player");
 	carText = LoadTexture("Assets/Characters/Hornet.png");
-	myCar = new Car(App->physics, 400, 400, this, carText);
+	myCar = new Car(App->physics, 490, 400, this, carText);
 	myCar->App = App;
 	App->scene_intro->entities.emplace_back(myCar);
 	return true;

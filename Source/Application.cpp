@@ -24,13 +24,18 @@ Application::Application()
 	AddModule(window);
 	AddModule(physics);
 	AddModule(audio);
-	
+
+	//// Rendering happens at the end
+	//AddModule(renderer->backgr);
+
 	// Scenes
-	AddModule(scene_intro);
 	AddModule(scene_intro->player);
+	AddModule(scene_intro);
 
 	// Rendering happens at the end
 	AddModule(renderer);
+	
+	
 }
 
 Application::~Application()
