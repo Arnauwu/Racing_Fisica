@@ -28,5 +28,6 @@ public:
 
 	Color background;
 	Texture2D backgroundTexture;
+	Texture2D icons;
     Camera2D camera;
 };

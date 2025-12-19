@@ -19,9 +19,9 @@ ModuleRender::~ModuleRender()
 bool ModuleRender::Init()
 {
 	bool ret = true;
-    /*background = Color{52, 115, 86, 255};*/
-    background = Color{ 46, 89, 70, 255 };
+    background = GRAY;
     backgroundTexture = LoadTexture("Assets/Maps/MossGrotto.png");
+    icons = LoadTexture("Assets/Characters/icons_vertical.png");
 
 	return ret;
 }
@@ -44,9 +44,18 @@ update_status ModuleRender::Update()
     // maximum performance, all consecutive Draw() calls are
     // not processed until EndDrawing() is called
     BeginDrawing();
-    DrawFPS(10, 10);
+
+    //NOT CAMERA, DOWN
     BeginMode2D(camera);
     DrawTexture(backgroundTexture, 0, 0, WHITE);
+    EndMode2D();
+
+    //NOT CAMERA, UP
+    DrawTextureEx(icons, {1230, 0},0,3, WHITE);
+    DrawFPS(10, 10);
+
+    //CAMERA
+    BeginMode2D(camera);
 
 	return UPDATE_CONTINUE;
 }
@@ -77,7 +86,7 @@ bool ModuleRender::CleanUp()
 
 void ModuleRender::SetBackgroundColor(Color color)
 {
-	background = color;
+	//background = color;
 }
 
 UIElement* ModuleRender::CreateButton(int id, Rectangle bounds, const char* text, Module* observer)
