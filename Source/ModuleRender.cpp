@@ -19,7 +19,8 @@ ModuleRender::~ModuleRender()
 bool ModuleRender::Init()
 {
 	bool ret = true;
-    background = GRAY;
+    /*background = Color{52, 115, 86, 255};*/
+    background = Color{ 46, 89, 70, 255 };
     backgroundTexture = LoadTexture("Assets/Maps/MossGrotto.png");
 
 	return ret;
@@ -76,7 +77,7 @@ bool ModuleRender::CleanUp()
 
 void ModuleRender::SetBackgroundColor(Color color)
 {
-	//background = color;
+	background = color;
 }
 
 UIElement* ModuleRender::CreateButton(int id, Rectangle bounds, const char* text, Module* observer)
