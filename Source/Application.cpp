@@ -26,7 +26,7 @@ Application::Application()
 	AddModule(audio);
 
 	//// Rendering happens at the end
-	//AddModule(renderer->backgr);
+	//AddModule(renderer);
 
 	// Scenes
 	AddModule(scene_intro->player);
@@ -34,6 +34,7 @@ Application::Application()
 
 	// Rendering happens at the end
 	AddModule(renderer);
+
 	
 	
 }
