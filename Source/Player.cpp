@@ -16,6 +16,7 @@ bool ModulePlayer::Start()
 	carText = LoadTexture("Assets/Characters/Hornet.png");
 	myCar = new Car(App->physics, 490, 400, this, carText);
 	myCar->App = App;
+	myCar->body->body->SetFixedRotation(true);
 	App->scene_intro->entities.emplace_back(myCar);
 	return true;
 }
@@ -40,50 +41,45 @@ void ModulePlayer::Input() {
 	{
 		myCar->carRotation -= 2.5f;
 		if (myCar->carRotation < 360 && myCar->carRotation > 270) {//Direction Left - Up case
-			myCar->impulse.x -= 0.05;
-			myCar->impulse.y += 0.05;
+			myCar->impulse.x -= 0.1;
+			myCar->impulse.y += 0.1;
 		}
 		else if (myCar->carRotation < 270 && myCar->carRotation > 180) {//Direction Left - Down case
-			myCar->impulse.x += 0.05;
-			myCar->impulse.y += 0.05;
+			myCar->impulse.x += 0.1;
+			myCar->impulse.y += 0.1;
 
 		}
 		else if (myCar->carRotation < 180 && myCar->carRotation > 90) {//Direction Right - Down case
-			myCar->impulse.x += 0.05;
-			myCar->impulse.y -= 0.05;
+			myCar->impulse.x += 0.1;
+			myCar->impulse.y -= 0.1;
 		}
 		else {//Direction Right - Up case
-			myCar->impulse.x -= 0.05;
-			myCar->impulse.y -= 0.05;
+			myCar->impulse.x -= 0.1;
+			myCar->impulse.y -= 0.1;
 		}
 	}
 	else if (IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT)) {
 		myCar->carRotation += 2.5f;
 		if (myCar->carRotation < 360 && myCar->carRotation > 270) {//Direction Left - Up case
-			myCar->impulse.x += 0.05;
-			myCar->impulse.y -= 0.05;
+			myCar->impulse.x += 0.1;
+			myCar->impulse.y -= 0.1;
 		}
 		else if (myCar->carRotation < 270 && myCar->carRotation > 180) {//Direction Left - Down case
-			myCar->impulse.x -= 0.05;
-			myCar->impulse.y -= 0.05;
+			myCar->impulse.x -= 0.1;
+			myCar->impulse.y -= 0.1;
 		}
 		else if (myCar->carRotation < 180 && myCar->carRotation > 90) {//Direction Left - Down case
-			myCar->impulse.x -= 0.05;
-			myCar->impulse.y += 0.05;
+			myCar->impulse.x -= 0.1;
+			myCar->impulse.y += 0.1;
 		}
 		else {//Direction Right - Down case
-			myCar->impulse.x += 0.05;
-			myCar->impulse.y += 0.05;
+			myCar->impulse.x += 0.1;
+			myCar->impulse.y += 0.1;
 		}
 	}
 	if(IsKeyDown(KEY_SPACE))
 	{
 		carBody->SetLinearVelocity({ 0,0 });
 	}
-	if (IsKeyReleased(KEY_SPACE)) 
-	{
-
-	}
-
 }
 
