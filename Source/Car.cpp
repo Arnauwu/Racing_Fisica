@@ -42,25 +42,6 @@ void Car::Move() {
 	if (carRotation >= 360) 
 	{ 
 		carRotation = 0; 
-		impulse.y = -maxVelocity;
-		impulse.x = 0;
-	}
-	if (carRotation < 0) 
-	{ 
-		carRotation = 359; 
-	}
-	if (carRotation == 270)
-	{
-		impulse.y = 0;
-		impulse.x = -maxVelocity;
-	}
-	else if (carRotation == 90){
-		impulse.y = 0;
-		impulse.x = maxVelocity;
-	}
-	else if (carRotation == 180) {
-		impulse.y = maxVelocity;
-		impulse.x = 0;
 	}
 
 	body->body->SetLinearVelocity(impulse);
