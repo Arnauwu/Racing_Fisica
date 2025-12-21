@@ -3,6 +3,7 @@
 #include "Globals.h"
 #include "p2Point.h"
 #include "Car.h"
+#include "Timer.h"
 
 class ModulePlayer : public Module
 {
@@ -15,9 +16,15 @@ public:
 	bool CleanUp();
 	void Input();
 	void Action();
+	void Dash();
+	void TurnCar();
+	bool canAct = true;
+	bool dashing = false;
+
 
 	Car* myCar;
 	Texture2D carText;
+	Timer actTime;
 
 	Characters character = HORNET;
 };

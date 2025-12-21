@@ -33,52 +33,22 @@ bool ModulePlayer::CleanUp()
 update_status ModulePlayer::Update()
 {
 	Input();
+	if (actTime.ReadSec() > 0.25) {
+		canAct = true;
+		if (dashing) {
+			dashing = false;
+			myCar->maxVelocity -= 3;
+			printf("\n\n\nDASH END\n\n\n");
+		}
+	}
+	printf("%f\n X:%f\n Y:%f\n\n\n", myCar->carRotation, myCar->impulse.x, myCar->impulse.y);
 	return UPDATE_CONTINUE;
 }
 
 void ModulePlayer::Input() {
 	b2Body* carBody = myCar->body->body;
-	if (IsKeyDown(KEY_A) || IsKeyDown(KEY_LEFT))
-	{
-		myCar->carRotation -= 2.5f;
-		if (myCar->carRotation < 360 && myCar->carRotation > 270) {//Direction Left - Up case
-			myCar->impulse.x -= 0.1;
-			myCar->impulse.y += 0.1;
-		}
-		else if (myCar->carRotation < 270 && myCar->carRotation > 180) {//Direction Left - Down case
-			myCar->impulse.x += 0.1;
-			myCar->impulse.y += 0.1;
-
-		}
-		else if (myCar->carRotation < 180 && myCar->carRotation > 90) {//Direction Right - Down case
-			myCar->impulse.x += 0.1;
-			myCar->impulse.y -= 0.1;
-		}
-		else {//Direction Right - Up case
-			myCar->impulse.x -= 0.1;
-			myCar->impulse.y -= 0.1;
-		}
-	}
-	else if (IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT)) {
-		myCar->carRotation += 2.5f;
-		if (myCar->carRotation < 360 && myCar->carRotation > 270) {//Direction Left - Up case
-			myCar->impulse.x += 0.1;
-			myCar->impulse.y -= 0.1;
-		}
-		else if (myCar->carRotation < 270 && myCar->carRotation > 180) {//Direction Left - Down case
-			myCar->impulse.x -= 0.1;
-			myCar->impulse.y -= 0.1;
-		}
-		else if (myCar->carRotation < 180 && myCar->carRotation > 90) {//Direction Left - Down case
-			myCar->impulse.x -= 0.1;
-			myCar->impulse.y += 0.1;
-		}
-		else {//Direction Right - Down case
-			myCar->impulse.x += 0.1;
-			myCar->impulse.y += 0.1;
-		}
-	}
-	if(IsKeyPressed(KEY_SPACE))
+	TurnCar();
+	if(IsKeyPressed(KEY_SPACE) && canAct)
 	{
 		Action();
 	}
@@ -111,12 +81,7 @@ void ModulePlayer::Action()
 		myCar->jumping = true;
 		break;
 	case HORNET:
-		if (carBody->GetType() != b2_staticBody) {
-			carBody->SetType(b2_staticBody);
-		}
-		else {
-			carBody->SetType(b2_dynamicBody);
-		}
+		Dash();
 		break;
 	case ZOTE:
 		break;
@@ -127,4 +92,28 @@ void ModulePlayer::Action()
 	case PABLO:
 		break;
 	}
+}
+
+void ModulePlayer::Dash() {
+	myCar->maxVelocity += 3;
+	canAct = false;
+	dashing = true;
+	actTime.Start();
+}
+
+void ModulePlayer::TurnCar() {
+	if (!dashing) {
+		if (IsKeyDown(KEY_A) || IsKeyDown(KEY_LEFT)) {
+			myCar->carRotation -= 2.5f;
+		}
+		else if (IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT)) {
+			myCar->carRotation += 2.5f;
+		}
+	}
+
+	// Adjust velocity to the direction the car is facing
+	float angleRad = myCar->carRotation * (PI / 180.0f);
+
+	myCar->impulse.x = myCar->maxVelocity * sin(angleRad);
+	myCar->impulse.y = myCar->maxVelocity * -cos(angleRad);
 }
