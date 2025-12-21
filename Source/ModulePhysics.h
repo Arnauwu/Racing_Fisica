@@ -15,6 +15,11 @@
 #define PIXEL_TO_METERS(p)  ((float) METER_PER_PIXEL * p)
 
 // Small class to return to other modules to track position and rotation of physics bodies
+
+enum class ColliderType {
+	TURBO,
+	CHECKPOINT
+};
 class PhysBody
 {
 public:
@@ -32,6 +37,7 @@ public:
 	int width, height;
 	b2Body* body;
 	Module* listener;
+	ColliderType ctype;
 };
 
 // Module --------------------------------------

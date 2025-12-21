@@ -22,6 +22,7 @@ public:
 	void Move();
 
 	void CheckFinishLane();
+	void OnCollision(PhysBody* physA, PhysBody* physB);
 
 	void Jump();
 	bool jumping = false;

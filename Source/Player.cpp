@@ -38,10 +38,8 @@ update_status ModulePlayer::Update()
 		if (dashing) {
 			dashing = false;
 			myCar->maxVelocity -= 3;
-			printf("\n\n\nDASH END\n\n\n");
 		}
 	}
-	printf("%f\n X:%f\n Y:%f\n\n\n", myCar->carRotation, myCar->impulse.x, myCar->impulse.y);
 	return UPDATE_CONTINUE;
 }
 

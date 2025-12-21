@@ -20,7 +20,6 @@ bool ModuleRender::Init()
 {
 	bool ret = true;
     background = GRAY;
-    backgroundTexture = LoadTexture("Assets/Maps/MossGrotto.png");
     icons = LoadTexture("Assets/Characters/icons_vertical.png");
 
 	return ret;

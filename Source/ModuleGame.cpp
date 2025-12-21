@@ -22,8 +22,6 @@ bool ModuleGame::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
-	//App->renderer->camera.x = App->renderer->camera.y = 0;
-
 	App->renderer->camera.zoom = 1.0f;
 	App->renderer->camera.target = { 0.0f, 0.0f };
 	App->renderer->camera.offset = { 0.0f, 0.0f };
@@ -31,25 +29,13 @@ bool ModuleGame::Start()
 
 	bonus_fx = App->audio->LoadFx("Assets/bonus.wav");
 
-	PhysBody* rect1 = App->physics->CreateRectangle(560,640,100,57);
-	PhysBody* rect11 = App->physics->CreateRectangle(590, 590, 100, 41);
-	PhysBody* rect111 = App->physics->CreateRectangle(630, 640, 80, 60);
-
-	PhysBody* rect2 = App->physics->CreateRectangle(400, -100, 2000, 200);
-	PhysBody* rect3 = App->physics->CreateRectangle(-35, 700, 200, 1400);
-	PhysBody* rect4 = App->physics->CreateRectangle(1380, 650, 200, 1300);
-	PhysBody* rect5 = App->physics->CreateRectangle(1000, 1350, 2000, 200);
-
-	rect1->body->SetType(b2_staticBody);
-	rect11->body->SetType(b2_staticBody);
-	rect111->body->SetType(b2_staticBody);
-	
-	rect2->body->SetType(b2_staticBody);
-	rect3->body->SetType(b2_staticBody);
-	rect4->body->SetType(b2_staticBody);
-	rect5->body->SetType(b2_staticBody);
-
-
+	track = new Track(App->physics, 0, 0, MossGrottoEXT, 196, MossGrottoINT, this, LoadTexture("Assets/Maps/MossGrotto.png"));
+	track->body->ctype = ColliderType::CHECKPOINT;
+	App->renderer->backgroundTexture = track->texture;
+	App->physics->CreateChain(0, 0, MossGrottoINT, 156);
+	App->scene_intro->entities.emplace_back(track);
+	CheckPoint = App->physics->CreateRectangleSensor(200, 200, 60, 100);
+	CheckPoint->ctype = ColliderType::CHECKPOINT;
 
 	return ret;
 }

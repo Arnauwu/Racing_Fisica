@@ -57,7 +57,7 @@ void Car::CheckFinishLane() {
 }
 
 void Car::Jump() {
-	if (scale >= 2.0f) {
+	if (scale >= 3.0f) {
 		landing = true;
 	}
 	if (!landing) {
@@ -69,5 +69,19 @@ void Car::Jump() {
 	else {
 		jumping = false;
 		landing = false;
+	}
+}
+
+void Car::OnCollision(PhysBody* physA, PhysBody* physB) {
+	switch (physB->ctype)
+	{
+	case ColliderType::CHECKPOINT:
+		printf("A");
+		break;
+	case ColliderType::TURBO:
+
+		break;
+	default:
+		break;
 	}
 }
