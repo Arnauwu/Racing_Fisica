@@ -115,3 +115,17 @@ void ModulePlayer::TurnCar() {
 	myCar->impulse.x = myCar->maxVelocity * sin(angleRad);
 	myCar->impulse.y = myCar->maxVelocity * -cos(angleRad);
 }
+
+void ModulePlayer::OnCollision(PhysBody* physA, PhysBody* physB) {
+	switch (physB->ctype)
+	{
+	case ColliderType::CHECKPOINT:
+		printf("A");
+		break;
+	case ColliderType::TURBO:
+
+		break;
+	default:
+		break;
+	}
+}

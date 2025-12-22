@@ -4,7 +4,6 @@
 #include "Module.h"
 #include "Entity.h"
 #include "Player.h"
-#include "Track.h"
 
 #include "p2Point.h"
 
@@ -41,7 +40,6 @@ public:
 	std::set<std::set<Entity*>> collidingEntities;
 
 	ModulePlayer* player;
-	Track* track;
 
 	PhysBody* CheckPoint;
 

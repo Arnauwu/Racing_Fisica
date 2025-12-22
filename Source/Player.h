@@ -18,6 +18,7 @@ public:
 	void Action();
 	void Dash();
 	void TurnCar();
+	void OnCollision(PhysBody* physA, PhysBody* physB);
 	bool canAct = true;
 	bool dashing = false;
 

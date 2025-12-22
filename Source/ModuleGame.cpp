@@ -29,11 +29,9 @@ bool ModuleGame::Start()
 
 	bonus_fx = App->audio->LoadFx("Assets/bonus.wav");
 
-	track = new Track(App->physics, 0, 0, MossGrottoEXT, 196, MossGrottoINT, this, LoadTexture("Assets/Maps/MossGrotto.png"));
-	track->body->ctype = ColliderType::CHECKPOINT;
-	App->renderer->backgroundTexture = track->texture;
+	App->renderer->backgroundTexture = LoadTexture("Assets/Maps/MossGrotto.png");
+	App->physics->CreateChain(0, 0, MossGrottoEXT, 196);
 	App->physics->CreateChain(0, 0, MossGrottoINT, 156);
-	App->scene_intro->entities.emplace_back(track);
 	CheckPoint = App->physics->CreateRectangleSensor(200, 200, 60, 100);
 	CheckPoint->ctype = ColliderType::CHECKPOINT;
 

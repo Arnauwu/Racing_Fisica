@@ -71,17 +71,3 @@ void Car::Jump() {
 		landing = false;
 	}
 }
-
-void Car::OnCollision(PhysBody* physA, PhysBody* physB) {
-	switch (physB->ctype)
-	{
-	case ColliderType::CHECKPOINT:
-		printf("A");
-		break;
-	case ColliderType::TURBO:
-
-		break;
-	default:
-		break;
-	}
-}
