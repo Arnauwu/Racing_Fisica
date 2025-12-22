@@ -14,7 +14,7 @@ bool ModulePlayer::Start()
 {
 	LOG("Loading player");
 	carText = LoadTexture("Assets/Characters/karts_spritesheet.png");
-	myCar = new Car(App->physics, 490, 400, this, carText);
+	myCar = new Car(App->physics, 490, 400, App->scene_intro, carText);
 	myCar->App = App;
 	myCar->body->body->SetFixedRotation(true);
 	myCar->character = &character;
@@ -114,18 +114,4 @@ void ModulePlayer::TurnCar() {
 
 	myCar->impulse.x = myCar->maxVelocity * sin(angleRad);
 	myCar->impulse.y = myCar->maxVelocity * -cos(angleRad);
-}
-
-void ModulePlayer::OnCollision(PhysBody* physA, PhysBody* physB) {
-	switch (physB->ctype)
-	{
-	case ColliderType::CHECKPOINT:
-		printf("A");
-		break;
-	case ColliderType::TURBO:
-
-		break;
-	default:
-		break;
-	}
 }

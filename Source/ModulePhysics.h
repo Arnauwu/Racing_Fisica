@@ -4,6 +4,7 @@
 #include "Globals.h"
 
 #include "box2d\box2d.h"
+#include <vector>
 
 #define GRAVITY_X 0.0f
 #define GRAVITY_Y 0.0f
@@ -38,6 +39,7 @@ public:
 	b2Body* body;
 	Module* listener;
 	ColliderType ctype;
+	std::vector<PhysBody*> collidedBodies;
 };
 
 // Module --------------------------------------

@@ -32,8 +32,8 @@ bool ModuleGame::Start()
 	App->renderer->backgroundTexture = LoadTexture("Assets/Maps/MossGrotto.png");
 	App->physics->CreateChain(0, 0, MossGrottoEXT, 196);
 	App->physics->CreateChain(0, 0, MossGrottoINT, 156);
-	CheckPoint = App->physics->CreateRectangleSensor(200, 200, 60, 100);
-	CheckPoint->ctype = ColliderType::CHECKPOINT;
+	CheckPoint1 = App->physics->CreateRectangleSensor(200, 200, 60, 100);
+	CheckPoint1->ctype = ColliderType::CHECKPOINT;
 
 	return ret;
 }
@@ -147,50 +147,22 @@ update_status ModuleGame::Update()
 
 void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
-	if (!bodyA || !bodyB)
+	switch (bodyB->ctype)
 	{
-		return;
-	}
-
-	bool isCircle1 = false;
-	bool isCircle2 = false;
-
-
-	const b2Fixture* fixture = bodyA->body->GetFixtureList();
-	while (fixture != NULL)
-	{
-		if (const b2CircleShape* circle = dynamic_cast<const b2CircleShape*>(fixture->GetShape()))
-		{
-			//sumradius += circle->m_radius;
-			isCircle1 = true;
-			break;
+	case ColliderType::CHECKPOINT:
+		if (bodyA->collidedBodies.size() < 4) {
+			bodyA->collidedBodies.push_back(bodyB);
 		}
-		fixture = fixture->GetNext();
-	}
-
-	const b2Fixture* fixture2 = bodyB->body->GetFixtureList();
-	while (fixture2 != NULL)
-	{
-		if (const b2CircleShape* circle = dynamic_cast<const b2CircleShape*>(fixture2->GetShape()))
-		{
-			//sumradius += circle->m_radius;
-			isCircle2 = true;
-			break;
+		else {
+			bodyA->collidedBodies.clear();
+			bodyA->collidedBodies.push_back(bodyB);
 		}
-		fixture2 = fixture2->GetNext();
-	}
+		printf("%d", bodyA->collidedBodies.size());
+		break;
+	case ColliderType::TURBO:
 
-	if (isCircle1 && isCircle2)
-	{
-		std::set<Entity*> colliding;
-		//Delete both bodies
-		for (Entity* entity : entities)
-		{
-			if (entity->body == bodyA || entity->body == bodyB)
-			{
-				colliding.emplace(entity);
-			}
-		}
-		collidingEntities.emplace(colliding);
+		break;
+	default:
+		break;
 	}
 }
