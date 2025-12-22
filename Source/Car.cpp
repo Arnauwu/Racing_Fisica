@@ -23,11 +23,6 @@ void Car::Update()
 	App->renderer->Draw(texture, x, y, &section, &carRotation, scale);
 	frameCount++;
 	Move();
-	if (IsKeyPressed(KEY_E))
-	{
-		checkPointCounter++;
-		printf("Checkpoints : %d\n",checkPointCounter);
-	}
 }
 
 int Car::RayHit(vec2<int> ray, vec2<int> mouse, vec2<float>& normal)
@@ -50,7 +45,7 @@ void Car::Move() {
 }
 
 void Car::CheckFinishLane() {
-	if (checkPointCounter == 4) 
+	if (laps == 3) 
 	{
 		printf("META META META MET A META\n");
 	}

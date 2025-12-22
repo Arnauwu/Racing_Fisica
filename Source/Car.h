@@ -28,12 +28,13 @@ public:
 	bool jumping = false;
 
 	Application* App;
-	double carRotation = 0;
+	double carRotation = 180;
 	float scale = 1;
 	float maxVelocity = 3.6f;
 	b2Vec2 impulse = { 0.0f, -maxVelocity };
-	int checkPointCounter = 0;
+	int laps = 0;
 	Characters* character;
+	std::vector<PhysBody*> checkPoints;
 private:
 	Texture2D texture;
 	int textTiles;

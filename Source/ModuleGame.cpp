@@ -9,7 +9,7 @@ ModuleGame::ModuleGame(Application* app, bool start_enabled) : Module(app, start
 {
 	ray_on = false;
 	sensed = false;
-	player = new ModulePlayer(App);
+	player = new ModulePlayer(App, true, 100, 400);
 }
 
 ModuleGame::~ModuleGame()
@@ -32,8 +32,14 @@ bool ModuleGame::Start()
 	App->renderer->backgroundTexture = LoadTexture("Assets/Maps/MossGrotto.png");
 	App->physics->CreateChain(0, 0, MossGrottoEXT, 196);
 	App->physics->CreateChain(0, 0, MossGrottoINT, 156);
-	CheckPoint1 = App->physics->CreateRectangleSensor(200, 200, 60, 100);
+	CheckPoint1 = App->physics->CreateRectangleSensor(155, 600, 210, 30);
+	CheckPoint2 = App->physics->CreateRectangleSensor(1140, 850, 300, 30);
+	CheckPoint3 = App->physics->CreateRectangleSensor(725, 360, 150, 30);
+	CheckPoint4 = App->physics->CreateRectangleSensor(525, 350, 210, 30);
 	CheckPoint1->ctype = ColliderType::CHECKPOINT;
+	CheckPoint2->ctype = ColliderType::CHECKPOINT;
+	CheckPoint3->ctype = ColliderType::CHECKPOINT;
+	CheckPoint4->ctype = ColliderType::CHECKPOINT;
 
 	return ret;
 }
@@ -147,17 +153,23 @@ update_status ModuleGame::Update()
 
 void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
+	Car* car = (Car*)bodyA->entity;
 	switch (bodyB->ctype)
 	{
 	case ColliderType::CHECKPOINT:
-		if (bodyA->collidedBodies.size() < 4) {
-			bodyA->collidedBodies.push_back(bodyB);
+		if (car->checkPoints.size() < 4) {
+			bool isThere = false;
+			for (int i = 0; i < car->checkPoints.size(); i++) {
+				if (car->checkPoints.at(i) == bodyB) isThere = true;
+			}
+			if (!isThere) car->checkPoints.push_back(bodyB);
 		}
 		else {
-			bodyA->collidedBodies.clear();
-			bodyA->collidedBodies.push_back(bodyB);
+			car->checkPoints.clear();
+			car->checkPoints.push_back(bodyB);
+			car->laps++;
 		}
-		printf("%d", bodyA->collidedBodies.size());
+		printf("%d", car->checkPoints.size());
 		break;
 	case ColliderType::TURBO:
 

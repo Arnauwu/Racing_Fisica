@@ -8,7 +8,7 @@
 class ModulePlayer : public Module
 {
 public:
-	ModulePlayer(Application* app, bool start_enabled = true);
+	ModulePlayer(Application* app, bool start_enabled = true, int x = 0, int y = 0);
 	virtual ~ModulePlayer();
 
 	bool Start();
@@ -25,6 +25,7 @@ public:
 	Car* myCar;
 	Texture2D carText;
 	Timer actTime;
+	int carX, carY;
 
 	Characters character = HORNET;
 };

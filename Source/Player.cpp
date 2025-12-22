@@ -3,7 +3,7 @@
 #include "Player.h"
 #include "ModuleGame.h"
 
-ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled)
+ModulePlayer::ModulePlayer(Application* app, bool start_enabled, int x, int y) : Module(app, start_enabled), carX(x), carY(y)
 {}
 
 ModulePlayer::~ModulePlayer()
@@ -14,7 +14,9 @@ bool ModulePlayer::Start()
 {
 	LOG("Loading player");
 	carText = LoadTexture("Assets/Characters/karts_spritesheet.png");
-	myCar = new Car(App->physics, 490, 400, App->scene_intro, carText);
+	printf("%d", carX);
+	myCar = new Car(App->physics, carX, carY, App->scene_intro, carText);
+	myCar->body->entity = myCar;
 	myCar->App = App;
 	myCar->body->body->SetFixedRotation(true);
 	myCar->character = &character;

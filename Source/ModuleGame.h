@@ -42,6 +42,9 @@ public:
 	ModulePlayer* player;
 
 	PhysBody* CheckPoint1;
+	PhysBody* CheckPoint2;
+	PhysBody* CheckPoint3;
+	PhysBody* CheckPoint4;
 
 #pragma region maps
 	const int MossGrottoEXT[196] = {
