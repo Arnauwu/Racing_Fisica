@@ -19,7 +19,8 @@
 class Entity;
 enum class ColliderType {
 	TURBO,
-	CHECKPOINT
+	CHECKPOINT,
+	CAR
 };
 class PhysBody
 {

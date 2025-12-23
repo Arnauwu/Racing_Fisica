@@ -36,8 +36,9 @@ public:
 	void LoadMap(Maps _map);
 	void carSetup(Car* _car, Characters* _char);
 
-	void LoadScreen(Screens _screen);
-	void UnloadScreen();
+	void LoadScreen();
+	void UnloadGame();
+	void SetCamera(float zoom, Vector2 offset, Vector2 target);
 
 public:
 
@@ -58,6 +59,8 @@ public:
 
 	ModulePlayer* player;
 
+	PhysBody* INTERIOR;
+	PhysBody* EXTERIOR;
 	PhysBody* CheckPoint1;
 	PhysBody* CheckPoint2;
 	PhysBody* CheckPoint3;

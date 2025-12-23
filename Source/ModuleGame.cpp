@@ -1,4 +1,4 @@
-
+﻿
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleRender.h"
@@ -31,8 +31,8 @@ bool ModuleGame::Start()
 	App->renderer->camera.rotation = 0.0f;
 
 	bonus_fx = App->audio->LoadFx("Assets/bonus.wav");
-
-	LoadScreen(currentScreen);
+	currentScreen = Screens::MAIN_MENU;
+	LoadScreen();
 
 	return ret;
 }
@@ -54,13 +54,13 @@ update_status ModuleGame::Update()
 	case Screens::MAIN_MENU:
 		if (IsKeyPressed(KEY_ENTER)) {
 			currentScreen = Screens::CHAR_SELECT;
-			LoadScreen(currentScreen);
+			LoadScreen();
 		}
 		break;
 	case Screens::CHAR_SELECT:
 		if (IsKeyPressed(KEY_ENTER)) {
 			currentScreen = Screens::MAP_SELECT;
-			LoadScreen(currentScreen);
+			LoadScreen();
 		}
 		break;
 	case Screens::MAP_SELECT:
@@ -72,23 +72,25 @@ update_status ModuleGame::Update()
 		int playerX, playerY;
 		player->myCar->body->GetPhysicPosition(playerX, playerY);
 
-		currentZoom = App->renderer->camera.zoom = 1.5f;
-
 		halfScreenWidth = SCREEN_WIDTH / 2.0f;
 		halfScreenHeight = SCREEN_HEIGHT / 2.0f;
+
+		currentZoom = 1.5f;
 
 		visibleHalfWidth = halfScreenWidth / currentZoom;
 		visibleHalfHeight = halfScreenHeight / currentZoom;
 
-		App->renderer->camera.offset = Vector2{ halfScreenWidth, halfScreenHeight };
-
 		targetX = (float)playerX;
 		targetY = (float)playerY;
 
-
-		App->renderer->camera.target = Vector2{ targetX, targetY };
+		SetCamera(currentZoom, Vector2{ halfScreenWidth, halfScreenHeight }, Vector2{ targetX, targetY });
 		break;
 	case Screens::END_RANK:
+		SetCamera(1.0f, Vector2{0,0}, Vector2{ 0,0 });
+		if (IsKeyPressed(KEY_ENTER)) {
+			currentScreen = Screens::MAIN_MENU;
+			LoadScreen();
+		}
 		break;
 	}
 
@@ -204,8 +206,10 @@ void ModuleGame::LoadMap(Maps _map) {
 	case Maps::MOSS_GROTTO_1:
 		currentScreen = Screens::GAME;
 		App->renderer->backgroundTexture = LoadTexture("Assets/Maps/MossGrotto.png");
-		App->physics->CreateChain(0, 0, MossGrottoEXT, 196);
-		App->physics->CreateChain(0, 0, MossGrottoINT, 156);
+		EXTERIOR = App->physics->CreateChain(0, 0, MossGrottoEXT, 196);
+		EXTERIOR->body->SetType(b2BodyType::b2_staticBody);
+		INTERIOR = App->physics->CreateChain(0, 0, MossGrottoINT, 156);
+		INTERIOR->body->SetType(b2BodyType::b2_staticBody);
 		CheckPoint1 = App->physics->CreateRectangleSensor(155, 600, 210, 30);
 		CheckPoint2 = App->physics->CreateRectangleSensor(1140, 850, 300, 30);
 		CheckPoint3 = App->physics->CreateRectangleSensor(725, 360, 150, 30);
@@ -214,10 +218,11 @@ void ModuleGame::LoadMap(Maps _map) {
 		CheckPoint2->ctype = ColliderType::CHECKPOINT;
 		CheckPoint3->ctype = ColliderType::CHECKPOINT;
 		CheckPoint4->ctype = ColliderType::CHECKPOINT;
+		
 		player->myCar = new Car(App->physics, 100, 400, App->scene_intro, player->carText);
 		carSetup(player->myCar, &player->character);
-			
-			/*new ModulePlayer(App, true, 100, 400);*/
+		/*App->physics->DeleteBody(player->myCar->body);
+		player->myCar->~Car();*/
 		break;
 
 	case Maps::MOSS_GROTTO_2:
@@ -241,12 +246,13 @@ void ModuleGame::LoadMap(Maps _map) {
 void ModuleGame::carSetup(Car* _car, Characters* _char) {
 	_car->body->entity = _car;
 	_car->App = App;
+	_car->body->ctype = ColliderType::CAR;
 	_car->body->body->SetFixedRotation(true);
 	_car->character = _char;
 	App->scene_intro->entities.emplace_back(_car);
 }
 
-void ModuleGame::LoadScreen(Screens _screen) {
+void ModuleGame::LoadScreen() {
 	switch (currentScreen) {
 	case Screens::MAIN_MENU:
 		App->renderer->backgroundTexture = LoadTexture("Assets/Placeholders/Main_Menu.png");
@@ -264,4 +270,32 @@ void ModuleGame::LoadScreen(Screens _screen) {
 		App->renderer->backgroundTexture = LoadTexture("Assets/Placeholders/End_Ranking.png");
 		break;
 	}
+}
+
+void ModuleGame::UnloadGame() {
+	App->physics->DeleteBody(EXTERIOR);
+	App->physics->DeleteBody(INTERIOR);
+	App->physics->DeleteBody(CheckPoint1);
+	App->physics->DeleteBody(CheckPoint2);
+	App->physics->DeleteBody(CheckPoint3);
+	App->physics->DeleteBody(CheckPoint4);
+	for (auto it = entities.begin(); it != entities.end();)//Delete all cars
+	{
+		if ((*it)->body->ctype == ColliderType::CAR)
+		{
+			App->physics->DeleteBody((*it)->body);
+			delete* it;
+			it = entities.erase(it);
+		}
+		else
+		{
+			++it;
+		}
+	}
+}
+
+void ModuleGame::SetCamera(float zoom, Vector2 offset, Vector2 target) {
+	App->renderer->camera.zoom = zoom;
+	App->renderer->camera.offset = offset;
+	App->renderer->camera.target = target;
 }

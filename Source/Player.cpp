@@ -14,10 +14,10 @@ bool ModulePlayer::Start()
 {
 	LOG("Loading player");
 	carText = LoadTexture("Assets/Characters/karts_spritesheet.png");
-	printf("%d", carX);
 	myCar = new Car(App->physics, carX, carY, App->scene_intro, carText);
 	myCar->body->entity = myCar;
 	myCar->App = App;
+	myCar->body->ctype = ColliderType::CAR;
 	myCar->body->body->SetFixedRotation(true);
 	myCar->character = &character;
 	App->scene_intro->entities.emplace_back(myCar);
@@ -34,15 +34,22 @@ bool ModulePlayer::CleanUp()
 
 update_status ModulePlayer::Update()
 {
-	Input();
-	if (actTime.ReadSec() > 0.25) {
-		canAct = true;
-		if (dashing) {
-			dashing = false;
-			myCar->maxVelocity -= 3;
+	if (App->scene_intro->currentScreen == Screens::GAME) {
+		Input();
+		if (actTime.ReadSec() > 0.25) {
+			canAct = true;
+			if (dashing) {
+				dashing = false;
+				myCar->maxVelocity = 3.6f;
+			}
+		}
+		if (myCar->laps == 1) {
+			myCar->laps = 0;
+			App->scene_intro->currentScreen = Screens::END_RANK;
+			App->scene_intro->UnloadGame();
+			App->scene_intro->LoadScreen();
 		}
 	}
-	//character = *myCar->character;
 
 	return UPDATE_CONTINUE;
 }
