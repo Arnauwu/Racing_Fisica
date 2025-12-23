@@ -36,7 +36,10 @@ bool ModuleWindow::Init()
 
     LOG("Init raylib window");
 
+	//SetWindowIcon(icon);
+
     SetConfigFlags(flags);
+	
 	InitWindow(width, height, TITLE);
 
 	return ret;

@@ -41,5 +41,8 @@ private:
 	uint width;
 	uint height;
 
+	/*const char* filename = "Assets/Characters/knight_window_icon.png";
+	Image icon = LoadImage(filename);*/
+
     bool windowEvents[WINDOW_EVENT_COUNT];
 };
