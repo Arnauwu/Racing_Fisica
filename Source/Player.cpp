@@ -42,6 +42,8 @@ update_status ModulePlayer::Update()
 			myCar->maxVelocity -= 3;
 		}
 	}
+	//character = *myCar->character;
+
 	return UPDATE_CONTINUE;
 }
 

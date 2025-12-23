@@ -14,6 +14,18 @@
 class ModuleGame : public Module
 {
 public:
+	enum class Maps
+	{
+		MOSS_GROTTO_1,
+		MOSS_GROTTO_2,
+		CRYSTAL_PEAK_1,
+		CRYSTAL_PEAK_2,
+		BELLHART_1,
+		BELLHART_2
+	};
+	Maps map;
+	Screens currentScreen;
+
 	ModuleGame(Application* app, bool start_enabled = true);
 	~ModuleGame();
 
@@ -21,6 +33,11 @@ public:
 	update_status Update();
 	bool CleanUp();
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
+	void LoadMap(Maps _map);
+	void carSetup(Car* _car, Characters* _char);
+
+	void LoadScreen(Screens _screen);
+	void UnloadScreen();
 
 public:
 
@@ -45,6 +62,10 @@ public:
 	PhysBody* CheckPoint2;
 	PhysBody* CheckPoint3;
 	PhysBody* CheckPoint4;
+
+	
+
+
 
 #pragma region maps
 	const int MossGrottoEXT[196] = {

@@ -38,7 +38,15 @@ enum update_status
 #define WIN_BORDERLESS		false
 #define WIN_FULLSCREEN_DESKTOP false
 #define VSYNC				true
-#define TITLE "Pablo Kart"
+#define TITLE "Hollow Kart"
+
+enum class Screens {
+	MAIN_MENU,
+	CHAR_SELECT,
+	MAP_SELECT,
+	GAME,
+	END_RANK
+};
 
 enum Characters
 {

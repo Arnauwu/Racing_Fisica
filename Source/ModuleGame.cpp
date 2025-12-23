@@ -1,3 +1,4 @@
+
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleRender.h"
@@ -9,7 +10,9 @@ ModuleGame::ModuleGame(Application* app, bool start_enabled) : Module(app, start
 {
 	ray_on = false;
 	sensed = false;
-	player = new ModulePlayer(App, true, 100, 400);
+	currentScreen = Screens::MAIN_MENU;
+	player = new ModulePlayer(App, true, 2000, 2000);
+	
 }
 
 ModuleGame::~ModuleGame()
@@ -29,17 +32,7 @@ bool ModuleGame::Start()
 
 	bonus_fx = App->audio->LoadFx("Assets/bonus.wav");
 
-	App->renderer->backgroundTexture = LoadTexture("Assets/Maps/MossGrotto.png");
-	App->physics->CreateChain(0, 0, MossGrottoEXT, 196);
-	App->physics->CreateChain(0, 0, MossGrottoINT, 156);
-	CheckPoint1 = App->physics->CreateRectangleSensor(155, 600, 210, 30);
-	CheckPoint2 = App->physics->CreateRectangleSensor(1140, 850, 300, 30);
-	CheckPoint3 = App->physics->CreateRectangleSensor(725, 360, 150, 30);
-	CheckPoint4 = App->physics->CreateRectangleSensor(525, 350, 210, 30);
-	CheckPoint1->ctype = ColliderType::CHECKPOINT;
-	CheckPoint2->ctype = ColliderType::CHECKPOINT;
-	CheckPoint3->ctype = ColliderType::CHECKPOINT;
-	CheckPoint4->ctype = ColliderType::CHECKPOINT;
+	LoadScreen(currentScreen);
 
 	return ret;
 }
@@ -55,24 +48,50 @@ bool ModuleGame::CleanUp()
 // Update: draw background
 update_status ModuleGame::Update()
 {
-	int playerX, playerY;
-	player->myCar->body->GetPhysicPosition(playerX, playerY);
+	float currentZoom, halfScreenWidth, halfScreenHeight, visibleHalfWidth, visibleHalfHeight, targetX, targetY;
 
-	float currentZoom = App->renderer->camera.zoom = 1.5f;
+	switch (currentScreen) {
+	case Screens::MAIN_MENU:
+		if (IsKeyPressed(KEY_ENTER)) {
+			currentScreen = Screens::CHAR_SELECT;
+			LoadScreen(currentScreen);
+		}
+		break;
+	case Screens::CHAR_SELECT:
+		if (IsKeyPressed(KEY_ENTER)) {
+			currentScreen = Screens::MAP_SELECT;
+			LoadScreen(currentScreen);
+		}
+		break;
+	case Screens::MAP_SELECT:
+		if (IsKeyPressed(KEY_ENTER)) {
+			LoadMap(Maps::MOSS_GROTTO_1);
+		}
+		break;
+	case Screens::GAME:
+		int playerX, playerY;
+		player->myCar->body->GetPhysicPosition(playerX, playerY);
 
-	float halfScreenWidth = SCREEN_WIDTH / 2.0f;
-	float halfScreenHeight = SCREEN_HEIGHT / 2.0f;
+		currentZoom = App->renderer->camera.zoom = 1.5f;
 
-	float visibleHalfWidth = halfScreenWidth / currentZoom;
-	float visibleHalfHeight = halfScreenHeight / currentZoom;
+		halfScreenWidth = SCREEN_WIDTH / 2.0f;
+		halfScreenHeight = SCREEN_HEIGHT / 2.0f;
 
-	App->renderer->camera.offset = Vector2{ halfScreenWidth, halfScreenHeight };
+		visibleHalfWidth = halfScreenWidth / currentZoom;
+		visibleHalfHeight = halfScreenHeight / currentZoom;
 
-	float targetX = (float)playerX;
-	float targetY = (float)playerY;
+		App->renderer->camera.offset = Vector2{ halfScreenWidth, halfScreenHeight };
+
+		targetX = (float)playerX;
+		targetY = (float)playerY;
 
 
-	App->renderer->camera.target = Vector2{ targetX, targetY };
+		App->renderer->camera.target = Vector2{ targetX, targetY };
+		break;
+	case Screens::END_RANK:
+		break;
+	}
+
 
 	// Prepare for raycast ------------------------------------------------------
 
@@ -175,6 +194,74 @@ void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 
 		break;
 	default:
+		break;
+	}
+}
+
+void ModuleGame::LoadMap(Maps _map) {
+
+	switch (_map) {
+	case Maps::MOSS_GROTTO_1:
+		currentScreen = Screens::GAME;
+		App->renderer->backgroundTexture = LoadTexture("Assets/Maps/MossGrotto.png");
+		App->physics->CreateChain(0, 0, MossGrottoEXT, 196);
+		App->physics->CreateChain(0, 0, MossGrottoINT, 156);
+		CheckPoint1 = App->physics->CreateRectangleSensor(155, 600, 210, 30);
+		CheckPoint2 = App->physics->CreateRectangleSensor(1140, 850, 300, 30);
+		CheckPoint3 = App->physics->CreateRectangleSensor(725, 360, 150, 30);
+		CheckPoint4 = App->physics->CreateRectangleSensor(525, 350, 210, 30);
+		CheckPoint1->ctype = ColliderType::CHECKPOINT;
+		CheckPoint2->ctype = ColliderType::CHECKPOINT;
+		CheckPoint3->ctype = ColliderType::CHECKPOINT;
+		CheckPoint4->ctype = ColliderType::CHECKPOINT;
+		player->myCar = new Car(App->physics, 100, 400, App->scene_intro, player->carText);
+		carSetup(player->myCar, &player->character);
+			
+			/*new ModulePlayer(App, true, 100, 400);*/
+		break;
+
+	case Maps::MOSS_GROTTO_2:
+		currentScreen = Screens::GAME;
+		break;
+	case Maps::CRYSTAL_PEAK_1:
+		currentScreen = Screens::GAME;
+		break;
+	case Maps::CRYSTAL_PEAK_2:
+		currentScreen = Screens::GAME;
+		break;
+	case Maps::BELLHART_1:
+		currentScreen = Screens::GAME;
+		break;
+	case Maps::BELLHART_2:
+		currentScreen = Screens::GAME;
+		break;
+	}
+}
+
+void ModuleGame::carSetup(Car* _car, Characters* _char) {
+	_car->body->entity = _car;
+	_car->App = App;
+	_car->body->body->SetFixedRotation(true);
+	_car->character = _char;
+	App->scene_intro->entities.emplace_back(_car);
+}
+
+void ModuleGame::LoadScreen(Screens _screen) {
+	switch (currentScreen) {
+	case Screens::MAIN_MENU:
+		App->renderer->backgroundTexture = LoadTexture("Assets/Placeholders/Main_Menu.png");
+		break;
+	case Screens::CHAR_SELECT:
+		App->renderer->backgroundTexture = LoadTexture("Assets/Placeholders/Character_Select.png");
+		break;
+	case Screens::MAP_SELECT:
+		App->renderer->backgroundTexture = LoadTexture("Assets/Placeholders/Map_Select.png");
+		break;
+	case Screens::GAME:
+		LoadMap(map); // !!!!!!!!!!!!!!
+		break;
+	case Screens::END_RANK:
+		App->renderer->backgroundTexture = LoadTexture("Assets/Placeholders/End_Ranking.png");
 		break;
 	}
 }
