@@ -250,7 +250,7 @@ void ModuleGame::LoadMap(Maps _map) {
 		App->renderer->backgroundTexture = LoadTexture("Assets/Maps/CrystalPeak.png");
 		EXTERIOR = App->physics->CreateChain(0, 0, CrystalPeakEXT, 174);
 		EXTERIOR->body->SetType(b2BodyType::b2_staticBody);
-		INTERIOR = App->physics->CreateChain(0, 0, CrystalPeakINT, 166);
+		INTERIOR = App->physics->CreateChain(0, 0, CrystalPeakINT, 168);
 		INTERIOR->body->SetType(b2BodyType::b2_staticBody);
 		CheckPoint1 = App->physics->CreateRectangleSensor(100, 700, 210, 30);
 		CheckPoint1->identifier = 1;
