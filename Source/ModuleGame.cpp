@@ -264,7 +264,7 @@ void ModuleGame::LoadMap(Maps _map) {
 
 		player->myCar = new Car(App->physics, 100, 400, App->scene_intro, player->carText);
 		carSetup(player->myCar, &player->character);
-		enemy1->myCar = new Car(App->physics, 100, 350, App->scene_intro, enemy1->carText);
+		enemy1->myCar = new Car(App->physics, 110, 350, App->scene_intro, enemy1->carText);
 		carSetup(enemy1->myCar, &enemy1->character);
 		/*App->physics->DeleteBody(player->myCar->body);
 		player->myCar->~Car();*/
