@@ -75,8 +75,11 @@ update_status ModuleGame::Update()
 		}
 		break;
 	case Screens::MAP_SELECT:
-		if (IsKeyPressed(KEY_ENTER)) {
+		if (IsKeyPressed(KEY_ONE)) {
 			LoadMap(Maps::MOSS_GROTTO_1);
+		}
+		if (IsKeyPressed(KEY_TWO)) {
+			LoadMap(Maps::CRYSTAL_PEAK_1);
 		}
 		break;
 	case Screens::GAME:
@@ -244,6 +247,27 @@ void ModuleGame::LoadMap(Maps _map) {
 		break;
 	case Maps::CRYSTAL_PEAK_1:
 		currentScreen = Screens::GAME;
+		App->renderer->backgroundTexture = LoadTexture("Assets/Maps/CrystalPeak.png");
+		EXTERIOR = App->physics->CreateChain(0, 0, CrystalPeakEXT, 174);
+		EXTERIOR->body->SetType(b2BodyType::b2_staticBody);
+		INTERIOR = App->physics->CreateChain(0, 0, CrystalPeakINT, 166);
+		INTERIOR->body->SetType(b2BodyType::b2_staticBody);
+		CheckPoint1 = App->physics->CreateRectangleSensor(100, 700, 210, 30);
+		CheckPoint1->identifier = 1;
+		CheckPoint2 = App->physics->CreateRectangleSensor(425, 500, 210, 30);
+		CheckPoint3 = App->physics->CreateRectangleSensor(500, 75, 30, 150);
+		CheckPoint4 = App->physics->CreateRectangleSensor(1175, 700, 250, 30);
+		CheckPoint1->ctype = ColliderType::CHECKPOINT;
+		CheckPoint2->ctype = ColliderType::CHECKPOINT;
+		CheckPoint3->ctype = ColliderType::CHECKPOINT;
+		CheckPoint4->ctype = ColliderType::CHECKPOINT;
+
+		player->myCar = new Car(App->physics, 100, 400, App->scene_intro, player->carText);
+		carSetup(player->myCar, &player->character);
+		enemy1->myCar = new Car(App->physics, 100, 350, App->scene_intro, enemy1->carText);
+		carSetup(enemy1->myCar, &enemy1->character);
+		/*App->physics->DeleteBody(player->myCar->body);
+		player->myCar->~Car();*/
 		break;
 	case Maps::CRYSTAL_PEAK_2:
 		currentScreen = Screens::GAME;
