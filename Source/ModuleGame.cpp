@@ -12,6 +12,16 @@ ModuleGame::ModuleGame(Application* app, bool start_enabled) : Module(app, start
 	sensed = false;
 	currentScreen = Screens::MAIN_MENU;
 	player = new ModulePlayer(App, true, 2000, 2000);
+	enemy1 = new Enemy();
+	player->App = app;
+	/*player->carText = LoadTexture("Assets/Characters/karts_spritesheet.png");
+	player->myCar = new Car(App->physics, 2000, 2000, App->scene_intro, player->carText);
+	player->myCar->body->entity = player->myCar;
+	player->myCar->App = App;
+	player->myCar->body->ctype = ColliderType::CAR;
+	player->myCar->body->body->SetFixedRotation(true);
+	player->myCar->character = &player->character;
+	App->scene_intro->entities.emplace_back(player->myCar);*/
 	
 }
 
@@ -24,7 +34,8 @@ bool ModuleGame::Start()
 {
 	LOG("Loading Intro assets");
 	bool ret = true;
-
+	enemy1->App = App;
+	enemy1->Start();
 	App->renderer->camera.zoom = 1.0f;
 	App->renderer->camera.target = { 0.0f, 0.0f };
 	App->renderer->camera.offset = { 0.0f, 0.0f };
@@ -185,7 +196,7 @@ void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 			}
 			if (!isThere) car->checkPoints.push_back(bodyB);
 		}
-		else {
+		else if (bodyB->identifier == 1){
 			car->checkPoints.clear();
 			car->checkPoints.push_back(bodyB);
 			car->laps++;
@@ -211,6 +222,7 @@ void ModuleGame::LoadMap(Maps _map) {
 		INTERIOR = App->physics->CreateChain(0, 0, MossGrottoINT, 156);
 		INTERIOR->body->SetType(b2BodyType::b2_staticBody);
 		CheckPoint1 = App->physics->CreateRectangleSensor(155, 600, 210, 30);
+		CheckPoint1->identifier = 1;
 		CheckPoint2 = App->physics->CreateRectangleSensor(1140, 850, 300, 30);
 		CheckPoint3 = App->physics->CreateRectangleSensor(725, 360, 150, 30);
 		CheckPoint4 = App->physics->CreateRectangleSensor(525, 350, 210, 30);
@@ -221,6 +233,8 @@ void ModuleGame::LoadMap(Maps _map) {
 		
 		player->myCar = new Car(App->physics, 100, 400, App->scene_intro, player->carText);
 		carSetup(player->myCar, &player->character);
+		enemy1->myCar = new Car(App->physics, 100, 300, App->scene_intro, enemy1->carText);
+		carSetup(enemy1->myCar, &enemy1->character);
 		/*App->physics->DeleteBody(player->myCar->body);
 		player->myCar->~Car();*/
 		break;
@@ -279,19 +293,7 @@ void ModuleGame::UnloadGame() {
 	App->physics->DeleteBody(CheckPoint2);
 	App->physics->DeleteBody(CheckPoint3);
 	App->physics->DeleteBody(CheckPoint4);
-	for (auto it = entities.begin(); it != entities.end();)//Delete all cars
-	{
-		if ((*it)->body->ctype == ColliderType::CAR)
-		{
-			App->physics->DeleteBody((*it)->body);
-			delete* it;
-			it = entities.erase(it);
-		}
-		else
-		{
-			++it;
-		}
-	}
+	enemy1->DeleteMyCar();
 }
 
 void ModuleGame::SetCamera(float zoom, Vector2 offset, Vector2 target) {

@@ -15,6 +15,7 @@ bool ModulePlayer::Start()
 	LOG("Loading player");
 	carText = LoadTexture("Assets/Characters/karts_spritesheet.png");
 	myCar = new Car(App->physics, carX, carY, App->scene_intro, carText);
+	myCar->type = EntityType::CAR;
 	myCar->body->entity = myCar;
 	myCar->App = App;
 	myCar->body->ctype = ColliderType::CAR;
@@ -48,6 +49,7 @@ update_status ModulePlayer::Update()
 			App->scene_intro->currentScreen = Screens::END_RANK;
 			App->scene_intro->UnloadGame();
 			App->scene_intro->LoadScreen();
+			DeleteMyCar();
 		}
 	}
 
@@ -55,7 +57,6 @@ update_status ModulePlayer::Update()
 }
 
 void ModulePlayer::Input() {
-	b2Body* carBody = myCar->body->body;
 	TurnCar();
 	if(IsKeyPressed(KEY_SPACE) && canAct)
 	{
@@ -125,4 +126,26 @@ void ModulePlayer::TurnCar() {
 
 	myCar->impulse.x = myCar->maxVelocity * sin(angleRad);
 	myCar->impulse.y = myCar->maxVelocity * -cos(angleRad);
+}
+
+void ModulePlayer::DeleteMyCar(){
+	for (auto it = App->scene_intro->entities.begin(); it != App->scene_intro->entities.end();)//Delete all cars
+	{
+		if ((*it)->body != nullptr) {
+			if ((*it) == myCar)
+			{
+				App->physics->DeleteBody((*it)->body);
+				delete* it;
+				it = App->scene_intro->entities.erase(it);
+			}
+			else
+			{
+				++it;
+			}
+		}
+		else
+		{
+			++it;
+		}
+	}
 }

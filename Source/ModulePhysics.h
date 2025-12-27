@@ -41,6 +41,7 @@ public:
 	Module* listener;
 	ColliderType ctype;
 	Entity* entity;
+	int identifier;
 };
 
 // Module --------------------------------------

@@ -57,3 +57,8 @@ enum Characters
 	P_KING,
 	PABLO
 };
+
+enum class EntityType {
+	ENEMY,
+	CAR
+};

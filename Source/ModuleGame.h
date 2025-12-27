@@ -4,6 +4,7 @@
 #include "Module.h"
 #include "Entity.h"
 #include "Player.h"
+#include "Enemy.h"
 
 #include "p2Point.h"
 
@@ -58,6 +59,7 @@ public:
 	std::set<std::set<Entity*>> collidingEntities;
 
 	ModulePlayer* player;
+	Enemy* enemy1;
 
 	PhysBody* INTERIOR;
 	PhysBody* EXTERIOR;

@@ -3,6 +3,7 @@
 #include "Globals.h"
 #include "Module.h"
 #include "ModulePhysics.h"
+#include "Application.h"
 
 #include "p2Point.h"
 
@@ -13,13 +14,8 @@ class PhysBody;
 class Entity
 {
 protected:
-
-	Entity(PhysBody* _body, Module* _listener)
-		: body(_body)
-		, listener(_listener)
-	{
-		body->listener = listener;
-	}
+	Entity();
+	Entity(PhysBody* _body, Module* _listener);
 
 public:
 	virtual ~Entity() = default;
@@ -33,4 +29,6 @@ public:
 public:
 	PhysBody* body;
 	Module* listener;
+
+	EntityType type;
 };

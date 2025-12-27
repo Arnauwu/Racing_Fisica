@@ -1,12 +1,13 @@
 #include "Entity.h"
-#include "Globals.h"
-#include "Application.h"
-#include "ModuleRender.h"
-#include "ModuleGame.h"
-#include "ModuleAudio.h"
-#include "ModulePhysics.h"
 
-class Entity
-{
+Entity::Entity() {
+    body = nullptr;
+    listener = nullptr;
+}
 
-};
+Entity::Entity(PhysBody* _body, Module* _listener)
+    : body(_body), listener(_listener) {
+    if (body != nullptr) {
+        body->listener = listener;
+    }
+}

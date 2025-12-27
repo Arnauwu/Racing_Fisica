@@ -47,7 +47,7 @@ void Car::Move() {
 void Car::CheckFinishLane() {
 	if (laps == 3) 
 	{
-		printf("META META META MET A META\n");
+		printf("META META META META META\n");
 	}
 }
 
