@@ -275,6 +275,22 @@ void ModuleGame::LoadMap(Maps _map) {
 		CheckPoint3->ctype = ColliderType::CHECKPOINT;
 		CheckPoint4->ctype = ColliderType::CHECKPOINT;
 
+		for (int i = 0; i < enemies.size(); i++) {
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(115, 1180, 250, 200));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(435, 1180, 250, 200));
+			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(465, 305, 250, 220));
+			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(935, 300, 125, 300));
+			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(935, 600, 250, 200));
+			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(935, 600, 250, 200));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(635, 600, 250, 200));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(615, 820, 210, 130));
+			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(885, 800, 250, 200));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(855, 1000, 250, 200));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(1255, 1000, 250, 200));
+
+
+		}
+
 		player->myCar = new Car(App->physics, 100, 400, App->scene_intro, player->carText);
 		carSetup(player->myCar, &player->character);
 		enemy1->myCar = new Car(App->physics, 110, 350, App->scene_intro, enemy1->carText);
