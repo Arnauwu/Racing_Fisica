@@ -44,6 +44,7 @@ public:
 public:
 
 	std::vector<Entity*> entities;
+	std::vector<Enemy*> enemies;
 
 	PhysBody* sensor;
 	bool sensed;

@@ -15,8 +15,8 @@ public:
 	void Update() override;
 	void TurnCar();
 	void DeleteMyCar();
-	bool canAct = true;
-	bool dashing = false;
+	bool turning = false;
+	float startRotation;
 
 
 	Car* myCar;
@@ -26,4 +26,7 @@ public:
 	Characters character = KNIGHT;
 
 	Application* App;
+
+	std::vector<PhysBody*> turnLeft;
+	std::vector<PhysBody*> turnRight;
 };

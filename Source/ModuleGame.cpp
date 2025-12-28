@@ -34,6 +34,7 @@ bool ModuleGame::Start()
 {
 	LOG("Loading Intro assets");
 	bool ret = true;
+	enemies.push_back(enemy1);
 	enemy1->App = App;
 	enemy1->Start();
 	App->renderer->camera.zoom = 1.0f;
@@ -207,7 +208,6 @@ void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		printf("%d", car->checkPoints.size());
 		break;
 	case ColliderType::TURBO:
-
 		break;
 	default:
 		break;
@@ -233,6 +233,19 @@ void ModuleGame::LoadMap(Maps _map) {
 		CheckPoint2->ctype = ColliderType::CHECKPOINT;
 		CheckPoint3->ctype = ColliderType::CHECKPOINT;
 		CheckPoint4->ctype = ColliderType::CHECKPOINT;
+
+		for (int i = 0; i < enemies.size(); i++) {
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(175, 980, 250, 200));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(1140, 970, 250, 200));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(1140, 100, 250, 200));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(700, 100, 200, 200));
+			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(700, 800, 200, 200));
+			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(400, 800, 100, 200));
+			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(400, 550, 100, 100));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(525, 500, 100, 100));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(525, 150, 200, 200));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(200, 150, 200, 200));
+		}
 		
 		player->myCar = new Car(App->physics, 100, 400, App->scene_intro, player->carText);
 		carSetup(player->myCar, &player->character);

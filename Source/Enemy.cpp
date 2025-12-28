@@ -41,6 +41,41 @@ void Enemy::TurnCar() {
 			myCar->carRotation += 2.5f;
 		}
 	}*/
+	if (!turning) {
+		startRotation = myCar->carRotation;
+	}
+	int x, y;
+	myCar->body->GetPhysicPosition(x, y);
+	bool hasToTurn = false;
+	for (int i = 0; i < turnLeft.size(); i++) {
+		int turnX, turnY;
+		int turnW = turnLeft[i]->width;
+		int turnH = turnLeft[i]->height;
+		turnLeft[i]->GetPhysicPosition(turnX, turnY);
+		if (x > turnX - (turnW/2) && x < turnX + (turnW / 2) && y > turnY - (turnH / 2) && y < turnY + (turnH / 2)) {
+			hasToTurn = true;
+			turning = true;
+			if (myCar->carRotation > startRotation - 90) {
+				myCar->carRotation -= 2.5f;
+			}
+		}
+	}
+	for (int i = 0; i < turnRight.size(); i++) {
+		int turnX, turnY;
+		int turnW = turnRight[i]->width;
+		int turnH = turnRight[i]->height;
+		turnRight[i]->GetPhysicPosition(turnX, turnY);
+		if (x > turnX - (turnW / 2) && x < turnX + (turnW / 2) && y > turnY - (turnH / 2) && y < turnY + (turnH / 2)) {
+			hasToTurn = true;
+			turning = true;
+			if (myCar->carRotation < startRotation + 90) {
+				myCar->carRotation += 2.5f;
+			}
+		}
+	}
+	if (!hasToTurn) {
+		turning = false;
+	}
 
 	// Adjust velocity to the direction the car is facing
 	float angleRad = myCar->carRotation * (PI / 180.0f);
