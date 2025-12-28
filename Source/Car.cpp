@@ -10,11 +10,9 @@ void Car::Update()
 	}
 	int x, y;
 	body->GetPhysicPosition(x, y);
-	guide.x = x + rectOffset.x;
-	guide.y = y + rectOffset.y;
-	guide.width = 100;
-	guide.height = 50;
-
+	guideDown.x = x + rectOffset.x;
+	guideDown.y = y + rectOffset.y;
+	DrawRectangleLinesEx(guideDown, 2, RED);
 	if (frameCount > 2) {
 		frameCount = 0;
 		drawFrame += 32;

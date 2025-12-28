@@ -35,8 +35,8 @@ public:
 	int laps = 0;
 	Characters* character;
 	std::vector<PhysBody*> checkPoints;
-	Rectangle guide;
-	Vector2 rectOffset = { 20, 30 };
+	Rectangle guideDown = { 0,0,25,25 };
+	Vector2 rectOffset = { -12, 60 };
 private:
 	Texture2D texture;
 	int textTiles;
