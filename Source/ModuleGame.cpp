@@ -331,6 +331,16 @@ void ModuleGame::UnloadGame() {
 	App->physics->DeleteBody(CheckPoint3);
 	App->physics->DeleteBody(CheckPoint4);
 	enemy1->DeleteMyCar();
+	for (int i = 0; i < enemies.size(); i++) {
+		for (int j = 0; j < enemies[i]->turnRight.size(); j++) {
+			App->physics->DeleteBody(enemies[i]->turnRight[j]);
+		}
+		for (int j = 0; j < enemies[i]->turnLeft.size(); j++) {
+			App->physics->DeleteBody(enemies[i]->turnLeft[j]);
+		}
+		enemies[i]->turnLeft.clear();
+		enemies[i]->turnRight.clear();
+	}
 }
 
 void ModuleGame::SetCamera(float zoom, Vector2 offset, Vector2 target) {
