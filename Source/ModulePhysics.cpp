@@ -378,9 +378,9 @@ void ModulePhysics::BeginContact(b2Contact* contact)
 		physB->listener->OnCollision(physB, physA);
 }
 
-void ModulePhysics::MouseJoint(b2Body* body)
+void ModulePhysics::MouseJoint(b2Body* playerCar)
 {
-	if (!world || !body) return;
+	if (!world || !playerCar) return;
 
 	if (!groundBody)
 	{
@@ -394,14 +394,14 @@ void ModulePhysics::MouseJoint(b2Body* body)
 	{
 		b2MouseJointDef def;
 		def.bodyA = groundBody;
-		def.bodyB = body;
+		def.bodyB = playerCar;
 		def.target = mouseWorld;
-		def.maxForce = 500.0f * body->GetMass();
+		def.maxForce = 500.0f * playerCar->GetMass();
 		def.stiffness = 100.0f;
 		def.damping = 20.0f;
 
 		mouseJoint = (b2MouseJoint*)world->CreateJoint(&def);
-		body->SetAwake(true);
+		playerCar->SetAwake(true);
 	}
 
 	if (mouseJoint)
