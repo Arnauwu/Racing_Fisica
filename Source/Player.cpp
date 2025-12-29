@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "Player.h"
 #include "ModuleGame.h"
+#include "ModulePhysics.h"
 
 ModulePlayer::ModulePlayer(Application* app, bool start_enabled, int x, int y) : Module(app, start_enabled), carX(x), carY(y)
 {}
@@ -12,6 +13,8 @@ ModulePlayer::~ModulePlayer()
 // Load assets
 bool ModulePlayer::Start()
 {
+	physics = App->physics;
+
 	LOG("Loading player");
 	carText = LoadTexture("Assets/Characters/karts_spritesheet.png");
 	myCar = new Car(App->physics, carX, carY, App->scene_intro, carText);
@@ -22,6 +25,7 @@ bool ModulePlayer::Start()
 	myCar->body->body->SetFixedRotation(true);
 	myCar->character = &character;
 	App->scene_intro->entities.emplace_back(myCar);
+	
 	return true;
 }
 
@@ -52,7 +56,7 @@ update_status ModulePlayer::Update()
 			DeleteMyCar();
 		}
 	}
-
+	physics->MouseJoint(myCar->body->body);
 	return UPDATE_CONTINUE;
 }
 

@@ -39,6 +39,7 @@ public:
 	Vector2 rectOffset = { -12, 60 };
 
 	Timer timer;
+
 private:
 	Texture2D texture;
 	int textTiles;
