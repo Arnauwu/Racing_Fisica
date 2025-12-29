@@ -40,6 +40,7 @@ public:
 	void LoadScreen();
 	void UnloadGame();
 	void SetCamera(float zoom, Vector2 offset, Vector2 target);
+	void SetUpCars();
 
 public:
 
@@ -61,6 +62,10 @@ public:
 
 	ModulePlayer* player;
 	Enemy* enemy1;
+	Enemy* enemy2;
+	Enemy* enemy3;
+	Enemy* enemy4;
+	Enemy* enemy5;
 
 	PhysBody* INTERIOR;
 	PhysBody* EXTERIOR;

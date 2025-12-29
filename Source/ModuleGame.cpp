@@ -13,6 +13,10 @@ ModuleGame::ModuleGame(Application* app, bool start_enabled) : Module(app, start
 	currentScreen = Screens::MAIN_MENU;
 	player = new ModulePlayer(App, true, 2000, 2000);
 	enemy1 = new Enemy();
+	enemy2 = new Enemy();
+	enemy3 = new Enemy();
+	enemy4 = new Enemy();
+	enemy5 = new Enemy();
 	player->App = app;
 	/*player->carText = LoadTexture("Assets/Characters/karts_spritesheet.png");
 	player->myCar = new Car(App->physics, 2000, 2000, App->scene_intro, player->carText);
@@ -35,8 +39,14 @@ bool ModuleGame::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 	enemies.push_back(enemy1);
-	enemy1->App = App;
-	enemy1->Start();
+	enemies.push_back(enemy2);
+	enemies.push_back(enemy3);
+	enemies.push_back(enemy4);
+	enemies.push_back(enemy5);
+	for (int i = 0; i < enemies.size(); i++) {
+		enemies[i]->App = App;
+		enemies[i]->Start();
+	}
 	App->renderer->camera.zoom = 1.0f;
 	App->renderer->camera.target = { 0.0f, 0.0f };
 	App->renderer->camera.offset = { 0.0f, 0.0f };
@@ -235,7 +245,7 @@ void ModuleGame::LoadMap(Maps _map) {
 		CheckPoint4->ctype = ColliderType::CHECKPOINT;
 
 		for (int i = 0; i < enemies.size(); i++) {
-			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(175, 980, 250, 200));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(175, 995, 250, 200));
 			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(1140, 970, 250, 200));
 			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(1140, 100, 250, 200));
 			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(700, 100, 200, 200));
@@ -245,14 +255,19 @@ void ModuleGame::LoadMap(Maps _map) {
 			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(525, 500, 100, 100));
 			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(525, 150, 200, 200));
 			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(200, 150, 200, 200));
+
+			enemies[i]->turnLeft[0]->identifier = 1;
+			enemies[i]->turnLeft[1]->identifier = 0;
+			enemies[i]->turnLeft[2]->identifier = 3;
+			enemies[i]->turnLeft[3]->identifier = 2;
+			enemies[i]->turnRight[0]->identifier = 3;
+			enemies[i]->turnRight[1]->identifier = 0;
+			enemies[i]->turnRight[2]->identifier = 1;
+			enemies[i]->turnLeft[4]->identifier = 0;
+			enemies[i]->turnLeft[5]->identifier = 3;
+			enemies[i]->turnLeft[6]->identifier = 2;
 		}
 		
-		player->myCar = new Car(App->physics, 100, 400, App->scene_intro, player->carText);
-		carSetup(player->myCar, &player->character);
-		enemy1->myCar = new Car(App->physics, 100, 300, App->scene_intro, enemy1->carText);
-		carSetup(enemy1->myCar, &enemy1->character);
-		/*App->physics->DeleteBody(player->myCar->body);
-		player->myCar->~Car();*/
 		break;
 
 	case Maps::MOSS_GROTTO_2:
@@ -290,13 +305,6 @@ void ModuleGame::LoadMap(Maps _map) {
 
 
 		}
-
-		player->myCar = new Car(App->physics, 100, 400, App->scene_intro, player->carText);
-		carSetup(player->myCar, &player->character);
-		enemy1->myCar = new Car(App->physics, 110, 350, App->scene_intro, enemy1->carText);
-		carSetup(enemy1->myCar, &enemy1->character);
-		/*App->physics->DeleteBody(player->myCar->body);
-		player->myCar->~Car();*/
 		break;
 	case Maps::CRYSTAL_PEAK_2:
 		currentScreen = Screens::GAME;
@@ -308,6 +316,7 @@ void ModuleGame::LoadMap(Maps _map) {
 		currentScreen = Screens::GAME;
 		break;
 	}
+	SetUpCars();
 }
 
 void ModuleGame::carSetup(Car* _car, Characters* _char) {
@@ -363,4 +372,26 @@ void ModuleGame::SetCamera(float zoom, Vector2 offset, Vector2 target) {
 	App->renderer->camera.zoom = zoom;
 	App->renderer->camera.offset = offset;
 	App->renderer->camera.target = target;
+}
+
+void ModuleGame::SetUpCars() {
+	player->myCar = new Car(App->physics, 100, 600, App->scene_intro, player->carText);
+	carSetup(player->myCar, &player->character);
+	enemy1->character = KNIGHT;
+	enemy2->character = ZOTE;
+	enemy3->character = SHERMA;
+	enemy4->character = P_KING;
+	enemy5->character = PABLO;
+	enemy1->myCar = new Car(App->physics, 140, 575, App->scene_intro, enemy1->carText);
+	enemy2->myCar = new Car(App->physics, 180, 550, App->scene_intro, enemy2->carText);
+	enemy3->myCar = new Car(App->physics, 100, 525, App->scene_intro, enemy3->carText);
+	enemy4->myCar = new Car(App->physics, 140, 500, App->scene_intro, enemy4->carText);
+	enemy5->myCar = new Car(App->physics, 180, 475, App->scene_intro, enemy5->carText);
+	for (int i = 0; i < enemies.size(); i++) {
+		enemies[i]->turnTargetRotation = 180;
+		if (enemies[i]->character == player->character) {
+			enemies[i]->character = HORNET;
+		}
+		carSetup(enemies[i]->myCar, &enemies[i]->character);
+	}
 }

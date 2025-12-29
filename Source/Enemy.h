@@ -17,6 +17,7 @@ public:
 	void DeleteMyCar();
 	bool turning = false;
 	float startRotation;
+	int turnTargetRotation = 180;
 
 
 	Car* myCar;

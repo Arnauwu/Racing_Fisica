@@ -41,8 +41,12 @@ void Enemy::TurnCar() {
 			myCar->carRotation += 2.5f;
 		}
 	}*/
+	printf("%f, %d, %d\n", myCar->carRotation, turnTargetRotation, (int)turning);
 	if (!turning) {
 		startRotation = myCar->carRotation;
+	}
+	if (myCar->carRotation <= 0 || myCar->carRotation > 360) {
+		myCar->carRotation = 360;
 	}
 	int x, y;
 	myCar->body->GetPhysicPosition(x, y);
@@ -55,8 +59,13 @@ void Enemy::TurnCar() {
 		if (x > turnX - (turnW/2) && x < turnX + (turnW / 2) && y > turnY - (turnH / 2) && y < turnY + (turnH / 2)) {
 			hasToTurn = true;
 			turning = true;
-			if (myCar->carRotation > startRotation - 90) {
+			turnTargetRotation = 90 * turnLeft[i]->identifier;
+			if (myCar->carRotation > turnTargetRotation) {
+				printf("TURN LEFT\n");
 				myCar->carRotation -= 2.5f;
+			}
+			else if (myCar->carRotation < turnTargetRotation) {
+				myCar->carRotation += 2.5f;
 			}
 		}
 	}
@@ -68,13 +77,45 @@ void Enemy::TurnCar() {
 		if (x > turnX - (turnW / 2) && x < turnX + (turnW / 2) && y > turnY - (turnH / 2) && y < turnY + (turnH / 2)) {
 			hasToTurn = true;
 			turning = true;
-			if (myCar->carRotation < startRotation + 90) {
-				myCar->carRotation += 2.5f;
+			turnTargetRotation = 90 * turnRight[i]->identifier;
+			if (myCar->carRotation < turnTargetRotation || turnTargetRotation == 0 || myCar->carRotation == 360) {
+				if (myCar->carRotation == 360) {
+					myCar->carRotation = 2.5f;
+				}
+				else {
+					myCar->carRotation += 2.5f;
+				}
+			}
+			else if (myCar->carRotation > turnTargetRotation) {
+				myCar->carRotation -= 2.5f;
 			}
 		}
 	}
 	if (!hasToTurn) {
 		turning = false;
+	}
+	if(turnTargetRotation != 0){
+		div_t rot = div(myCar->carRotation, turnTargetRotation);
+		if (myCar->carRotation != turnTargetRotation && turning == false) {
+			if (rot.quot < turnTargetRotation) {
+				if (myCar->carRotation < 270) {
+					myCar->carRotation += 2.5f;
+				}
+			}
+			else {
+				myCar->carRotation -= 2.5f;
+			}
+		}
+	}
+	else {
+		if (myCar->carRotation != 360 && turning == false) {
+			if (myCar->carRotation < turnTargetRotation) {
+				myCar->carRotation -= 2.5f;
+			}
+			else {
+				myCar->carRotation += 2.5f;
+			}
+		}
 	}
 
 	// Adjust velocity to the direction the car is facing

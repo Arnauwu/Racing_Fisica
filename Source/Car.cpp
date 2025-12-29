@@ -36,11 +36,6 @@ void Car::Move() {
 	int x, y;
 	body->GetPhysicPosition(x, y);
 
-	if (carRotation >= 360) 
-	{ 
-		carRotation = 0; 
-	}
-
 	body->body->SetLinearVelocity(impulse);
 
 	if (jumping) Jump();
