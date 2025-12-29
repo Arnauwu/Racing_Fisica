@@ -295,33 +295,31 @@ void ModuleGame::LoadMap(Maps _map) {
 		CheckPoint4->ctype = ColliderType::CHECKPOINT;
 
 		for (int i = 0; i < enemies.size(); i++) {
-			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(115, 1180, 250, 200));
-			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(465, 1180, 250, 400));
-			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(300, 1180, 100, 400));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(115, 1180, 290, 200));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(475, 1180, 250, 400));
 			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(455, 305, 250, 220));
 			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(935, 300, 125, 300));
-			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(935, 600, 250, 200));
 			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(935, 600, 250, 200));
 			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(635, 600, 250, 200));
 			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(615, 820, 210, 130));
 			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(885, 800, 250, 200));
-			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(855, 1000, 250, 200));
-			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(1255, 1000, 250, 200));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(755, 1000, 250, 200));
+
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(1230, 1000, 250, 200));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(1255, 600, 150, 100));
 
 			enemies[i]->turnLeft[0]->identifier = 1; //DRETA
 			enemies[i]->turnLeft[1]->identifier = 0; //ADALT
 			enemies[i]->turnLeft[2]->identifier = 1; //DRETA
-			enemies[i]->turnRight[0]->identifier = 1;
+			enemies[i]->turnRight[0]->identifier = 1; 
 			enemies[i]->turnRight[1]->identifier = 2; //AVALL
 			enemies[i]->turnRight[2]->identifier = 3; //ESQUERRA
-			enemies[i]->turnRight[3]->identifier = 2;
-			enemies[i]->turnLeft[3]->identifier = 1;
-			enemies[i]->turnLeft[4]->identifier = 2;
-			enemies[i]->turnRight[4]->identifier = 1;
+			enemies[i]->turnLeft[3]->identifier = 2;
+			enemies[i]->turnLeft[4]->identifier = 1;
+			enemies[i]->turnRight[3]->identifier = 0;
+
 			enemies[i]->turnLeft[5]->identifier = 0;
-			enemies[i]->turnLeft[6]->identifier = 1;
-
-
+			enemies[i]->turnLeft[6]->identifier = 3;
 		}
 		break;
 	case Maps::CRYSTAL_PEAK_2:
