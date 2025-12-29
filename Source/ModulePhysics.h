@@ -70,6 +70,10 @@ public:
 
 	b2World* world;
 
+	void MouseJoint(b2Body* targetBody);
+	b2Body* groundBody = nullptr;
+	b2MouseJoint* mouseJoint = nullptr;
+
 private:
 
 	bool debug;

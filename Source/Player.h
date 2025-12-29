@@ -19,6 +19,7 @@ public:
 	void Dash();
 	void TurnCar();
 	void DeleteMyCar();
+	b2Body* GetBody() const { return myCar->body->body; }
 	bool canAct = true;
 	bool dashing = false;
 
@@ -28,5 +29,6 @@ public:
 	Timer actTime;
 	int carX, carY;
 
+	ModulePhysics* physics = nullptr;
 	Characters character = HORNET;
 };

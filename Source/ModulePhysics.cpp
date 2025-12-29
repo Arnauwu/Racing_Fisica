@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "ModuleRender.h"
 #include "ModulePhysics.h"
+#include "Player.h"
 
 #include "p2Point.h"
 
@@ -375,4 +376,40 @@ void ModulePhysics::BeginContact(b2Contact* contact)
 
 	if (physB && physB->listener != NULL)
 		physB->listener->OnCollision(physB, physA);
+}
+
+void ModulePhysics::MouseJoint(b2Body* body)
+{
+	if (!world || !body) return;
+
+	if (!groundBody)
+	{
+		b2BodyDef bd;
+		groundBody = world->CreateBody(&bd);
+	}
+
+	b2Vec2 mouseWorld(GetMousePosition().x / PIXELS_PER_METER,GetMousePosition().y / PIXELS_PER_METER);
+
+	if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && !mouseJoint)
+	{
+		b2MouseJointDef def;
+		def.bodyA = groundBody;
+		def.bodyB = body;
+		def.target = mouseWorld;
+		def.maxForce = 500.0f * body->GetMass();
+		def.stiffness = 100.0f;
+		def.damping = 20.0f;
+
+		mouseJoint = (b2MouseJoint*)world->CreateJoint(&def);
+		body->SetAwake(true);
+	}
+
+	if (mouseJoint)
+		mouseJoint->SetTarget(mouseWorld);
+
+	if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON) && mouseJoint)
+	{
+		world->DestroyJoint(mouseJoint);
+		mouseJoint = nullptr;
+	}
 }
