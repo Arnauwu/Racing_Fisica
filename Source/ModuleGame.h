@@ -41,11 +41,13 @@ public:
 	void UnloadGame();
 	void SetCamera(float zoom, Vector2 offset, Vector2 target);
 	void SetUpCars();
+	void CalculatePositions();
 
 public:
 
 	std::vector<Entity*> entities;
 	std::vector<Enemy*> enemies;
+	std::vector<Car*> cars;
 
 	PhysBody* sensor;
 	bool sensed;

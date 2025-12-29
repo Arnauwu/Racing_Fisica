@@ -203,6 +203,11 @@ void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	switch (bodyB->ctype)
 	{
 	case ColliderType::CHECKPOINT:
+		CalculatePositions();
+		printf("\n\n");
+		for (int i = 0; i < cars.size(); i++) {
+			printf("%d\n", (int)*cars[i]->character);
+		}
 		if (car->checkPoints.size() < 4) {
 			bool isThere = false;
 			for (int i = 0; i < car->checkPoints.size(); i++) {
@@ -215,7 +220,6 @@ void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 			car->checkPoints.push_back(bodyB);
 			car->laps++;
 		}
-		printf("%d", car->checkPoints.size());
 		break;
 	case ColliderType::TURBO:
 		break;
@@ -245,12 +249,12 @@ void ModuleGame::LoadMap(Maps _map) {
 		CheckPoint4->ctype = ColliderType::CHECKPOINT;
 
 		for (int i = 0; i < enemies.size(); i++) {
-			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(175, 995, 250, 200));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(175, 1005, 250, 250));
 			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(1140, 970, 250, 200));
 			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(1140, 100, 250, 200));
-			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(700, 100, 200, 200));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(720, 100, 200, 200));
 			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(700, 800, 200, 200));
-			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(400, 800, 100, 200));
+			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(390, 800, 100, 200));
 			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(400, 550, 100, 100));
 			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(525, 500, 100, 100));
 			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(525, 150, 200, 200));
@@ -326,6 +330,7 @@ void ModuleGame::carSetup(Car* _car, Characters* _char) {
 	_car->body->body->SetFixedRotation(true);
 	_car->character = _char;
 	App->scene_intro->entities.emplace_back(_car);
+	_car->timer.Start();
 }
 
 void ModuleGame::LoadScreen() {
@@ -355,8 +360,8 @@ void ModuleGame::UnloadGame() {
 	App->physics->DeleteBody(CheckPoint2);
 	App->physics->DeleteBody(CheckPoint3);
 	App->physics->DeleteBody(CheckPoint4);
-	enemy1->DeleteMyCar();
 	for (int i = 0; i < enemies.size(); i++) {
+		enemies[i]->DeleteMyCar();
 		for (int j = 0; j < enemies[i]->turnRight.size(); j++) {
 			App->physics->DeleteBody(enemies[i]->turnRight[j]);
 		}
@@ -377,6 +382,7 @@ void ModuleGame::SetCamera(float zoom, Vector2 offset, Vector2 target) {
 void ModuleGame::SetUpCars() {
 	player->myCar = new Car(App->physics, 100, 600, App->scene_intro, player->carText);
 	carSetup(player->myCar, &player->character);
+	cars.push_back(player->myCar);
 	enemy1->character = KNIGHT;
 	enemy2->character = ZOTE;
 	enemy3->character = SHERMA;
@@ -393,5 +399,25 @@ void ModuleGame::SetUpCars() {
 			enemies[i]->character = HORNET;
 		}
 		carSetup(enemies[i]->myCar, &enemies[i]->character);
+		cars.push_back(enemies[i]->myCar);
+	}
+}
+
+void ModuleGame::CalculatePositions() {
+	int n = cars.size();
+
+	for (int i = 0; i < n - 1; i++) {
+		for (int j = 0; j < n - i - 1; j++) {
+
+			// 1. Voltes (més és millor)
+			if (cars[j]->laps < cars[j + 1]->laps) {
+				std::swap(cars[j], cars[j + 1]);
+			}
+			// 2. Checkpoints (més és millor)
+			else if (cars[j]->laps == cars[j + 1]->laps &&
+				cars[j]->checkPoints.size() < cars[j + 1]->checkPoints.size()) {
+				std::swap(cars[j], cars[j + 1]);
+			}
+		}
 	}
 }

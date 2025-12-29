@@ -50,13 +50,22 @@ update_status ModuleRender::Update()
     EndMode2D();
 
     //NOT CAMERA, UP
-    DrawTextureEx(icons, { 1230, 0 }, 0, 3, WHITE);
-    DrawTextEx(GetFontDefault(),"1", {1205,0}, 45,0, RAYWHITE);
-    DrawTextEx(GetFontDefault(), "2", { 1200,50 }, 45, 0, RAYWHITE);
-    DrawTextEx(GetFontDefault(), "3", { 1200,100 }, 45, 0, RAYWHITE);
-    DrawTextEx(GetFontDefault(), "4", { 1200,150 }, 45, 0, RAYWHITE);
-    DrawTextEx(GetFontDefault(), "5", { 1200,200 }, 45, 0, RAYWHITE);
-    DrawTextEx(GetFontDefault(), "6", { 1200,250 }, 45, 0, RAYWHITE);
+    if (App->scene_intro->currentScreen == Screens::GAME) {
+        /*DrawTextureEx(icons, { 1230, 0 }, 0, 3, WHITE);*/
+        DrawTexturePro(icons, { 0, 0 + (float)(int)*App->scene_intro->cars[0]->character * 16, 16, 16 }, {1245, 100, 48, 48}, {(float)icons.width, (float)icons.height}, 0, WHITE);
+        DrawTexturePro(icons, { 0, 0 + (float)(int)*App->scene_intro->cars[1]->character * 16, 16, 16 }, { 1245, 148, 48, 48 }, { (float)icons.width, (float)icons.height }, 0, WHITE);
+        DrawTexturePro(icons, { 0, 0 + (float)(int)*App->scene_intro->cars[2]->character * 16, 16, 16 }, { 1245, 196, 48, 48 }, { (float)icons.width, (float)icons.height }, 0, WHITE);
+        DrawTexturePro(icons, { 0, 0 + (float)(int)*App->scene_intro->cars[3]->character * 16, 16, 16 }, { 1245, 244, 48, 48 }, { (float)icons.width, (float)icons.height }, 0, WHITE);
+        DrawTexturePro(icons, { 0, 0 + (float)(int)*App->scene_intro->cars[4]->character * 16, 16, 16 }, { 1245, 292, 48, 48 }, { (float)icons.width, (float)icons.height }, 0, WHITE);
+        DrawTexturePro(icons, { 0, 0 + (float)(int)*App->scene_intro->cars[5]->character * 16, 16, 16 }, { 1245, 340, 48, 48 }, { (float)icons.width, (float)icons.height }, 0, WHITE);
+        DrawTextEx(GetFontDefault(), "1", { 1205,0 }, 45, 0, RAYWHITE);
+        DrawTextEx(GetFontDefault(), "2", { 1200,50 }, 45, 0, RAYWHITE);
+        DrawTextEx(GetFontDefault(), "3", { 1200,100 }, 45, 0, RAYWHITE);
+        DrawTextEx(GetFontDefault(), "4", { 1200,150 }, 45, 0, RAYWHITE);
+        DrawTextEx(GetFontDefault(), "5", { 1200,200 }, 45, 0, RAYWHITE);
+        DrawTextEx(GetFontDefault(), "6", { 1200,250 }, 45, 0, RAYWHITE);
+    }
+
     DrawFPS(10, 10);
 
     //CAMERA

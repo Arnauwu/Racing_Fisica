@@ -41,7 +41,6 @@ void Enemy::TurnCar() {
 			myCar->carRotation += 2.5f;
 		}
 	}*/
-	printf("%f, %d, %d\n", myCar->carRotation, turnTargetRotation, (int)turning);
 	if (!turning) {
 		startRotation = myCar->carRotation;
 	}
@@ -61,7 +60,6 @@ void Enemy::TurnCar() {
 			turning = true;
 			turnTargetRotation = 90 * turnLeft[i]->identifier;
 			if (myCar->carRotation > turnTargetRotation) {
-				printf("TURN LEFT\n");
 				myCar->carRotation -= 2.5f;
 			}
 			else if (myCar->carRotation < turnTargetRotation) {

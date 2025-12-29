@@ -37,6 +37,8 @@ public:
 	std::vector<PhysBody*> checkPoints;
 	Rectangle guideDown = { 0,0,25,25 };
 	Vector2 rectOffset = { -12, 60 };
+
+	Timer timer;
 private:
 	Texture2D texture;
 	int textTiles;
