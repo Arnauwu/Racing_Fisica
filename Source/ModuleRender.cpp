@@ -50,7 +50,7 @@ update_status ModuleRender::Update()
     EndMode2D();
 
     //NOT CAMERA, UP
-    if (App->scene_intro->currentScreen == Screens::GAME) {
+    if (App->scene_intro->currentScreen == Screens::GAME && App->scene_intro->cars.size() != 0) {
         /*DrawTextureEx(icons, { 1230, 0 }, 0, 3, WHITE);*/
         DrawTexturePro(icons, { 0, 0 + (float)(int)*App->scene_intro->cars[0]->character * 16, 16, 16 }, {1245, 100, 48, 48}, {(float)icons.width, (float)icons.height}, 0, WHITE);
         DrawTexturePro(icons, { 0, 0 + (float)(int)*App->scene_intro->cars[1]->character * 16, 16, 16 }, { 1245, 148, 48, 48 }, { (float)icons.width, (float)icons.height }, 0, WHITE);
