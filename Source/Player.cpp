@@ -55,8 +55,9 @@ update_status ModulePlayer::Update()
 			App->scene_intro->LoadScreen();
 			DeleteMyCar();
 		}
+		physics->MouseJoint(myCar->body->body);
 	}
-	physics->MouseJoint(myCar->body->body);
+
 	return UPDATE_CONTINUE;
 }
 
