@@ -315,11 +315,11 @@ void ModuleGame::LoadMap(Maps _map) {
 			enemies[i]->turnRight[1]->identifier = 2; //AVALL
 			enemies[i]->turnRight[2]->identifier = 3; //ESQUERRA
 			enemies[i]->turnRight[3]->identifier = 2;
-			enemies[i]->turnLeft[2]->identifier = 1;
-			enemies[i]->turnLeft[3]->identifier = 2;
+			enemies[i]->turnLeft[3]->identifier = 1;
+			enemies[i]->turnLeft[4]->identifier = 2;
 			enemies[i]->turnRight[4]->identifier = 1;
-			enemies[i]->turnLeft[4]->identifier = 0;
-			enemies[i]->turnLeft[5]->identifier = 1;
+			enemies[i]->turnLeft[5]->identifier = 0;
+			enemies[i]->turnLeft[6]->identifier = 1;
 
 
 		}
