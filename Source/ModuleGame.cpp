@@ -307,6 +307,18 @@ void ModuleGame::LoadMap(Maps _map) {
 			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(855, 1000, 250, 200));
 			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(1255, 1000, 250, 200));
 
+			enemies[i]->turnLeft[0]->identifier = 1; //DRETA
+			enemies[i]->turnLeft[1]->identifier = 0; //ADALT
+			enemies[i]->turnRight[0]->identifier = 1;
+			enemies[i]->turnRight[1]->identifier = 2; //AVALL
+			enemies[i]->turnRight[2]->identifier = 3; //ESQUERRA
+			enemies[i]->turnRight[3]->identifier = 2;
+			enemies[i]->turnLeft[2]->identifier = 1;
+			enemies[i]->turnLeft[3]->identifier = 2;
+			enemies[i]->turnRight[4]->identifier = 1;
+			enemies[i]->turnLeft[4]->identifier = 0;
+			enemies[i]->turnLeft[5]->identifier = 1;
+
 
 		}
 		break;
