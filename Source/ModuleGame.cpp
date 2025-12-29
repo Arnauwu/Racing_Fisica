@@ -358,10 +358,10 @@ void ModuleGame::carSetup(Car* _car, Characters* _char) {
 void ModuleGame::LoadScreen() {
 	switch (currentScreen) {
 	case Screens::MAIN_MENU:
-		App->renderer->backgroundTexture = LoadTexture("Assets/Placeholders/Main_Menu.png");
+		App->renderer->backgroundTexture = LoadTexture("Assets/UI/Main_Menu.png");
 		break;
 	case Screens::CHAR_SELECT:
-		App->renderer->backgroundTexture = LoadTexture("Assets/Placeholders/Character_Select.png");
+		App->renderer->backgroundTexture = LoadTexture("Assets/UI/Select_Racer.png");
 		break;
 	case Screens::MAP_SELECT:
 		App->renderer->backgroundTexture = LoadTexture("Assets/Placeholders/Map_Select.png");

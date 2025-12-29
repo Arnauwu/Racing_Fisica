@@ -46,7 +46,13 @@ update_status ModuleRender::Update()
 
     //NOT CAMERA, DOWN
     BeginMode2D(camera);
-    DrawTexture(backgroundTexture, 0, 0, WHITE);
+    if (App->scene_intro->currentScreen != Screens::GAME) {
+        DrawTextureEx(backgroundTexture, Vector2{ 0,0 }, 0.0, 4.0, WHITE);
+    }
+    else {
+        DrawTexture(backgroundTexture, 0, 0, WHITE);
+    }
+    
     EndMode2D();
 
     //NOT CAMERA, UP
