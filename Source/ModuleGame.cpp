@@ -296,8 +296,9 @@ void ModuleGame::LoadMap(Maps _map) {
 
 		for (int i = 0; i < enemies.size(); i++) {
 			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(115, 1180, 250, 200));
-			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(435, 1180, 250, 200));
-			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(465, 305, 250, 220));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(465, 1180, 250, 400));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(300, 1180, 100, 400));
+			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(455, 305, 250, 220));
 			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(935, 300, 125, 300));
 			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(935, 600, 250, 200));
 			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(935, 600, 250, 200));
@@ -309,6 +310,7 @@ void ModuleGame::LoadMap(Maps _map) {
 
 			enemies[i]->turnLeft[0]->identifier = 1; //DRETA
 			enemies[i]->turnLeft[1]->identifier = 0; //ADALT
+			enemies[i]->turnLeft[2]->identifier = 1; //DRETA
 			enemies[i]->turnRight[0]->identifier = 1;
 			enemies[i]->turnRight[1]->identifier = 2; //AVALL
 			enemies[i]->turnRight[2]->identifier = 3; //ESQUERRA
