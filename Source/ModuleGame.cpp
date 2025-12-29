@@ -297,8 +297,10 @@ void ModuleGame::LoadMap(Maps _map) {
 		for (int i = 0; i < enemies.size(); i++) {
 			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(115, 1180, 290, 200));
 			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(475, 1180, 250, 400));
+
 			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(455, 305, 250, 220));
-			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(935, 300, 125, 300));
+			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(955, 300, 125, 300));
+
 			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(935, 600, 250, 200));
 			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(635, 600, 250, 200));
 			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(615, 820, 210, 130));
@@ -306,7 +308,11 @@ void ModuleGame::LoadMap(Maps _map) {
 			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(755, 1000, 250, 200));
 
 			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(1230, 1000, 250, 200));
-			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(1255, 600, 150, 100));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(1230, 90, 250, 200));
+
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(200, 60, 250, 200));
+			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(220, 240, 200, 130));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(30, 260, 150, 200));
 
 			enemies[i]->turnLeft[0]->identifier = 1; //DRETA
 			enemies[i]->turnLeft[1]->identifier = 0; //ADALT
@@ -319,7 +325,11 @@ void ModuleGame::LoadMap(Maps _map) {
 			enemies[i]->turnRight[3]->identifier = 0;
 
 			enemies[i]->turnLeft[5]->identifier = 0;
-			enemies[i]->turnLeft[6]->identifier = 3;
+			enemies[i]->turnLeft[6]->identifier =3;
+
+			enemies[i]->turnLeft[7]->identifier = 2;
+			enemies[i]->turnRight[4]->identifier = 3;
+			enemies[i]->turnLeft[8]->identifier = 2;
 		}
 		break;
 	case Maps::CRYSTAL_PEAK_2:
