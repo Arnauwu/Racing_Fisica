@@ -49,7 +49,7 @@ update_status ModulePlayer::Update()
 				App->scene_intro->playerDash = false;
 			}
 		}
-		if (myCar->laps == 1) {
+		if (myCar->laps == 3) {
 			myCar->laps = 0;
 			App->scene_intro->currentScreen = Screens::END_RANK;
 			App->scene_intro->UnloadGame();

@@ -360,6 +360,7 @@ void ModuleGame::LoadMap(Maps _map) {
 	carsRanking.clear();
 	switch (_map) {
 	case Maps::MOSS_GROTTO_1:
+		App->renderer->background = DARKGREEN;
 		currentScreen = Screens::GAME;
 		App->renderer->backgroundTexture = LoadTexture("Assets/Maps/MossGrotto.png");
 		EXTERIOR = App->physics->CreateChain(0, 0, MossGrottoEXT, 196);
@@ -419,6 +420,7 @@ void ModuleGame::LoadMap(Maps _map) {
 		break;
 
 	case Maps::MOSS_GROTTO_2:
+		App->renderer->background = DARKGREEN;
 		currentScreen = Screens::GAME;
 		App->renderer->backgroundTexture = LoadTexture("Assets/Maps/MossGrotto_2.png");
 		EXTERIOR = App->physics->CreateChain(0, 0, MossGrotto_2EXT, 134);
@@ -479,6 +481,7 @@ void ModuleGame::LoadMap(Maps _map) {
 
 
 	case Maps::CRYSTAL_PEAK_1:
+		App->renderer->background = PURPLE;
 		currentScreen = Screens::GAME;
 		App->renderer->backgroundTexture = LoadTexture("Assets/Maps/CrystalPeak.png");
 		EXTERIOR = App->physics->CreateChain(0, 0, CrystalPeakEXT, 174);
@@ -538,6 +541,7 @@ void ModuleGame::LoadMap(Maps _map) {
 		App->audio->PlayMusic("Assets/Audio/Music/crystalPeak.mp3");
 		break;
 	case Maps::CRYSTAL_PEAK_2:
+		App->renderer->background = PURPLE;
 		currentScreen = Screens::GAME;
 		App->renderer->backgroundTexture = LoadTexture("Assets/Maps/CrystalPeak_2.png");
 		EXTERIOR = App->physics->CreateChain(0, 0, CrystalPeak_2EXT, 158);
