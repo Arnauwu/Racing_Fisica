@@ -406,7 +406,9 @@ void ModuleGame::LoadMap(Maps _map) {
 			enemies[i]->turnLeft[4]->identifier = 0;
 			enemies[i]->turnLeft[5]->identifier = 3;
 			enemies[i]->turnLeft[6]->identifier = 2;
+
 			//Auxiliary
+
 			enemies[i]->turnLeft[7]->identifier = 2;
 			enemies[i]->turnLeft[8]->identifier = 1;
 			enemies[i]->turnLeft[9]->identifier = 1;
@@ -659,12 +661,12 @@ void ModuleGame::LoadScreen() {
 		App->renderer->backgroundTexture = LoadTexture("Assets/UI/Ranking_black.png");
 		App->renderer->frameRec = { 0,0,64,64 };
 		App->renderer->animTimer.Start();
-		if (cars[0] == player->myCar) {
+		/*if (cars[0] == player->myCar) {
 			App->renderer->endTxt = LoadTexture("Assets/UI/Win.png");
 		}
 		else {
 			App->renderer->endTxt = LoadTexture("Assets/UI/Lose.png");
-		}
+		}*/
 		break;
 	}
 }
