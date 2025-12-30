@@ -117,9 +117,40 @@ update_status ModuleRender::Update()
         }
         DrawTextureEx(charButton, position, 0, 4, WHITE);
       
-        Vector2 anPos = { 85,40 };
+        Vector2 anPos = { 106*4,21*4 };
+        Texture2D selText;
+        Rectangle auxRec = { 0,0,64,64 };
 
-        
+        DrawTexturePro(selKnight, auxRec, Rectangle{ (float)anPos.x, (float)anPos.y, 4 * 64, 4 * 64 }, Vector2{ 0, 0 }, 0, WHITE);
+        DrawTexturePro(selHornet, auxRec, Rectangle{ (float)anPos.x + (71 * 4), (float)anPos.y, 4 * 64, 4 * 64 }, Vector2{ 0, 0 }, 0, WHITE);
+        DrawTexturePro(selZote, auxRec, Rectangle{ (float)anPos.x + (71 * 4) * 2, (float)anPos.y, 4 * 64, 4 * 64 }, Vector2{ 0, 0 }, 0, WHITE);
+        DrawTexturePro(selSherma, auxRec, Rectangle{ (float)anPos.x, (float)anPos.y + (74 * 4), 4 * 64, 4 * 64 }, Vector2{ 0, 0 }, 0, WHITE);
+        DrawTexturePro(selPaleKing, auxRec, Rectangle{ (float)anPos.x + (71 * 4), (float)anPos.y + (74 * 4), 4 * 64, 4 * 64 }, Vector2{ 0, 0 }, 0, WHITE);
+        DrawTexturePro(selPablo, auxRec, Rectangle{ (float)anPos.x + (71 * 4) * 2, (float)anPos.y + (74 * 4), 4 * 64, 4 * 64 }, Vector2{ 0, 0 }, 0, WHITE);
+
+        switch (*option) {
+        case 1:
+            selText = selKnight;
+            break;
+        case 2:
+            selText = selHornet;
+            break;
+        case 3:
+            selText = selZote;
+            break;
+        case 4:
+            selText = selSherma;
+            break;
+        case 5:
+            selText = selPaleKing;
+            break;
+        case 6:
+            selText = selPablo;
+            break;
+        default:
+            break;
+        }
+
         if (frameRec.x > 320) {//320 és el nombre de frames. L'he comptat jo de la spritesheeet, però es podria fer com ho vaig fer al Car, que va automàtic.
             frameRec.x = 0;//Si el frame es passa del maxim de frames torna al 1r frame
         }
@@ -127,11 +158,6 @@ update_status ModuleRender::Update()
             frameRec.x += 64;
             animTimer.Start();//Reinicia el timer
         }
-        //4 ÉS LA SCALE:
-        DrawTexturePro(selKnight, frameRec, Rectangle{ (float)anPos.x, (float)anPos.y, 4 * 64, 4 * 64 }, Vector2{ 0, 0 }, 0, WHITE);
-
-
-        //edit
     }
     else if (App->scene_intro->currentScreen == Screens::MAP_SELECT) {
         int* option = &App->scene_intro->selected;
@@ -193,29 +219,40 @@ update_status ModuleRender::Update()
         LOG("\nPERSONATGE PLAYER: %d\n",(int)App->scene_intro->player->character);
 
         int currentPlayer = (int)App->scene_intro->player->character;
-        Vector2 rankpos = { 120,0 };
+        Vector2 rankPos = { 80,260 };
+        Texture2D rankTexture;
         switch (currentPlayer) {
         case 0:
-            DrawTextureEx(selKnight, rankpos, 0.0, 5, WHITE);
+            rankTexture = selKnight;
             break;
         case 1:    
-            DrawTextureEx(selHornet, rankpos, 0.0, 4.5, WHITE);
+            rankTexture = selHornet;
             break;
         case 2:
-            DrawTextureEx(selZote, rankpos, 0.0, 4.5, WHITE);
+            rankTexture = selZote;
             break;
         case 3:
-            DrawTextureEx(selSherma, rankpos, 0.0, 4.5, WHITE);
+            rankTexture = selSherma;
             break;
         case 4:
-            DrawTextureEx(selPaleKing, rankpos, 0.0, 4.5, WHITE);
+            rankTexture = selPaleKing;
             break;
         case 5:
-            DrawTextureEx(selPablo, rankpos, 0.0, 4.5, WHITE);
+            rankTexture = selPablo;
             break;
         default:
             break;
         }
+
+        if (frameRec.x > 320) {//320 és el nombre de frames. L'he comptat jo de la spritesheeet, però es podria fer com ho vaig fer al Car, que va automàtic.
+            frameRec.x = 0;//Si el frame es passa del maxim de frames torna al 1r frame
+        }
+        if (animTimer.ReadSec() > 0.1f) {//Actualitza el frame quan ha passat el temps (en segons)
+            frameRec.x += 64;
+            animTimer.Start();//Reinicia el timer
+        }
+        //4 ÉS LA SCALE:
+        DrawTexturePro(rankTexture, frameRec, Rectangle{ (float)rankPos.x, (float)rankPos.y, 6.5 * 64, 6.5 * 64 }, Vector2{ 0, 0 }, 0, WHITE);
     }
 
     DrawFPS(10, 10);

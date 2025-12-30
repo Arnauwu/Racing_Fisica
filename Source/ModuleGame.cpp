@@ -632,8 +632,8 @@ void ModuleGame::LoadScreen() {
 	case Screens::CHAR_SELECT:
 		selected = 1;
 		App->audio->PlayMusic("Assets/Audio/Music/SelectScreen.mp3");
-		App->renderer->backgroundTexture = LoadTexture("Assets/UI/Select_Racer.png");
-		App->renderer->Animate(App->renderer->selKnight, Vector2{ 106,22 }, 6, 4);
+		App->renderer->backgroundTexture = LoadTexture("Assets/UI/Select_Racer_Empty.png");
+		//App->renderer->Animate(App->renderer->selKnight, Vector2{ 106,22 }, 6, 4);
 		App->renderer->frameRec = { 0,0,64,64 };
 		App->renderer->animTimer.Start();
 		//edit
@@ -648,6 +648,8 @@ void ModuleGame::LoadScreen() {
 	case Screens::END_RANK:
 		App->audio->PlayMusic("Assets/Audio/Music/SelectScreen.mp3");
 		App->renderer->backgroundTexture = LoadTexture("Assets/UI/Ranking_black.png");
+		App->renderer->frameRec = { 0,0,64,64 };
+		App->renderer->animTimer.Start();
 		break;
 	}
 }
