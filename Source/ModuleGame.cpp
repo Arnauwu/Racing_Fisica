@@ -638,7 +638,7 @@ void ModuleGame::LoadScreen() {
 		break;
 	case Screens::MAP_SELECT:
 		selected = 1;
-		App->renderer->backgroundTexture = LoadTexture("Assets/UI/Map_Select.png");
+		App->renderer->backgroundTexture = LoadTexture("Assets/UI/MapSelect.png");
 		break;
 	case Screens::GAME:
 		LoadMap(map); 
