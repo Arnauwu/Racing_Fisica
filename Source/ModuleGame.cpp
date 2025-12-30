@@ -392,6 +392,8 @@ void ModuleGame::LoadMap(Maps _map) {
 		}
 
 		worms.push_back(App->physics->CreateRectangle(500, 1100, 32, 32));
+		worms.push_back(App->physics->CreateRectangle(680, 302, 32, 32));
+		worms.push_back(App->physics->CreateRectangle(470, 394, 32, 32));
 		App->audio->PlayMusic("Assets/Audio/Music/GrassMap.mp3");
 		break;
 
@@ -447,7 +449,10 @@ void ModuleGame::LoadMap(Maps _map) {
 			enemies[i]->turnLeft[8]->identifier = 3;
 			enemies[i]->turnLeft[9]->identifier = 2;
 		}
-
+		worms.push_back(App->physics->CreateRectangle(280, 1236, 32, 32));
+		worms.push_back(App->physics->CreateRectangle(420, 822, 32, 32));
+		worms.push_back(App->physics->CreateRectangle(970, 478, 32, 32));
+		worms.push_back(App->physics->CreateRectangle(742, 114, 32, 32));
 		App->audio->PlayMusic("Assets/Audio/Music/bellhart.mp3");
 		break;
 
@@ -506,6 +511,9 @@ void ModuleGame::LoadMap(Maps _map) {
 			enemies[i]->turnRight[4]->identifier = 3;
 			enemies[i]->turnLeft[8]->identifier = 2;
 		}
+		worms.push_back(App->physics->CreateRectangle(360, 1014, 32, 32));
+		worms.push_back(App->physics->CreateRectangle(1194, 1126, 32, 32));
+		worms.push_back(App->physics->CreateRectangle(714, 52, 32, 32));
 		App->audio->PlayMusic("Assets/Audio/Music/crystalPeak.mp3");
 		break;
 	case Maps::CRYSTAL_PEAK_2:
@@ -568,6 +576,10 @@ void ModuleGame::LoadMap(Maps _map) {
 
 			enemies[i]->turnLeft[9]->identifier = 2;
 		}
+
+		worms.push_back(App->physics->CreateRectangle(292, 958, 32, 32));
+		worms.push_back(App->physics->CreateRectangle(958, 888, 32, 32));
+		worms.push_back(App->physics->CreateRectangle(142, 206, 32, 32));
 		App->audio->PlayMusic("Assets/Audio/Music/bellhart.mp3");
 		break;
 
