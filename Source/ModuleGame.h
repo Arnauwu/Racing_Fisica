@@ -55,7 +55,10 @@ public:
 	Texture2D circle;
 	Texture2D box;
 
-	uint32 bonus_fx;
+	uint32 optSelectFx;
+	uint32 moveMenuFx;
+	uint32 winFX;
+	uint32 looseFX;
 
 	vec2<int> ray;
 	bool ray_on;
@@ -78,7 +81,7 @@ public:
 
 	int selected = 1;
 
-
+	ModuleAudio* audio;
 
 #pragma region maps
 	const int MossGrottoEXT[196] = {

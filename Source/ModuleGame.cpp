@@ -43,7 +43,12 @@ bool ModuleGame::Start()
 	App->renderer->camera.offset = { 0.0f, 0.0f };
 	App->renderer->camera.rotation = 0.0f;
 
-	bonus_fx = App->audio->LoadFx("Assets/bonus.wav");
+	audio = App->audio;
+
+	moveMenuFx = audio->LoadFx("Assets/Audio/Fx/SelectPj.wav") - 1;
+	optSelectFx = audio->LoadFx("Assets/Audio/Fx/salt.wav") - 1;
+	winFX = audio->LoadFx("Assets/Audio/Fx/win.wav") - 1;
+	looseFX = audio->LoadFx("Assets/Audio/Fx/loose.wav") - 1;
 	currentScreen = Screens::MAIN_MENU;
 	LoadScreen();
 
@@ -67,6 +72,7 @@ update_status ModuleGame::Update()
 	case Screens::MAIN_MENU:
 		if (IsKeyPressed(KEY_ENTER)) {
 			if (selected == 1) {
+				audio->PlayFx(optSelectFx);
 				currentScreen = Screens::CHAR_SELECT;
 				LoadScreen();
 			}
@@ -81,11 +87,13 @@ update_status ModuleGame::Update()
 			else {
 				selected = 1;
 			}
+			audio->PlayFx(moveMenuFx);
 		}
 		break;
 	case Screens::CHAR_SELECT:
 		if (IsKeyPressed(KEY_ENTER)) {
 			player->character = (Characters)(selected - 1);
+			audio->PlayFx(optSelectFx);
 			currentScreen = Screens::MAP_SELECT;
 			LoadScreen();
 		}
@@ -96,6 +104,7 @@ update_status ModuleGame::Update()
 			else {
 				selected--;
 			}
+			audio->PlayFx(moveMenuFx);
 		}
 		if (IsKeyPressed(KEY_RIGHT) || IsKeyPressed(KEY_D)) {
 			if (selected == 6) {
@@ -104,6 +113,7 @@ update_status ModuleGame::Update()
 			else {
 				selected++;
 			}
+			audio->PlayFx(moveMenuFx);
 		}
 		if (IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_W)) {
 			for (int i = 0; i < 3; i++) {
@@ -114,6 +124,7 @@ update_status ModuleGame::Update()
 					selected--;
 				}
 			}
+			audio->PlayFx(moveMenuFx);
 		}
 		else if (IsKeyPressed(KEY_DOWN) || IsKeyPressed(KEY_S)) {
 			for (int i = 0; i < 3; i++) {
@@ -124,13 +135,16 @@ update_status ModuleGame::Update()
 					selected++;
 				}
 			}
+			audio->PlayFx(moveMenuFx);
 		}
 		break;
 	case Screens::MAP_SELECT:
 		if (IsKeyPressed(KEY_ONE)) {
+			audio->PlayFx(optSelectFx);
 			LoadMap(Maps::MOSS_GROTTO_1);
 		}
 		if (IsKeyPressed(KEY_TWO)) {
+			audio->PlayFx(optSelectFx);
 			LoadMap(Maps::CRYSTAL_PEAK_1);
 		}
 		break;
@@ -154,6 +168,7 @@ update_status ModuleGame::Update()
 	case Screens::END_RANK:
 		SetCamera(1.0f, Vector2{0,0}, Vector2{ 0,0 });
 		if (IsKeyPressed(KEY_ENTER)) {
+			audio->PlayFx(optSelectFx);
 			currentScreen = Screens::MAIN_MENU;
 			LoadScreen();
 		}
@@ -290,17 +305,18 @@ void ModuleGame::LoadMap(Maps _map) {
 			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(1140, 100, 250, 200));
 			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(720, 200, 200, 400));
 			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(700, 800, 200, 200));
-			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(400, 800, 100, 200));
-			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(400, 550, 100, 100));
-			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(525, 500, 100, 100));
+			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(400, 800, 150, 200));
+			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(375, 600, 100, 100));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(525, 550, 100, 100));
 			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(525, 150, 200, 200));
-			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(200, 150, 200, 200));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(100, 250, 200, 400));
 
 
 			//Auxiliary
 			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(850, 920, 50, 50));
 			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(850, 1120, 200, 350));
 			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(500, 1105, 400, 250));
+			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(470, 640, 25, 25));
 
 			enemies[i]->turnLeft[0]->identifier = 1;
 			enemies[i]->turnLeft[1]->identifier = 0;
@@ -316,6 +332,7 @@ void ModuleGame::LoadMap(Maps _map) {
 			enemies[i]->turnLeft[7]->identifier = 2;
 			enemies[i]->turnLeft[8]->identifier = 1;
 			enemies[i]->turnLeft[9]->identifier = 1;
+			enemies[i]->turnRight[3]->identifier = 0;
 		}
 		App->audio->PlayMusic("Assets/Audio/Music/GrassMap.mp3");
 		break;
@@ -422,12 +439,19 @@ void ModuleGame::LoadScreen() {
 		LoadMap(map); // !!!!!!!!!!!!!!
 		break;
 	case Screens::END_RANK:
+		App->audio->PlayMusic("Assets/Audio/Music/SelectScreen.mp3");
 		App->renderer->backgroundTexture = LoadTexture("Assets/Placeholders/End_Ranking.png");
 		break;
 	}
 }
 
 void ModuleGame::UnloadGame() {
+	if (cars[0] == player->myCar) {
+		audio->PlayFx(winFX);
+	}
+	else {
+		audio->PlayFx(looseFX);
+	}
 	App->physics->DeleteBody(EXTERIOR);
 	App->physics->DeleteBody(INTERIOR);
 	App->physics->DeleteBody(CheckPoint1);

@@ -17,12 +17,6 @@ ModuleAudio::ModuleAudio(Application* app, bool start_enabled) : Module(app, sta
 ModuleAudio::~ModuleAudio()
 {}
 
-update_status ModuleAudio::Update() {
-	UpdateMusicStream(music);
-	SetMasterVolume(0.25f);
-	return UPDATE_CONTINUE;
-}
-
 // Called before render is available
 bool ModuleAudio::Init()
 {
@@ -34,6 +28,13 @@ bool ModuleAudio::Init()
     InitAudioDevice();
 
 	return ret;
+}
+
+
+update_status ModuleAudio::Update() {
+	UpdateMusicStream(music);
+	SetMasterVolume(0.25f);
+	return UPDATE_CONTINUE;
 }
 
 // Called before quitting
