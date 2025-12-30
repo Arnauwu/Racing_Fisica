@@ -3,6 +3,7 @@
 #include "Globals.h"
 #include <vector>
 #include <limits.h>
+#include "Timer.h"
 
 class ModuleRender : public Module
 {
@@ -43,4 +44,6 @@ public:
 	Texture2D selPablo;
 
 	Rectangle frameRec;
+
+	Timer animTimer;
 };

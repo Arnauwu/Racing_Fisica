@@ -634,6 +634,8 @@ void ModuleGame::LoadScreen() {
 		App->audio->PlayMusic("Assets/Audio/Music/SelectScreen.mp3");
 		App->renderer->backgroundTexture = LoadTexture("Assets/UI/Select_Racer.png");
 		App->renderer->Animate(App->renderer->selKnight, Vector2{ 106,22 }, 6, 4);
+		App->renderer->frameRec = { 0,0,64,64 };
+		App->renderer->animTimer.Start();
 		//edit
 		break;
 	case Screens::MAP_SELECT:

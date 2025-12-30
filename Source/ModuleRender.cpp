@@ -116,11 +116,19 @@ update_status ModuleRender::Update()
             position.y = 22 * 4 - 10 * 2;
         }
         DrawTextureEx(charButton, position, 0, 4, WHITE);
-
-        frameRec = { 0,0,64,64 };        
+      
         Vector2 anPos = { 85,40 };
-        //DrawTextureEx(selKnight, anPos, 0, 4, WHITE);
-        DrawTextureRec(selKnight, frameRec, anPos, WHITE);
+
+        
+        if (frameRec.x > 320) {//320 és el nombre de frames. L'he comptat jo de la spritesheeet, però es podria fer com ho vaig fer al Car, que va automàtic.
+            frameRec.x = 0;//Si el frame es passa del maxim de frames torna al 1r frame
+        }
+        if (animTimer.ReadSec() > 0.1f) {//Actualitza el frame quan ha passat el temps (en segons)
+            frameRec.x += 64;
+            animTimer.Start();//Reinicia el timer
+        }
+        //4 ÉS LA SCALE:
+        DrawTexturePro(selKnight, frameRec, Rectangle{ (float)anPos.x, (float)anPos.y, 4 * 64, 4 * 64 }, Vector2{ 0, 0 }, 0, WHITE);
 
 
         //edit
