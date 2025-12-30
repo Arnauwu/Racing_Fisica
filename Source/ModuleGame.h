@@ -80,6 +80,8 @@ public:
 	PhysBody* CheckPoint4;
 
 	int selected = 1;
+	double playerTime;
+	double bestTime;
 
 	ModuleAudio* audio;
 

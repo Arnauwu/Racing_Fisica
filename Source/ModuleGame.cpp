@@ -148,6 +148,7 @@ update_status ModuleGame::Update()
 			LoadMap(Maps::CRYSTAL_PEAK_1);
 		}
 		if (IsKeyPressed(KEY_ENTER)) {
+			audio->PlayFx(optSelectFx);
 			switch (selected) {
 			case 1:
 				LoadMap(Maps::MOSS_GROTTO_1);
@@ -162,7 +163,6 @@ update_status ModuleGame::Update()
 				LoadMap(Maps::CRYSTAL_PEAK_1);
 				break;
 			}
-
 		}
 
 		if(IsKeyPressed(KEY_LEFT) || IsKeyPressed(KEY_A)) {
@@ -172,6 +172,7 @@ update_status ModuleGame::Update()
 			else {
 				selected--;
 			}
+			audio->PlayFx(moveMenuFx);
 		}
 		if (IsKeyPressed(KEY_RIGHT) || IsKeyPressed(KEY_D)) {
 			if (selected == 4) {
@@ -180,6 +181,7 @@ update_status ModuleGame::Update()
 			else {
 				selected++;
 			}
+			audio->PlayFx(moveMenuFx);
 		}
 		if (IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_W)) {
 			for (int i = 0; i < 2; i++) {
@@ -190,6 +192,7 @@ update_status ModuleGame::Update()
 					selected--;
 				}
 			}
+			audio->PlayFx(moveMenuFx);
 		}
 		else if (IsKeyPressed(KEY_DOWN) || IsKeyPressed(KEY_S)) {
 			for (int i = 0; i < 2; i++) {
@@ -200,6 +203,7 @@ update_status ModuleGame::Update()
 					selected++;
 				}
 			}
+			audio->PlayFx(moveMenuFx);
 		}
 		break;
 	case Screens::GAME:
@@ -218,6 +222,7 @@ update_status ModuleGame::Update()
 		targetY = (float)playerY;
 
 		SetCamera(currentZoom, Vector2{ halfScreenWidth, halfScreenHeight }, Vector2{ targetX, targetY });
+		playerTime = player->myCar->timer.ReadSec();
 		break;
 	case Screens::END_RANK:
 		SetCamera(1.0f, Vector2{0,0}, Vector2{ 0,0 });
@@ -500,6 +505,7 @@ void ModuleGame::LoadScreen() {
 }
 
 void ModuleGame::UnloadGame() {
+	if (playerTime < bestTime || bestTime == 0) bestTime = playerTime;
 	if (cars[0] == player->myCar) {
 		audio->PlayFx(winFX);
 	}

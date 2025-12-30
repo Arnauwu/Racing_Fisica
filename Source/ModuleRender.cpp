@@ -73,6 +73,7 @@ update_status ModuleRender::Update()
         DrawTextEx(GetFontDefault(), "4", { 1200,150 }, 45, 0, RAYWHITE);
         DrawTextEx(GetFontDefault(), "5", { 1200,200 }, 45, 0, RAYWHITE);
         DrawTextEx(GetFontDefault(), "6", { 1200,250 }, 45, 0, RAYWHITE);
+        DrawTextPro(GetFontDefault(), TextFormat("Time: %.3f", App->scene_intro->playerTime), { 1130, 300 }, { 0,0 }, 0, 30, 1, WHITE);
     }
     else if (App->scene_intro->currentScreen == Screens::MAIN_MENU) {
         int* option = &App->scene_intro->selected;
