@@ -419,11 +419,11 @@ void ModuleGame::LoadMap(Maps _map) {
 		INTERIOR->body->SetType(b2BodyType::b2_staticBody);
 		EXTRAS = App->physics->CreateChain(0, 0, MossGrotto_2EXTRAS, 38);
 		EXTRAS->body->SetType(b2BodyType::b2_staticBody);
-		CheckPoint1 = App->physics->CreateRectangleSensor(155, 620, 210, 30);
+		CheckPoint1 = App->physics->CreateRectangleSensor(125, 783, 230, 30);
 		CheckPoint1->identifier = 1;
-		CheckPoint2 = App->physics->CreateRectangleSensor(1140, 850, 300, 30);
-		CheckPoint3 = App->physics->CreateRectangleSensor(725, 360, 150, 30);
-		CheckPoint4 = App->physics->CreateRectangleSensor(525, 350, 210, 30);
+		CheckPoint2 = App->physics->CreateRectangleSensor(1380, 1092, 300, 30);
+		CheckPoint3 = App->physics->CreateRectangleSensor(981, 700, 30, 240);
+		CheckPoint4 = App->physics->CreateRectangleSensor(254, 135, 30, 240);
 		CheckPoint1->ctype = ColliderType::CHECKPOINT;
 		CheckPoint2->ctype = ColliderType::CHECKPOINT;
 		CheckPoint3->ctype = ColliderType::CHECKPOINT;
@@ -442,7 +442,7 @@ void ModuleGame::LoadMap(Maps _map) {
 			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(1330, 490, 260, 200));
 			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(680, 470, 260, 200));
 			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(400, 480, 170, 200));
-			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(385, 230, 220, 200));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(385, 200, 220, 200));
 			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(125, 250, 220, 200));
 
 			enemies[i]->turnLeft[0]->identifier = 1; 
@@ -530,11 +530,11 @@ void ModuleGame::LoadMap(Maps _map) {
 		EXTERIOR->body->SetType(b2BodyType::b2_staticBody);
 		INTERIOR = App->physics->CreateChain(0, 0, CrystalPeak_2INT, 134);
 		INTERIOR->body->SetType(b2BodyType::b2_staticBody);
-		CheckPoint1 = App->physics->CreateRectangleSensor(100, 720, 210, 30);
+		CheckPoint1 = App->physics->CreateRectangleSensor(124, 845, 225, 30);
 		CheckPoint1->identifier = 1;
-		CheckPoint2 = App->physics->CreateRectangleSensor(425, 500, 210, 30);
-		CheckPoint3 = App->physics->CreateRectangleSensor(500, 75, 30, 150);
-		CheckPoint4 = App->physics->CreateRectangleSensor(1175, 700, 250, 30);
+		CheckPoint2 = App->physics->CreateRectangleSensor(650, 910, 210, 30);
+		CheckPoint3 = App->physics->CreateRectangleSensor(1150, 640, 230, 30);
+		CheckPoint4 = App->physics->CreateRectangleSensor(306, 105, 30, 195);
 		CheckPoint1->ctype = ColliderType::CHECKPOINT;
 		CheckPoint2->ctype = ColliderType::CHECKPOINT;
 		CheckPoint3->ctype = ColliderType::CHECKPOINT;
@@ -552,6 +552,11 @@ void ModuleGame::LoadMap(Maps _map) {
 			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(1100, 470, 200, 180));
 			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(820, 400, 180, 180));
 			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(810, 110, 250, 180));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(170, 110, 230, 180));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(170, 300, 230, 180));
+			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(575, 300, 200, 180));
+			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(575, 500, 200, 180));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(175, 505, 200, 180));
 
 			enemies[i]->turnLeft[0]->identifier = 1;
 			enemies[i]->turnLeft[1]->identifier = 0;
@@ -568,7 +573,15 @@ void ModuleGame::LoadMap(Maps _map) {
 			enemies[i]->turnLeft[5]->identifier = 3;
 
 			enemies[i]->turnRight[3]->identifier = 0;
+
 			enemies[i]->turnLeft[6]->identifier = 3;
+			enemies[i]->turnLeft[7]->identifier = 2;
+			enemies[i]->turnLeft[8]->identifier = 1;
+
+			enemies[i]->turnRight[4]->identifier = 2;
+			enemies[i]->turnRight[5]->identifier = 3;
+
+			enemies[i]->turnLeft[9]->identifier = 2;
 		}
 		App->audio->PlayMusic("Assets/Audio/Music/bellhart.mp3");
 		break;
@@ -644,7 +657,7 @@ void ModuleGame::UnloadGame() {
 	}
 	App->physics->DeleteBody(EXTERIOR);
 	App->physics->DeleteBody(INTERIOR);
-	if(map == Maps::MOSS_GROTTO_2) App->physics->DeleteBody(EXTRAS);
+	if (EXTRAS != nullptr) { App->physics->DeleteBody(EXTRAS); }
 	App->physics->DeleteBody(CheckPoint1);
 	App->physics->DeleteBody(CheckPoint2);
 	App->physics->DeleteBody(CheckPoint3);
