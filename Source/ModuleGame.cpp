@@ -29,6 +29,7 @@ bool ModuleGame::Start()
 {
 	LOG("Loading Intro assets");
 	bool ret = true;
+	wormTEXT = LoadTexture("Assets/Characters/Worm.png");
 	enemies.push_back(enemy1);
 	enemies.push_back(enemy2);
 	enemies.push_back(enemy3);
@@ -49,6 +50,7 @@ bool ModuleGame::Start()
 	optSelectFx = audio->LoadFx("Assets/Audio/Fx/salt.wav") - 1;
 	winFX = audio->LoadFx("Assets/Audio/Fx/win.wav") - 1;
 	looseFX = audio->LoadFx("Assets/Audio/Fx/loose.wav") - 1;
+	turboFx = audio->LoadFx("Assets/Audio/Fx/turbo.wav") - 1;
 	currentScreen = Screens::MAIN_MENU;
 	LoadScreen();
 
@@ -160,15 +162,19 @@ update_status ModuleGame::Update()
 			switch (selected) {
 			case 1:
 				LoadMap(Maps::MOSS_GROTTO_1);
+				map = Maps::MOSS_GROTTO_1;
 				break;
 			case 2:
 				LoadMap(Maps::CRYSTAL_PEAK_1);
+				map = Maps::CRYSTAL_PEAK_1;
 				break;
 			case 3:
 				LoadMap(Maps::MOSS_GROTTO_2);
+				map = Maps::MOSS_GROTTO_2;
 				break;
 			case 4:
 				LoadMap(Maps::CRYSTAL_PEAK_2);
+				map = Maps::CRYSTAL_PEAK_2;
 				break;
 			}
 		}
@@ -215,6 +221,16 @@ update_status ModuleGame::Update()
 		}
 		break;
 	case Screens::GAME:
+		if (playerLaps != player->myCar->laps) 
+		{
+			for (int i = 0; i < wormsPos.size(); i++) {
+				worms.push_back(App->physics->CreateRectangle(wormsPos[i].x, wormsPos[i].y, 32, 32));
+				worms[wormsPos.size() - 1]->ctype = ColliderType::WORM;
+			}
+			wormsPos.clear();
+			playerLaps = player->myCar->laps;
+		}
+
 		int playerX, playerY;
 		player->myCar->body->GetPhysicPosition(playerX, playerY);
 
@@ -231,6 +247,7 @@ update_status ModuleGame::Update()
 
 		SetCamera(currentZoom, Vector2{ halfScreenWidth, halfScreenHeight }, Vector2{ targetX, targetY });
 		playerTime = player->myCar->timer.ReadSec();
+		DrawWorms();
 		break;
 	case Screens::END_RANK:
 		SetCamera(1.0f, Vector2{0,0}, Vector2{ 0,0 });
@@ -283,37 +300,17 @@ update_status ModuleGame::Update()
 		}
 	}
 
-	for (const auto& collision : collidingEntities)
+	for (PhysBody* body : toDelete)
 	{
-		float totalMass = 0.0f;
-		float sumRadius = 0.0f;
+		auto it = std::find(worms.begin(), worms.end(), body);
+		if (it != worms.end())
+			worms.erase(it);
 
-		b2Vec2 momentum;
-		b2Vec2 position;
-		momentum.x = 0.0f;
-		momentum.y = 0.0f;
-		for (Entity* entity : collision)
-		{
-			const b2Fixture* fixture = entity->body->body->GetFixtureList();
-			const b2CircleShape* circle = dynamic_cast<const b2CircleShape*>(fixture->GetShape());
-			sumRadius += circle->m_radius;
-			entities.erase(std::find(entities.begin(), entities.end(), entity));
-			b2Vec2 vec = entity->body->body->GetLinearVelocity();
-			momentum.x += vec.x * entity->body->body->GetMass();
-			momentum.y += vec.y * entity->body->body->GetMass();
-			totalMass += entity->body->body->GetMass();
-			float x = 0;
-			float y = 0;
-			position += entity->body->body->GetPosition();
-			App->physics->DeleteBody(entity->body);
-		}
-
-		b2Vec2 velocity;
-		velocity.x = momentum.x / totalMass;
-		velocity.y = momentum.y / totalMass;
-		position.x /= 2;
-		position.y /= 2;
+		App->physics->DeleteBody(body);
 	}
+
+	toDelete.clear();
+
 
 	collidingEntities.clear();
 	return UPDATE_CONTINUE;
@@ -322,6 +319,7 @@ update_status ModuleGame::Update()
 void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
 	Car* car = (Car*)bodyA->entity;
+	int x, y;
 	switch (bodyB->ctype)
 	{
 	case ColliderType::CHECKPOINT:
@@ -339,7 +337,13 @@ void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 			car->laps++;
 		}
 		break;
-	case ColliderType::TURBO:
+	case ColliderType::WORM:
+		car->maxVelocity = 7.2f;
+		car->turboTime.Start();
+		bodyB->GetPhysicPosition(x, y);
+		wormsPos.push_back(Vector2{ (float)x,(float)y });
+		toDelete.push_back(bodyB);
+		App->audio->PlayFx(turboFx);
 		break;
 	default:
 		break;
@@ -347,7 +351,8 @@ void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 }
 
 void ModuleGame::LoadMap(Maps _map) {
-
+	wormsPos.clear();
+	carsRanking.clear();
 	switch (_map) {
 	case Maps::MOSS_GROTTO_1:
 		currentScreen = Screens::GAME;
@@ -401,6 +406,10 @@ void ModuleGame::LoadMap(Maps _map) {
 			enemies[i]->turnLeft[9]->identifier = 1;
 			enemies[i]->turnRight[3]->identifier = 0;
 		}
+
+		worms.push_back(App->physics->CreateRectangle(500, 1100, 32, 32));
+		worms.push_back(App->physics->CreateRectangle(680, 302, 32, 32));
+		worms.push_back(App->physics->CreateRectangle(470, 394, 32, 32));
 		App->audio->PlayMusic("Assets/Audio/Music/GrassMap.mp3");
 		break;
 
@@ -413,11 +422,11 @@ void ModuleGame::LoadMap(Maps _map) {
 		INTERIOR->body->SetType(b2BodyType::b2_staticBody);
 		EXTRAS = App->physics->CreateChain(0, 0, MossGrotto_2EXTRAS, 38);
 		EXTRAS->body->SetType(b2BodyType::b2_staticBody);
-		CheckPoint1 = App->physics->CreateRectangleSensor(155, 620, 210, 30);
+		CheckPoint1 = App->physics->CreateRectangleSensor(125, 783, 230, 30);
 		CheckPoint1->identifier = 1;
-		CheckPoint2 = App->physics->CreateRectangleSensor(1140, 850, 300, 30);
-		CheckPoint3 = App->physics->CreateRectangleSensor(725, 360, 150, 30);
-		CheckPoint4 = App->physics->CreateRectangleSensor(525, 350, 210, 30);
+		CheckPoint2 = App->physics->CreateRectangleSensor(1380, 1092, 300, 30);
+		CheckPoint3 = App->physics->CreateRectangleSensor(981, 700, 30, 240);
+		CheckPoint4 = App->physics->CreateRectangleSensor(254, 135, 30, 240);
 		CheckPoint1->ctype = ColliderType::CHECKPOINT;
 		CheckPoint2->ctype = ColliderType::CHECKPOINT;
 		CheckPoint3->ctype = ColliderType::CHECKPOINT;
@@ -436,12 +445,12 @@ void ModuleGame::LoadMap(Maps _map) {
 			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(1330, 490, 260, 200));
 			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(680, 470, 260, 200));
 			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(400, 480, 170, 200));
-			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(385, 230, 220, 200));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(385, 200, 220, 200));
 			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(125, 250, 220, 200));
 
-			enemies[i]->turnLeft[0]->identifier = 1; //DRETA
-			enemies[i]->turnLeft[1]->identifier = 1; //DRETA
-			enemies[i]->turnLeft[2]->identifier = 0; //ADALT
+			enemies[i]->turnLeft[0]->identifier = 1; 
+			enemies[i]->turnLeft[1]->identifier = 1; 
+			enemies[i]->turnLeft[2]->identifier = 0; 
 			enemies[i]->turnLeft[3]->identifier = 3;
 			enemies[i]->turnLeft[4]->identifier = 3;
 
@@ -456,8 +465,11 @@ void ModuleGame::LoadMap(Maps _map) {
 			enemies[i]->turnLeft[8]->identifier = 3;
 			enemies[i]->turnLeft[9]->identifier = 2;
 		}
-
-		App->audio->PlayMusic("Assets/Audio/Music/GrassMap.mp3");
+		worms.push_back(App->physics->CreateRectangle(280, 1236, 32, 32));
+		worms.push_back(App->physics->CreateRectangle(420, 822, 32, 32));
+		worms.push_back(App->physics->CreateRectangle(970, 478, 32, 32));
+		worms.push_back(App->physics->CreateRectangle(742, 114, 32, 32));
+		App->audio->PlayMusic("Assets/Audio/Music/bellhart.mp3");
 		break;
 
 
@@ -515,6 +527,9 @@ void ModuleGame::LoadMap(Maps _map) {
 			enemies[i]->turnRight[4]->identifier = 3;
 			enemies[i]->turnLeft[8]->identifier = 2;
 		}
+		worms.push_back(App->physics->CreateRectangle(360, 1014, 32, 32));
+		worms.push_back(App->physics->CreateRectangle(1194, 1126, 32, 32));
+		worms.push_back(App->physics->CreateRectangle(714, 52, 32, 32));
 		App->audio->PlayMusic("Assets/Audio/Music/crystalPeak.mp3");
 		break;
 	case Maps::CRYSTAL_PEAK_2:
@@ -524,16 +539,66 @@ void ModuleGame::LoadMap(Maps _map) {
 		EXTERIOR->body->SetType(b2BodyType::b2_staticBody);
 		INTERIOR = App->physics->CreateChain(0, 0, CrystalPeak_2INT, 134);
 		INTERIOR->body->SetType(b2BodyType::b2_staticBody);
-		CheckPoint1 = App->physics->CreateRectangleSensor(100, 720, 210, 30);
+		CheckPoint1 = App->physics->CreateRectangleSensor(124, 845, 225, 30);
 		CheckPoint1->identifier = 1;
-		CheckPoint2 = App->physics->CreateRectangleSensor(425, 500, 210, 30);
-		CheckPoint3 = App->physics->CreateRectangleSensor(500, 75, 30, 150);
-		CheckPoint4 = App->physics->CreateRectangleSensor(1175, 700, 250, 30);
+		CheckPoint2 = App->physics->CreateRectangleSensor(650, 910, 210, 30);
+		CheckPoint3 = App->physics->CreateRectangleSensor(1150, 640, 230, 30);
+		CheckPoint4 = App->physics->CreateRectangleSensor(306, 105, 30, 195);
 		CheckPoint1->ctype = ColliderType::CHECKPOINT;
 		CheckPoint2->ctype = ColliderType::CHECKPOINT;
 		CheckPoint3->ctype = ColliderType::CHECKPOINT;
 		CheckPoint4->ctype = ColliderType::CHECKPOINT;
+
+		for (int i = 0; i < enemies.size(); i++) {
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(115, 1180, 290, 200));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(465, 1180, 200, 400));
+			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(380, 740, 220, 180));
+			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(650, 740, 200, 180));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(660, 1180, 200, 180));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(900, 1180, 200, 180));
+			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(900, 760, 200, 180));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(1150, 760, 200, 180));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(1120, 470, 200, 180));
+			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(850, 420, 240, 180));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(810, 100, 300, 180));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(170, 110, 230, 180));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(170, 300, 230, 180));
+			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(575, 300, 200, 180));
+			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(575, 500, 200, 180));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(175, 505, 200, 180));
+
+			enemies[i]->turnLeft[0]->identifier = 1;
+			enemies[i]->turnLeft[1]->identifier = 0;
+
+			enemies[i]->turnRight[0]->identifier = 1;
+			enemies[i]->turnRight[1]->identifier = 2;
+
+			enemies[i]->turnLeft[2]->identifier = 1;
+			enemies[i]->turnLeft[3]->identifier = 0;
+
+			enemies[i]->turnRight[2]->identifier = 1;
+
+			enemies[i]->turnLeft[4]->identifier = 0;
+			enemies[i]->turnLeft[5]->identifier = 3;
+
+			enemies[i]->turnRight[3]->identifier = 0;
+
+			enemies[i]->turnLeft[6]->identifier = 3;
+			enemies[i]->turnLeft[7]->identifier = 2;
+			enemies[i]->turnLeft[8]->identifier = 1;
+
+			enemies[i]->turnRight[4]->identifier = 2;
+			enemies[i]->turnRight[5]->identifier = 3;
+
+			enemies[i]->turnLeft[9]->identifier = 2;
+		}
+
+		worms.push_back(App->physics->CreateRectangle(292, 958, 32, 32));
+		worms.push_back(App->physics->CreateRectangle(958, 888, 32, 32));
+		worms.push_back(App->physics->CreateRectangle(142, 206, 32, 32));
+		App->audio->PlayMusic("Assets/Audio/Music/bellhart.mp3");
 		break;
+
 	case Maps::BELLHART_1:
 		currentScreen = Screens::GAME;
 		break;
@@ -542,6 +607,9 @@ void ModuleGame::LoadMap(Maps _map) {
 		break;
 	}
 	SetUpCars();
+	for (int i = 0; i < worms.size(); i++) {
+		worms[i]->ctype = ColliderType::WORM;
+	}
 }
 
 void ModuleGame::carSetup(Car* _car, Characters* _char) {
@@ -573,17 +641,29 @@ void ModuleGame::LoadScreen() {
 		App->renderer->backgroundTexture = LoadTexture("Assets/UI/Map_Select.png");
 		break;
 	case Screens::GAME:
-		LoadMap(map); // !!!!!!!!!!!!!!
+		LoadMap(map); 
 		break;
 	case Screens::END_RANK:
 		App->audio->PlayMusic("Assets/Audio/Music/SelectScreen.mp3");
-		App->renderer->backgroundTexture = LoadTexture("Assets/Placeholders/End_Ranking.png");
+		App->renderer->backgroundTexture = LoadTexture("Assets/UI/Ranking_black.png");
 		break;
 	}
 }
 
 void ModuleGame::UnloadGame() {
-	if (playerTime < bestTime || bestTime == 0) bestTime = playerTime;
+	if (map == Maps::MOSS_GROTTO_1) {
+		bestTime = &bestTimeM1;
+	}
+	else if (map == Maps::MOSS_GROTTO_2) {
+		bestTime = &bestTimeM2;
+	}
+	else if (map == Maps::CRYSTAL_PEAK_1) {
+		bestTime = &bestTimeC1;
+	}
+	else {
+		bestTime = &bestTimeC2;
+	}
+	if (playerTime < *bestTime || *bestTime == 0) *bestTime = playerTime;
 	if (cars[0] == player->myCar) {
 		audio->PlayFx(winFX);
 	}
@@ -592,10 +672,14 @@ void ModuleGame::UnloadGame() {
 	}
 	App->physics->DeleteBody(EXTERIOR);
 	App->physics->DeleteBody(INTERIOR);
+	if (EXTRAS != nullptr) { App->physics->DeleteBody(EXTRAS); }
 	App->physics->DeleteBody(CheckPoint1);
 	App->physics->DeleteBody(CheckPoint2);
 	App->physics->DeleteBody(CheckPoint3);
 	App->physics->DeleteBody(CheckPoint4);
+	for (Car* car : cars) {
+		carsRanking.push_back(*car); // còpia independent
+	}
 	for (int i = 0; i < enemies.size(); i++) {
 		enemies[i]->DeleteMyCar();
 		for (int j = 0; j < enemies[i]->turnRight.size(); j++) {
@@ -607,6 +691,12 @@ void ModuleGame::UnloadGame() {
 		enemies[i]->turnLeft.clear();
 		enemies[i]->turnRight.clear();
 	}
+	for (int i = 0; i < worms.size(); i++) {
+		toDelete.push_back(worms[i]);
+	}
+
+	cars.clear();
+
 }
 
 void ModuleGame::SetCamera(float zoom, Vector2 offset, Vector2 target) {
@@ -614,7 +704,8 @@ void ModuleGame::SetCamera(float zoom, Vector2 offset, Vector2 target) {
 	App->renderer->camera.offset = offset;
 	App->renderer->camera.target = target;
 }
-
+//printf("\n%d, ", (int)cars[i]->character);
+//printf("%d\n ", (int)carsRanking[0].character);
 void ModuleGame::SetUpCars() {
 	cars.clear();
 	player->myCar = new Car(App->physics, 100, 600, App->scene_intro, player->carText);
@@ -653,5 +744,13 @@ void ModuleGame::CalculatePositions() {
 				std::swap(cars[j], cars[j + 1]);
 			}
 		}
+	}
+}
+
+void ModuleGame::DrawWorms() {
+	for (int i = 0; i < worms.size(); i++) {
+		int x, y;
+		worms[i]->GetPhysicPosition(x, y);
+		DrawTextureEx(wormTEXT, { (float)x, (float)y }, 0, 1, WHITE);
 	}
 }

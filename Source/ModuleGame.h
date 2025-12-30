@@ -42,12 +42,14 @@ public:
 	void SetCamera(float zoom, Vector2 offset, Vector2 target);
 	void SetUpCars();
 	void CalculatePositions();
+	void DrawWorms();
 
 public:
 
 	std::vector<Entity*> entities;
 	std::vector<Enemy*> enemies;
 	std::vector<Car*> cars;
+	std::vector<Car> carsRanking;
 
 	PhysBody* sensor;
 	bool sensed;
@@ -59,6 +61,7 @@ public:
 	uint32 moveMenuFx;
 	uint32 winFX;
 	uint32 looseFX;
+	uint32 turboFx;
 
 	vec2<int> ray;
 	bool ray_on;
@@ -74,7 +77,7 @@ public:
 
 	PhysBody* INTERIOR;
 	PhysBody* EXTERIOR;
-	PhysBody* EXTRAS;
+	PhysBody* EXTRAS = nullptr;
 	PhysBody* CheckPoint1;
 	PhysBody* CheckPoint2;
 	PhysBody* CheckPoint3;
@@ -82,9 +85,21 @@ public:
 
 	int selected = 1;
 	double playerTime;
-	double bestTime;
+	double* bestTime;
+	double bestTimeM1;
+	double bestTimeM2;
+	double bestTimeC1;
+	double bestTimeC2;
+
+	int playerLaps;
+	std::vector<Vector2> wormsPos;
 
 	ModuleAudio* audio;
+
+	std::vector<PhysBody*> worms;
+	std::vector<PhysBody*> toDelete;
+	Texture2D wormTEXT;
+
 
 #pragma region maps
 	const int MossGrottoEXT[196] = {

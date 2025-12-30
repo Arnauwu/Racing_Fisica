@@ -48,7 +48,7 @@ update_status ModulePlayer::Update()
 				myCar->maxVelocity = 3.6f;
 			}
 		}
-		if (myCar->laps == 3) {
+		if (myCar->laps == 1) {
 			myCar->laps = 0;
 			App->scene_intro->currentScreen = Screens::END_RANK;
 			App->scene_intro->UnloadGame();
@@ -68,24 +68,6 @@ void ModulePlayer::Input() {
 	if(IsKeyPressed(KEY_SPACE) && canAct)
 	{
 		Action();
-	}
-	if (IsKeyPressed(KEY_ONE)) {
-		character = Characters::KNIGHT;
-	}
-	if (IsKeyPressed(KEY_TWO)) {
-		character = Characters::HORNET;
-	}
-	if (IsKeyPressed(KEY_THREE)) {
-		character = Characters::ZOTE;
-	}
-	if (IsKeyPressed(KEY_FOUR)) {
-		character = Characters::SHERMA;
-	}
-	if (IsKeyPressed(KEY_FIVE)) {
-		character = Characters::P_KING;
-	}
-	if (IsKeyPressed(KEY_SIX)) {
-		character = Characters::PABLO;
 	}
 }
 

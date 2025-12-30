@@ -142,6 +142,45 @@ update_status ModuleRender::Update()
             position.y = 55 * 4;
         }
         DrawTextureEx(mapButton, position, 0, 4, WHITE);
+        DrawTextPro(GetFontDefault(), TextFormat("Best time: %.3f", App->scene_intro->bestTimeM1), { 0, (float)(55 * 4) + mapButton.height * 2 }, { 0,0 }, 0, 30, 4, WHITE);
+        DrawTextPro(GetFontDefault(), TextFormat("Best time: %.3f", App->scene_intro->bestTimeM2), {0, ((float)55 * 4 + mapButton.height * 4 + 8) + mapButton.height * 2 }, {0,0}, 0, 30, 4, WHITE);
+        DrawTextPro(GetFontDefault(), TextFormat("Best time: %.3f", App->scene_intro->bestTimeC1), { 1010, (float)(55 * 4) + mapButton.height * 2 }, { 0,0 }, 0, 30, 4, WHITE);
+        DrawTextPro(GetFontDefault(), TextFormat("Best time: %.3f", App->scene_intro->bestTimeC2), { 1010, ((float)55 * 4 + mapButton.height * 4 + 8) + mapButton.height * 2 }, { 0,0 }, 0, 30, 4, WHITE);
+    }
+    else if (App->scene_intro->currentScreen == Screens::END_RANK) {
+        DrawTextPro(GetFontDefault(), TextFormat("%.3f", App->scene_intro->playerTime), { 200, 90 }, { 0,0 }, 0, 30, 4, WHITE);
+        DrawTextPro(GetFontDefault(), TextFormat("%.3f", *App->scene_intro->bestTime), { 335, 137 }, { 0,0 }, 0, 30, 4, WHITE);
+        for (int i = 0; i < App->scene_intro->carsRanking.size(); i++) {
+           int character = (int)*App->scene_intro->carsRanking[i].character;
+            switch (character) {
+            case 0:
+                DrawTextEx(GetFontDefault(), "KNIGHT", { 800,(125 + (float)(i * 90)) }, 45, 5, WHITE);
+                break;
+            case 1:
+                DrawTextEx(GetFontDefault(), "HORNET", { 800,(125 + (float)(i * 90)) }, 45, 5, WHITE);
+                break;
+            case 2:
+                DrawTextEx(GetFontDefault(), "ZOTE", { 800,(125 + (float)(i * 90)) }, 45, 5, WHITE);
+                break;
+            case 3:
+                DrawTextEx(GetFontDefault(), "SHERMA", { 800,(125 + (float)(i * 90)) }, 45, 5, WHITE);
+                break;
+            case 4:
+                DrawTextEx(GetFontDefault(), "PALE KING", { 800,(125 + (float)(i * 90)) }, 45, 5, WHITE);
+                break;
+            case 5:
+                DrawTextEx(GetFontDefault(), "PABLO", { 800,(125 + (float)(i * 90)) }, 45, 5, WHITE);
+                break;
+            default:
+                break;
+            }
+        }
+        DrawTexturePro(icons, { 0, 0 + (float)(int)*App->scene_intro->carsRanking[0].character * 16, 16, 16 }, { 700, 210, 64, 64 }, { (float)icons.width, (float)icons.height }, 0, WHITE);
+        DrawTexturePro(icons, { 0, 0 + (float)(int)*App->scene_intro->carsRanking[1].character * 16, 16, 16 }, { 700, 210 + 90, 64, 64 }, { (float)icons.width, (float)icons.height }, 0, WHITE);
+        DrawTexturePro(icons, { 0, 0 + (float)(int)*App->scene_intro->carsRanking[2].character * 16, 16, 16 }, { 700, 210 + 90 * 2, 64, 64 }, { (float)icons.width, (float)icons.height }, 0, WHITE);
+        DrawTexturePro(icons, { 0, 0 + (float)(int)*App->scene_intro->carsRanking[3].character * 16, 16, 16 }, { 700, 210 + 90 * 3, 64, 64 }, { (float)icons.width, (float)icons.height }, 0, WHITE);
+        DrawTexturePro(icons, { 0, 0 + (float)(int)*App->scene_intro->carsRanking[4].character * 16, 16, 16 }, { 700, 210 + 90 *4, 64, 64 }, { (float)icons.width, (float)icons.height }, 0, WHITE);
+        DrawTexturePro(icons, { 0, 0 + (float)(int)*App->scene_intro->carsRanking[5].character * 16, 16, 16 }, { 700, 210 + 90 * 5, 64, 64 }, { (float)icons.width, (float)icons.height }, 0, WHITE);
     }
 
     DrawFPS(10, 10);
