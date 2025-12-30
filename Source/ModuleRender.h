@@ -52,4 +52,5 @@ public:
 	Rectangle frameRecP2 = { 0, 0, 64, 64 };;
 
 	Timer animTimer;
+	Texture2D endTxt;
 };
