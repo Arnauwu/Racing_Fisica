@@ -46,4 +46,5 @@ public:
 	Rectangle frameRec;
 
 	Timer animTimer;
+	Texture2D endTxt;
 };
