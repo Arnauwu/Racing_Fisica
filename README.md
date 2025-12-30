@@ -1,5 +1,7 @@
 # Hollow Kart
 
+The Knight, Hornet and their friends compete to win the exclusive Hallownest Cup in Hollow Kart!
+
 ## Github
 
  - https://github.com/Arnauwu/Racing_Fisica
