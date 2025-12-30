@@ -404,11 +404,11 @@ void ModuleGame::LoadMap(Maps _map) {
 		INTERIOR->body->SetType(b2BodyType::b2_staticBody);
 		EXTRAS = App->physics->CreateChain(0, 0, MossGrotto_2EXTRAS, 38);
 		EXTRAS->body->SetType(b2BodyType::b2_staticBody);
-		CheckPoint1 = App->physics->CreateRectangleSensor(155, 620, 210, 30);
+		CheckPoint1 = App->physics->CreateRectangleSensor(125, 783, 230, 30);
 		CheckPoint1->identifier = 1;
-		CheckPoint2 = App->physics->CreateRectangleSensor(1140, 850, 300, 30);
-		CheckPoint3 = App->physics->CreateRectangleSensor(725, 360, 150, 30);
-		CheckPoint4 = App->physics->CreateRectangleSensor(525, 350, 210, 30);
+		CheckPoint2 = App->physics->CreateRectangleSensor(1380, 1092, 300, 30);
+		CheckPoint3 = App->physics->CreateRectangleSensor(981, 700, 30, 240);
+		CheckPoint4 = App->physics->CreateRectangleSensor(254, 135, 30, 240);
 		CheckPoint1->ctype = ColliderType::CHECKPOINT;
 		CheckPoint2->ctype = ColliderType::CHECKPOINT;
 		CheckPoint3->ctype = ColliderType::CHECKPOINT;
