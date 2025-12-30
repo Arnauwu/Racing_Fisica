@@ -124,6 +124,14 @@ update_status ModuleRender::Update()
             position.y = 55 * 4;
         }
         DrawTextureEx(mapButton, position, 0, 4, WHITE);
+        DrawTextPro(GetFontDefault(), TextFormat("Best time: %.3f", App->scene_intro->bestTimeM1), { 0, (float)(55 * 4) + mapButton.height * 2 }, { 0,0 }, 0, 30, 4, WHITE);
+        DrawTextPro(GetFontDefault(), TextFormat("Best time: %.3f", App->scene_intro->bestTimeM2), {0, ((float)55 * 4 + mapButton.height * 4 + 8) + mapButton.height * 2 }, {0,0}, 0, 30, 4, WHITE);
+        DrawTextPro(GetFontDefault(), TextFormat("Best time: %.3f", App->scene_intro->bestTimeC1), { 1010, (float)(55 * 4) + mapButton.height * 2 }, { 0,0 }, 0, 30, 4, WHITE);
+        DrawTextPro(GetFontDefault(), TextFormat("Best time: %.3f", App->scene_intro->bestTimeC2), { 1010, ((float)55 * 4 + mapButton.height * 4 + 8) + mapButton.height * 2 }, { 0,0 }, 0, 30, 4, WHITE);
+    }
+    else if (App->scene_intro->currentScreen == Screens::END_RANK) {
+        DrawTextPro(GetFontDefault(), TextFormat("%.3f", App->scene_intro->playerTime), { 200, 90 }, { 0,0 }, 0, 30, 4, WHITE);
+        DrawTextPro(GetFontDefault(), TextFormat("%.3f", *App->scene_intro->bestTime), { 335, 137 }, { 0,0 }, 0, 30, 4, WHITE);
     }
 
     DrawFPS(10, 10);

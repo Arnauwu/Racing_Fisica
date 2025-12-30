@@ -29,6 +29,7 @@ bool ModuleGame::Start()
 {
 	LOG("Loading Intro assets");
 	bool ret = true;
+	wormTEXT = LoadTexture("Assets/Characters/Worm.png");
 	enemies.push_back(enemy1);
 	enemies.push_back(enemy2);
 	enemies.push_back(enemy3);
@@ -152,15 +153,19 @@ update_status ModuleGame::Update()
 			switch (selected) {
 			case 1:
 				LoadMap(Maps::MOSS_GROTTO_1);
+				map = Maps::MOSS_GROTTO_1;
 				break;
 			case 2:
 				LoadMap(Maps::CRYSTAL_PEAK_1);
+				map = Maps::CRYSTAL_PEAK_1;
 				break;
 			case 3:
 				LoadMap(Maps::MOSS_GROTTO_2);
+				map = Maps::MOSS_GROTTO_2;
 				break;
 			case 4:
 				LoadMap(Maps::CRYSTAL_PEAK_1);
+				map = Maps::CRYSTAL_PEAK_1;
 				break;
 			}
 		}
@@ -223,6 +228,7 @@ update_status ModuleGame::Update()
 
 		SetCamera(currentZoom, Vector2{ halfScreenWidth, halfScreenHeight }, Vector2{ targetX, targetY });
 		playerTime = player->myCar->timer.ReadSec();
+		DrawWorms();
 		break;
 	case Screens::END_RANK:
 		SetCamera(1.0f, Vector2{0,0}, Vector2{ 0,0 });
@@ -275,37 +281,17 @@ update_status ModuleGame::Update()
 		}
 	}
 
-	for (const auto& collision : collidingEntities)
+	for (PhysBody* body : toDelete)
 	{
-		float totalMass = 0.0f;
-		float sumRadius = 0.0f;
+		auto it = std::find(worms.begin(), worms.end(), body);
+		if (it != worms.end())
+			worms.erase(it);
 
-		b2Vec2 momentum;
-		b2Vec2 position;
-		momentum.x = 0.0f;
-		momentum.y = 0.0f;
-		for (Entity* entity : collision)
-		{
-			const b2Fixture* fixture = entity->body->body->GetFixtureList();
-			const b2CircleShape* circle = dynamic_cast<const b2CircleShape*>(fixture->GetShape());
-			sumRadius += circle->m_radius;
-			entities.erase(std::find(entities.begin(), entities.end(), entity));
-			b2Vec2 vec = entity->body->body->GetLinearVelocity();
-			momentum.x += vec.x * entity->body->body->GetMass();
-			momentum.y += vec.y * entity->body->body->GetMass();
-			totalMass += entity->body->body->GetMass();
-			float x = 0;
-			float y = 0;
-			position += entity->body->body->GetPosition();
-			App->physics->DeleteBody(entity->body);
-		}
-
-		b2Vec2 velocity;
-		velocity.x = momentum.x / totalMass;
-		velocity.y = momentum.y / totalMass;
-		position.x /= 2;
-		position.y /= 2;
+		App->physics->DeleteBody(body);
 	}
+
+	toDelete.clear();
+
 
 	collidingEntities.clear();
 	return UPDATE_CONTINUE;
@@ -331,7 +317,10 @@ void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 			car->laps++;
 		}
 		break;
-	case ColliderType::TURBO:
+	case ColliderType::WORM:
+		car->maxVelocity = 7.2f;
+		car->turboTime.Start();
+		toDelete.push_back(bodyB);
 		break;
 	default:
 		break;
@@ -393,6 +382,8 @@ void ModuleGame::LoadMap(Maps _map) {
 			enemies[i]->turnLeft[9]->identifier = 1;
 			enemies[i]->turnRight[3]->identifier = 0;
 		}
+
+		worms.push_back(App->physics->CreateRectangle(500, 1100, 32, 32));
 		App->audio->PlayMusic("Assets/Audio/Music/GrassMap.mp3");
 		break;
 
@@ -482,6 +473,9 @@ void ModuleGame::LoadMap(Maps _map) {
 		break;
 	}
 	SetUpCars();
+	for (int i = 0; i < worms.size(); i++) {
+		worms[i]->ctype = ColliderType::WORM;
+	}
 }
 
 void ModuleGame::carSetup(Car* _car, Characters* _char) {
@@ -515,13 +509,25 @@ void ModuleGame::LoadScreen() {
 		break;
 	case Screens::END_RANK:
 		App->audio->PlayMusic("Assets/Audio/Music/SelectScreen.mp3");
-		App->renderer->backgroundTexture = LoadTexture("Assets/Placeholders/End_Ranking.png");
+		App->renderer->backgroundTexture = LoadTexture("Assets/UI/Ranking.png");
 		break;
 	}
 }
 
 void ModuleGame::UnloadGame() {
-	if (playerTime < bestTime || bestTime == 0) bestTime = playerTime;
+	if (map == Maps::MOSS_GROTTO_1) {
+		bestTime = &bestTimeM1;
+	}
+	else if (map == Maps::MOSS_GROTTO_2) {
+		bestTime = &bestTimeM2;
+	}
+	else if (map == Maps::CRYSTAL_PEAK_1) {
+		bestTime = &bestTimeC1;
+	}
+	else {
+		bestTime = &bestTimeC2;
+	}
+	if (playerTime < *bestTime || *bestTime == 0) *bestTime = playerTime;
 	if (cars[0] == player->myCar) {
 		audio->PlayFx(winFX);
 	}
@@ -544,6 +550,9 @@ void ModuleGame::UnloadGame() {
 		}
 		enemies[i]->turnLeft.clear();
 		enemies[i]->turnRight.clear();
+	}
+	for (int i = 0; i < worms.size(); i++) {
+		toDelete.push_back(worms[i]);
 	}
 }
 
@@ -591,5 +600,13 @@ void ModuleGame::CalculatePositions() {
 				std::swap(cars[j], cars[j + 1]);
 			}
 		}
+	}
+}
+
+void ModuleGame::DrawWorms() {
+	for (int i = 0; i < worms.size(); i++) {
+		int x, y;
+		worms[i]->GetPhysicPosition(x, y);
+		DrawTextureEx(wormTEXT, { (float)x, (float)y }, 0, 1, WHITE);
 	}
 }
