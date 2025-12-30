@@ -24,7 +24,7 @@ public:
 	Texture2D carText;
 	int carX, carY;
 
-	Characters character = KNIGHT;
+	Characters character = Characters::KNIGHT;
 
 	Application* App;
 

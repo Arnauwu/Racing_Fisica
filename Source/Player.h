@@ -30,5 +30,5 @@ public:
 	int carX, carY;
 
 	ModulePhysics* physics = nullptr;
-	Characters character = HORNET;
+	Characters character = Characters::HORNET;
 };

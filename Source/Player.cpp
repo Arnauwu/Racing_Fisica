@@ -55,7 +55,9 @@ update_status ModulePlayer::Update()
 			App->scene_intro->LoadScreen();
 			DeleteMyCar();
 		}
-		physics->MouseJoint(myCar->body->body);
+		else {
+			physics->MouseJoint(myCar->body->body);
+		}
 	}
 
 	return UPDATE_CONTINUE;
@@ -68,45 +70,29 @@ void ModulePlayer::Input() {
 		Action();
 	}
 	if (IsKeyPressed(KEY_ONE)) {
-		character = KNIGHT;
+		character = Characters::KNIGHT;
 	}
 	if (IsKeyPressed(KEY_TWO)) {
-		character = HORNET;
+		character = Characters::HORNET;
 	}
 	if (IsKeyPressed(KEY_THREE)) {
-		character = ZOTE;
+		character = Characters::ZOTE;
 	}
 	if (IsKeyPressed(KEY_FOUR)) {
-		character = SHERMA;
+		character = Characters::SHERMA;
 	}
 	if (IsKeyPressed(KEY_FIVE)) {
-		character = P_KING;
+		character = Characters::P_KING;
 	}
 	if (IsKeyPressed(KEY_SIX)) {
-		character = PABLO;
+		character = Characters::PABLO;
 	}
 }
 
 void ModulePlayer::Action() 
 {
 	b2Body* carBody = myCar->body->body;
-	switch (character)
-	{
-	case KNIGHT:
-		myCar->jumping = true;
-		break;
-	case HORNET:
-		Dash();
-		break;
-	case ZOTE:
-		break;
-	case SHERMA:
-		break;
-	case P_KING:
-		break;
-	case PABLO:
-		break;
-	}
+	Dash();
 }
 
 void ModulePlayer::Dash() {

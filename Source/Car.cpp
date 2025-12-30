@@ -10,9 +10,6 @@ void Car::Update()
 	}
 	int x, y;
 	body->GetPhysicPosition(x, y);
-	guideDown.x = x + rectOffset.x;
-	guideDown.y = y + rectOffset.y;
-	DrawRectangleLinesEx(guideDown, 2, RED);
 	if (frameCount > 2) {
 		frameCount = 0;
 		drawFrame += 32;
@@ -37,29 +34,11 @@ void Car::Move() {
 	body->GetPhysicPosition(x, y);
 
 	body->body->SetLinearVelocity(impulse);
-
-	if (jumping) Jump();
 }
 
 void Car::CheckFinishLane() {
 	if (laps == 3) 
 	{
 		printf("META META META META META\n");
-	}
-}
-
-void Car::Jump() {
-	if (scale >= 3.0f) {
-		landing = true;
-	}
-	if (!landing) {
-		scale += 0.1f;
-	}
-	else if (scale > 1.0f){
-		scale -= 0.1f;
-	}
-	else {
-		jumping = false;
-		landing = false;
 	}
 }

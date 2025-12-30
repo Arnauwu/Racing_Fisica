@@ -48,7 +48,7 @@ enum class Screens {
 	END_RANK
 };
 
-enum Characters
+enum class Characters
 {
 	KNIGHT,
 	HORNET,

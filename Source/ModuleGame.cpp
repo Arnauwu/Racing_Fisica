@@ -18,15 +18,6 @@ ModuleGame::ModuleGame(Application* app, bool start_enabled) : Module(app, start
 	enemy4 = new Enemy();
 	enemy5 = new Enemy();
 	player->App = app;
-	/*player->carText = LoadTexture("Assets/Characters/karts_spritesheet.png");
-	player->myCar = new Car(App->physics, 2000, 2000, App->scene_intro, player->carText);
-	player->myCar->body->entity = player->myCar;
-	player->myCar->App = App;
-	player->myCar->body->ctype = ColliderType::CAR;
-	player->myCar->body->body->SetFixedRotation(true);
-	player->myCar->character = &player->character;
-	App->scene_intro->entities.emplace_back(player->myCar);*/
-	
 }
 
 ModuleGame::~ModuleGame()
@@ -75,14 +66,64 @@ update_status ModuleGame::Update()
 	switch (currentScreen) {
 	case Screens::MAIN_MENU:
 		if (IsKeyPressed(KEY_ENTER)) {
-			currentScreen = Screens::CHAR_SELECT;
-			LoadScreen();
+			if (selected == 1) {
+				currentScreen = Screens::CHAR_SELECT;
+				LoadScreen();
+			}
+			else {
+				exit(0);
+			}
+		}
+		if (IsKeyPressed(KEY_DOWN) || IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_S) || IsKeyPressed(KEY_W)) {
+			if (selected == 1) {
+				selected = 2;
+			}
+			else {
+				selected = 1;
+			}
 		}
 		break;
 	case Screens::CHAR_SELECT:
 		if (IsKeyPressed(KEY_ENTER)) {
+			player->character = (Characters)(selected - 1);
 			currentScreen = Screens::MAP_SELECT;
 			LoadScreen();
+		}
+		if (IsKeyPressed(KEY_LEFT) || IsKeyPressed(KEY_A)) {
+			if (selected == 1) {
+				selected = 6;
+			}
+			else {
+				selected--;
+			}
+		}
+		if (IsKeyPressed(KEY_RIGHT) || IsKeyPressed(KEY_D)) {
+			if (selected == 6) {
+				selected = 1;
+			}
+			else {
+				selected++;
+			}
+		}
+		if (IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_W)) {
+			for (int i = 0; i < 3; i++) {
+				if (selected - 1 < 1) {
+					selected = 6;
+				}
+				else {
+					selected--;
+				}
+			}
+		}
+		else if (IsKeyPressed(KEY_DOWN) || IsKeyPressed(KEY_S)) {
+			for (int i = 0; i < 3; i++) {
+				if (selected + 1 > 6) {
+					selected = 1;
+				}
+				else {
+					selected++;
+				}
+			}
 		}
 		break;
 	case Screens::MAP_SELECT:
@@ -204,10 +245,6 @@ void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	{
 	case ColliderType::CHECKPOINT:
 		CalculatePositions();
-		printf("\n\n");
-		for (int i = 0; i < cars.size(); i++) {
-			printf("%d\n", (int)*cars[i]->character);
-		}
 		if (car->checkPoints.size() < 4) {
 			bool isThere = false;
 			for (int i = 0; i < car->checkPoints.size(); i++) {
@@ -254,11 +291,17 @@ void ModuleGame::LoadMap(Maps _map) {
 			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(1140, 100, 250, 200));
 			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(720, 200, 200, 400));
 			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(700, 800, 200, 200));
-			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(390, 800, 100, 200));
+			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(400, 800, 100, 200));
 			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(400, 550, 100, 100));
 			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(525, 500, 100, 100));
 			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(525, 150, 200, 200));
 			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(200, 150, 200, 200));
+
+
+			//Auxiliary
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(850, 920, 50, 50));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(850, 1120, 200, 350));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(500, 1105, 400, 250));
 
 			enemies[i]->turnLeft[0]->identifier = 1;
 			enemies[i]->turnLeft[1]->identifier = 0;
@@ -270,8 +313,12 @@ void ModuleGame::LoadMap(Maps _map) {
 			enemies[i]->turnLeft[4]->identifier = 0;
 			enemies[i]->turnLeft[5]->identifier = 3;
 			enemies[i]->turnLeft[6]->identifier = 2;
+			//Auxiliary
+			enemies[i]->turnLeft[7]->identifier = 2;
+			enemies[i]->turnLeft[8]->identifier = 1;
+			enemies[i]->turnLeft[9]->identifier = 1;
 		}
-		
+		App->audio->PlayMusic("Assets/Audio/Music/GrassMap.mp3", 0.0f);
 		break;
 
 	case Maps::MOSS_GROTTO_2:
@@ -331,6 +378,7 @@ void ModuleGame::LoadMap(Maps _map) {
 			enemies[i]->turnRight[4]->identifier = 3;
 			enemies[i]->turnLeft[8]->identifier = 2;
 		}
+		App->audio->PlayMusic("Assets/Audio/Music/crystalPeak.mp3", 0.0f);
 		break;
 	case Maps::CRYSTAL_PEAK_2:
 		currentScreen = Screens::GAME;
@@ -358,12 +406,17 @@ void ModuleGame::carSetup(Car* _car, Characters* _char) {
 void ModuleGame::LoadScreen() {
 	switch (currentScreen) {
 	case Screens::MAIN_MENU:
+		selected = 1;
+		App->audio->PlayMusic("Assets/Audio/Music/cancoInicial.mp3", 0.0f);
 		App->renderer->backgroundTexture = LoadTexture("Assets/UI/Main_Menu.png");
 		break;
 	case Screens::CHAR_SELECT:
+		selected = 1;
+		App->audio->PlayMusic("Assets/Audio/Music/SelectScreen.mp3", 0.0f);
 		App->renderer->backgroundTexture = LoadTexture("Assets/UI/Select_Racer.png");
 		break;
 	case Screens::MAP_SELECT:
+		selected = 1;
 		App->renderer->backgroundTexture = LoadTexture("Assets/Placeholders/Map_Select.png");
 		break;
 	case Screens::GAME:
@@ -402,14 +455,15 @@ void ModuleGame::SetCamera(float zoom, Vector2 offset, Vector2 target) {
 }
 
 void ModuleGame::SetUpCars() {
+	cars.clear();
 	player->myCar = new Car(App->physics, 100, 600, App->scene_intro, player->carText);
 	carSetup(player->myCar, &player->character);
 	cars.push_back(player->myCar);
-	enemy1->character = KNIGHT;
-	enemy2->character = ZOTE;
-	enemy3->character = SHERMA;
-	enemy4->character = P_KING;
-	enemy5->character = PABLO;
+	enemy1->character = Characters::KNIGHT;
+	enemy2->character = Characters::ZOTE;
+	enemy3->character = Characters::SHERMA;
+	enemy4->character = Characters::P_KING;
+	enemy5->character = Characters::PABLO;
 	enemy1->myCar = new Car(App->physics, 140, 575, App->scene_intro, enemy1->carText);
 	enemy2->myCar = new Car(App->physics, 180, 550, App->scene_intro, enemy2->carText);
 	enemy3->myCar = new Car(App->physics, 100, 525, App->scene_intro, enemy3->carText);
@@ -418,7 +472,7 @@ void ModuleGame::SetUpCars() {
 	for (int i = 0; i < enemies.size(); i++) {
 		enemies[i]->turnTargetRotation = 180;
 		if (enemies[i]->character == player->character) {
-			enemies[i]->character = HORNET;
+			enemies[i]->character = Characters::HORNET;
 		}
 		carSetup(enemies[i]->myCar, &enemies[i]->character);
 		cars.push_back(enemies[i]->myCar);

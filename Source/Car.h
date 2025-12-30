@@ -24,9 +24,6 @@ public:
 
 	void CheckFinishLane();
 
-	void Jump();
-	bool jumping = false;
-
 	Application* App;
 	double carRotation = 180;
 	float scale = 1;
@@ -35,7 +32,6 @@ public:
 	int laps = 0;
 	Characters* character;
 	std::vector<PhysBody*> checkPoints;
-	Rectangle guideDown = { 0,0,25,25 };
 	Vector2 rectOffset = { -12, 60 };
 
 	Timer timer;

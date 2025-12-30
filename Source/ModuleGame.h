@@ -76,7 +76,7 @@ public:
 	PhysBody* CheckPoint3;
 	PhysBody* CheckPoint4;
 
-	
+	int selected = 1;
 
 
 

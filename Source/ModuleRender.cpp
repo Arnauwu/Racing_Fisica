@@ -21,6 +21,8 @@ bool ModuleRender::Init()
 	bool ret = true;
     background = GRAY;
     icons = LoadTexture("Assets/Characters/icons_vertical.png");
+    menuButton = LoadTexture("Assets/UI/MenuButton.png");
+    charButton = LoadTexture("Assets/UI/CharButton.png");
 
 	return ret;
 }
@@ -70,6 +72,38 @@ update_status ModuleRender::Update()
         DrawTextEx(GetFontDefault(), "4", { 1200,150 }, 45, 0, RAYWHITE);
         DrawTextEx(GetFontDefault(), "5", { 1200,200 }, 45, 0, RAYWHITE);
         DrawTextEx(GetFontDefault(), "6", { 1200,250 }, 45, 0, RAYWHITE);
+    }
+    else if (App->scene_intro->currentScreen == Screens::MAIN_MENU) {
+        int* option = &App->scene_intro->selected;
+        Vector2 position = { 0, 0 };
+        if (*option == 1) {
+            position = { (SCREEN_WIDTH/2) - (float)(menuButton.width * 2), (SCREEN_HEIGHT / 2) + 48 };
+        }
+        else {
+            position = { (SCREEN_WIDTH / 2) - (float)(menuButton.width * 2), (SCREEN_HEIGHT / 2) + 114};
+        }
+        DrawTextureEx(menuButton, position, 0, 4, WHITE);
+    }
+    else if (App->scene_intro->currentScreen == Screens::CHAR_SELECT) {
+        int* option = &App->scene_intro->selected;
+        Vector2 position = { 106, 22 * 4 };
+        //7-9x 10y
+        if (*option == 1 || *option == 4) {
+            position.x = 106*4 - (7 * 2);
+        } 
+        else if(*option == 2 || *option == 5) {
+            position.x = 106*4 + (7 * 2) + (64 * 4);
+        }
+        else if (*option == 3 || *option == 6) {
+            position.x = 106 * 4 + (7 * 2) * 3 + (64 * 4) * 2;
+        }
+        if (*option > 3) {
+            position.y = 22 * 4 - 10 + charButton.height * 4;
+        }
+        else {
+            position.y = 22 * 4 - 10 * 2;
+        }
+        DrawTextureEx(charButton, position, 0, 4, WHITE);
     }
 
     DrawFPS(10, 10);
