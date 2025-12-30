@@ -148,6 +148,14 @@ update_status ModuleGame::Update()
 			audio->PlayFx(optSelectFx);
 			LoadMap(Maps::CRYSTAL_PEAK_1);
 		}
+		if (IsKeyPressed(KEY_THREE)) {
+			audio->PlayFx(optSelectFx);
+			LoadMap(Maps::MOSS_GROTTO_2);
+		}
+		if (IsKeyPressed(KEY_FOUR)) {
+			audio->PlayFx(optSelectFx);
+			LoadMap(Maps::CRYSTAL_PEAK_2);
+		}
 		if (IsKeyPressed(KEY_ENTER)) {
 			audio->PlayFx(optSelectFx);
 			switch (selected) {
@@ -164,8 +172,8 @@ update_status ModuleGame::Update()
 				map = Maps::MOSS_GROTTO_2;
 				break;
 			case 4:
-				LoadMap(Maps::CRYSTAL_PEAK_1);
-				map = Maps::CRYSTAL_PEAK_1;
+				LoadMap(Maps::CRYSTAL_PEAK_2);
+				map = Maps::CRYSTAL_PEAK_2;
 				break;
 			}
 		}
@@ -405,7 +413,45 @@ void ModuleGame::LoadMap(Maps _map) {
 		CheckPoint2->ctype = ColliderType::CHECKPOINT;
 		CheckPoint3->ctype = ColliderType::CHECKPOINT;
 		CheckPoint4->ctype = ColliderType::CHECKPOINT;
+
+
+		for (int i = 0; i < enemies.size(); i++) {
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(135, 1230, 290, 200));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(635, 1220, 340, 200));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(1350, 1200, 220, 200));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(1350, 970, 220, 200));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(900, 965, 320, 200));
+			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(450, 1000, 220, 200));
+			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(450, 700, 220, 200));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(1360, 720, 260, 200));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(1330, 490, 260, 200));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(680, 470, 260, 200));
+			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(400, 480, 170, 200));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(385, 230, 220, 200));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(125, 250, 220, 200));
+
+			enemies[i]->turnLeft[0]->identifier = 1; //DRETA
+			enemies[i]->turnLeft[1]->identifier = 1; //DRETA
+			enemies[i]->turnLeft[2]->identifier = 0; //ADALT
+			enemies[i]->turnLeft[3]->identifier = 3;
+			enemies[i]->turnLeft[4]->identifier = 3;
+
+			enemies[i]->turnRight[0]->identifier = 0; 
+			enemies[i]->turnRight[1]->identifier = 1;
+
+			enemies[i]->turnLeft[5]->identifier = 0;
+			enemies[i]->turnLeft[6]->identifier = 3;
+			enemies[i]->turnLeft[7]->identifier = 3;
+
+			enemies[i]->turnRight[2]->identifier = 0;
+			enemies[i]->turnLeft[8]->identifier = 3;
+			enemies[i]->turnLeft[9]->identifier = 2;
+		}
+
+		App->audio->PlayMusic("Assets/Audio/Music/GrassMap.mp3");
 		break;
+
+
 	case Maps::CRYSTAL_PEAK_1:
 		currentScreen = Screens::GAME;
 		App->renderer->backgroundTexture = LoadTexture("Assets/Maps/CrystalPeak.png");
@@ -443,12 +489,12 @@ void ModuleGame::LoadMap(Maps _map) {
 			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(220, 240, 200, 130));
 			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(30, 260, 150, 200));
 
-			enemies[i]->turnLeft[0]->identifier = 1; //DRETA
-			enemies[i]->turnLeft[1]->identifier = 0; //ADALT
-			enemies[i]->turnLeft[2]->identifier = 1; //DRETA
+			enemies[i]->turnLeft[0]->identifier = 1; 
+			enemies[i]->turnLeft[1]->identifier = 0; 
+			enemies[i]->turnLeft[2]->identifier = 1; 
 			enemies[i]->turnRight[0]->identifier = 1; 
-			enemies[i]->turnRight[1]->identifier = 2; //AVALL
-			enemies[i]->turnRight[2]->identifier = 3; //ESQUERRA
+			enemies[i]->turnRight[1]->identifier = 2; 
+			enemies[i]->turnRight[2]->identifier = 3; 
 			enemies[i]->turnLeft[3]->identifier = 2;
 			enemies[i]->turnLeft[4]->identifier = 1;
 			enemies[i]->turnRight[3]->identifier = 0;
@@ -464,6 +510,20 @@ void ModuleGame::LoadMap(Maps _map) {
 		break;
 	case Maps::CRYSTAL_PEAK_2:
 		currentScreen = Screens::GAME;
+		App->renderer->backgroundTexture = LoadTexture("Assets/Maps/CrystalPeak_2.png");
+		EXTERIOR = App->physics->CreateChain(0, 0, CrystalPeak_2EXT, 158);
+		EXTERIOR->body->SetType(b2BodyType::b2_staticBody);
+		INTERIOR = App->physics->CreateChain(0, 0, CrystalPeak_2INT, 134);
+		INTERIOR->body->SetType(b2BodyType::b2_staticBody);
+		CheckPoint1 = App->physics->CreateRectangleSensor(100, 720, 210, 30);
+		CheckPoint1->identifier = 1;
+		CheckPoint2 = App->physics->CreateRectangleSensor(425, 500, 210, 30);
+		CheckPoint3 = App->physics->CreateRectangleSensor(500, 75, 30, 150);
+		CheckPoint4 = App->physics->CreateRectangleSensor(1175, 700, 250, 30);
+		CheckPoint1->ctype = ColliderType::CHECKPOINT;
+		CheckPoint2->ctype = ColliderType::CHECKPOINT;
+		CheckPoint3->ctype = ColliderType::CHECKPOINT;
+		CheckPoint4->ctype = ColliderType::CHECKPOINT;
 		break;
 	case Maps::BELLHART_1:
 		currentScreen = Screens::GAME;
