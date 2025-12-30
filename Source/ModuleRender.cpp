@@ -182,28 +182,28 @@ update_status ModuleRender::Update()
         DrawTexturePro(icons, { 0, 0 + (float)(int)*App->scene_intro->carsRanking[4].character * 16, 16, 16 }, { 700, 210 + 90 *4, 64, 64 }, { (float)icons.width, (float)icons.height }, 0, WHITE);
         DrawTexturePro(icons, { 0, 0 + (float)(int)*App->scene_intro->carsRanking[5].character * 16, 16, 16 }, { 700, 210 + 90 * 5, 64, 64 }, { (float)icons.width, (float)icons.height }, 0, WHITE);
 
-        printf("\nPERSONATGE PLAYER: %d\n",(int)App->scene_intro->player->character);
+        LOG("\nPERSONATGE PLAYER: %d\n",(int)App->scene_intro->player->character);
 
         int currentPlayer = (int)App->scene_intro->player->character;
         Vector2 rankpos = { 120,0 };
         switch (currentPlayer) {
         case 0:
-            DrawTextureEx(selKnight, rankpos, 0.0, 4, WHITE);
+            DrawTextureEx(selKnight, rankpos, 0.0, 5, WHITE);
             break;
         case 1:    
-            DrawTextureEx(selHornet, rankpos, 0.0, 4, WHITE);
+            DrawTextureEx(selHornet, rankpos, 0.0, 4.5, WHITE);
             break;
         case 2:
-            DrawTextureEx(selZote, rankpos, 0.0, 4, WHITE);
+            DrawTextureEx(selZote, rankpos, 0.0, 4.5, WHITE);
             break;
         case 3:
-            DrawTextureEx(selSherma, rankpos, 0.0, 4, WHITE);
+            DrawTextureEx(selSherma, rankpos, 0.0, 4.5, WHITE);
             break;
         case 4:
-            DrawTextureEx(selPaleKing, rankpos, 0.0, 4, WHITE);
+            DrawTextureEx(selPaleKing, rankpos, 0.0, 4.5, WHITE);
             break;
         case 5:
-            DrawTextureEx(selPablo, rankpos, 0.0, 4, WHITE);
+            DrawTextureEx(selPablo, rankpos, 0.0, 4.5, WHITE);
             break;
         default:
             break;
