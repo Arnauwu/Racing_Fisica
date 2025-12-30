@@ -69,7 +69,7 @@ void ModulePlayer::Input() {
 	{
 		Action();
 	}
-	if (IsKeyPressed(KEY_ONE)) {
+	/*if (IsKeyPressed(KEY_ONE)) {
 		character = Characters::KNIGHT;
 	}
 	if (IsKeyPressed(KEY_TWO)) {
@@ -86,7 +86,7 @@ void ModulePlayer::Input() {
 	}
 	if (IsKeyPressed(KEY_SIX)) {
 		character = Characters::PABLO;
-	}
+	}*/
 }
 
 void ModulePlayer::Action() 

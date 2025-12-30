@@ -439,9 +439,9 @@ void ModuleGame::LoadMap(Maps _map) {
 			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(385, 230, 220, 200));
 			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(125, 250, 220, 200));
 
-			enemies[i]->turnLeft[0]->identifier = 1; //DRETA
-			enemies[i]->turnLeft[1]->identifier = 1; //DRETA
-			enemies[i]->turnLeft[2]->identifier = 0; //ADALT
+			enemies[i]->turnLeft[0]->identifier = 1; 
+			enemies[i]->turnLeft[1]->identifier = 1; 
+			enemies[i]->turnLeft[2]->identifier = 0; 
 			enemies[i]->turnLeft[3]->identifier = 3;
 			enemies[i]->turnLeft[4]->identifier = 3;
 
@@ -457,7 +457,7 @@ void ModuleGame::LoadMap(Maps _map) {
 			enemies[i]->turnLeft[9]->identifier = 2;
 		}
 
-		App->audio->PlayMusic("Assets/Audio/Music/GrassMap.mp3");
+		App->audio->PlayMusic("Assets/Audio/Music/bellhart.mp3");
 		break;
 
 
@@ -533,7 +533,40 @@ void ModuleGame::LoadMap(Maps _map) {
 		CheckPoint2->ctype = ColliderType::CHECKPOINT;
 		CheckPoint3->ctype = ColliderType::CHECKPOINT;
 		CheckPoint4->ctype = ColliderType::CHECKPOINT;
+
+		for (int i = 0; i < enemies.size(); i++) {
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(115, 1180, 290, 200));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(465, 1180, 200, 400));
+			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(380, 740, 220, 180));
+			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(650, 740, 200, 180));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(660, 1180, 200, 180));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(900, 1180, 200, 180));
+			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(900, 760, 200, 180));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(1150, 760, 200, 180));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(1100, 470, 200, 180));
+			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(820, 400, 180, 180));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(810, 110, 250, 180));
+
+			enemies[i]->turnLeft[0]->identifier = 1;
+			enemies[i]->turnLeft[1]->identifier = 0;
+
+			enemies[i]->turnRight[0]->identifier = 1;
+			enemies[i]->turnRight[1]->identifier = 2;
+
+			enemies[i]->turnLeft[2]->identifier = 1;
+			enemies[i]->turnLeft[3]->identifier = 0;
+
+			enemies[i]->turnRight[2]->identifier = 1;
+
+			enemies[i]->turnLeft[4]->identifier = 0;
+			enemies[i]->turnLeft[5]->identifier = 3;
+
+			enemies[i]->turnRight[3]->identifier = 0;
+			enemies[i]->turnLeft[6]->identifier = 3;
+		}
+		App->audio->PlayMusic("Assets/Audio/Music/bellhart.mp3");
 		break;
+
 	case Maps::BELLHART_1:
 		currentScreen = Screens::GAME;
 		break;
