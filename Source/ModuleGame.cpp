@@ -749,6 +749,6 @@ void ModuleGame::DrawWorms() {
 	for (int i = 0; i < worms.size(); i++) {
 		int x, y;
 		worms[i]->GetPhysicPosition(x, y);
-		DrawTextureEx(wormTEXT, { (float)x, (float)y }, 0, 1, WHITE);
+		DrawTextureEx(wormTEXT, { (float)x - 16, (float)y -16}, 0, 1, WHITE);
 	}
 }
