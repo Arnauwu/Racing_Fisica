@@ -427,7 +427,7 @@ void ModuleGame::LoadMap(Maps _map) {
 			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(1330, 490, 260, 200));
 			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(680, 470, 260, 200));
 			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(400, 480, 170, 200));
-			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(385, 230, 220, 200));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(385, 200, 220, 200));
 			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(125, 250, 220, 200));
 
 			enemies[i]->turnLeft[0]->identifier = 1; 
@@ -537,6 +537,11 @@ void ModuleGame::LoadMap(Maps _map) {
 			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(1100, 470, 200, 180));
 			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(820, 400, 180, 180));
 			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(810, 110, 250, 180));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(170, 110, 230, 180));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(170, 300, 230, 180));
+			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(575, 300, 200, 180));
+			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(575, 500, 200, 180));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(175, 505, 200, 180));
 
 			enemies[i]->turnLeft[0]->identifier = 1;
 			enemies[i]->turnLeft[1]->identifier = 0;
@@ -553,7 +558,15 @@ void ModuleGame::LoadMap(Maps _map) {
 			enemies[i]->turnLeft[5]->identifier = 3;
 
 			enemies[i]->turnRight[3]->identifier = 0;
+
 			enemies[i]->turnLeft[6]->identifier = 3;
+			enemies[i]->turnLeft[7]->identifier = 2;
+			enemies[i]->turnLeft[8]->identifier = 1;
+
+			enemies[i]->turnRight[4]->identifier = 2;
+			enemies[i]->turnRight[5]->identifier = 3;
+
+			enemies[i]->turnLeft[9]->identifier = 2;
 		}
 		App->audio->PlayMusic("Assets/Audio/Music/bellhart.mp3");
 		break;
