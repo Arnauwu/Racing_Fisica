@@ -770,6 +770,7 @@ void ModuleGame::DrawWorms() {
 	for (int i = 0; i < worms.size(); i++) {
 		int x, y;
 		worms[i]->GetPhysicPosition(x, y);
+		worms[i]->ctype = ColliderType::WORM;
 		DrawTextureEx(wormTEXT, { (float)x - 16, (float)y -16}, 0, 1, WHITE);
 	}
 }
