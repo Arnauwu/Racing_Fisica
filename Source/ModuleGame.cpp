@@ -51,6 +51,7 @@ bool ModuleGame::Start()
 	winFX = audio->LoadFx("Assets/Audio/Fx/win.wav") - 1;
 	looseFX = audio->LoadFx("Assets/Audio/Fx/loose.wav") - 1;
 	turboFx = audio->LoadFx("Assets/Audio/Fx/turbo.wav") - 1;
+	dashFx = audio->LoadFx("Assets/Audio/Fx/dash.wav") - 1;
 	currentScreen = Screens::MAIN_MENU;
 	LoadScreen();
 
@@ -248,6 +249,10 @@ update_status ModuleGame::Update()
 		SetCamera(currentZoom, Vector2{ halfScreenWidth, halfScreenHeight }, Vector2{ targetX, targetY });
 		playerTime = player->myCar->timer.ReadSec();
 		DrawWorms();
+		if (player->dashing == true && player->dashing != playerDash) {
+			playerDash = true;
+			audio->PlayFx(dashFx);
+		}
 		break;
 	case Screens::END_RANK:
 		SetCamera(1.0f, Vector2{0,0}, Vector2{ 0,0 });

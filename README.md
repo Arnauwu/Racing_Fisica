@@ -8,7 +8,7 @@ The Knight, Hornet and their friends compete to win the exclusive Hallownest Cup
 
 ## Itch.io
 
- - 
+ - https://marcoto.itch.io/hollow-kart
 
 
 ## Controls
