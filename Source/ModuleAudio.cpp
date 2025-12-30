@@ -10,11 +10,18 @@ ModuleAudio::ModuleAudio(Application* app, bool start_enabled) : Module(app, sta
 {
 	fx_count = 0;
 	music = Music{ 0 };
+	music.looping = true;
 }
 
 // Destructor
 ModuleAudio::~ModuleAudio()
 {}
+
+update_status ModuleAudio::Update() {
+	UpdateMusicStream(music);
+	SetMasterVolume(0.25f);
+	return UPDATE_CONTINUE;
+}
 
 // Called before render is available
 bool ModuleAudio::Init()

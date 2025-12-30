@@ -234,7 +234,6 @@ update_status ModuleGame::Update()
 	}
 
 	collidingEntities.clear();
-
 	return UPDATE_CONTINUE;
 }
 
@@ -318,7 +317,7 @@ void ModuleGame::LoadMap(Maps _map) {
 			enemies[i]->turnLeft[8]->identifier = 1;
 			enemies[i]->turnLeft[9]->identifier = 1;
 		}
-		App->audio->PlayMusic("Assets/Audio/Music/GrassMap.mp3", 0.0f);
+		App->audio->PlayMusic("Assets/Audio/Music/GrassMap.mp3");
 		break;
 
 	case Maps::MOSS_GROTTO_2:
@@ -378,7 +377,7 @@ void ModuleGame::LoadMap(Maps _map) {
 			enemies[i]->turnRight[4]->identifier = 3;
 			enemies[i]->turnLeft[8]->identifier = 2;
 		}
-		App->audio->PlayMusic("Assets/Audio/Music/crystalPeak.mp3", 0.0f);
+		App->audio->PlayMusic("Assets/Audio/Music/crystalPeak.mp3");
 		break;
 	case Maps::CRYSTAL_PEAK_2:
 		currentScreen = Screens::GAME;
@@ -407,12 +406,12 @@ void ModuleGame::LoadScreen() {
 	switch (currentScreen) {
 	case Screens::MAIN_MENU:
 		selected = 1;
-		App->audio->PlayMusic("Assets/Audio/Music/cancoInicial.mp3", 0.0f);
+		App->audio->PlayMusic("Assets/Audio/Music/cancoInicial.mp3");
 		App->renderer->backgroundTexture = LoadTexture("Assets/UI/Main_Menu.png");
 		break;
 	case Screens::CHAR_SELECT:
 		selected = 1;
-		App->audio->PlayMusic("Assets/Audio/Music/SelectScreen.mp3", 0.0f);
+		App->audio->PlayMusic("Assets/Audio/Music/SelectScreen.mp3");
 		App->renderer->backgroundTexture = LoadTexture("Assets/UI/Select_Racer.png");
 		break;
 	case Screens::MAP_SELECT:
@@ -484,12 +483,9 @@ void ModuleGame::CalculatePositions() {
 
 	for (int i = 0; i < n - 1; i++) {
 		for (int j = 0; j < n - i - 1; j++) {
-
-			// 1. Voltes (més és millor)
 			if (cars[j]->laps < cars[j + 1]->laps) {
 				std::swap(cars[j], cars[j + 1]);
 			}
-			// 2. Checkpoints (més és millor)
 			else if (cars[j]->laps == cars[j + 1]->laps &&
 				cars[j]->checkPoints.size() < cars[j + 1]->checkPoints.size()) {
 				std::swap(cars[j], cars[j + 1]);
