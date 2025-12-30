@@ -119,43 +119,69 @@ update_status ModuleRender::Update()
       
         Vector2 anPos = { 106*4,21*4 };
         Texture2D selText;
-        Rectangle auxRec = { 0,0,64,64 };
+        Rectangle* recPoint;
 
-        DrawTexturePro(selKnight, auxRec, Rectangle{ (float)anPos.x, (float)anPos.y, 4 * 64, 4 * 64 }, Vector2{ 0, 0 }, 0, WHITE);
-        DrawTexturePro(selHornet, auxRec, Rectangle{ (float)anPos.x + (71 * 4), (float)anPos.y, 4 * 64, 4 * 64 }, Vector2{ 0, 0 }, 0, WHITE);
-        DrawTexturePro(selZote, auxRec, Rectangle{ (float)anPos.x + (71 * 4) * 2, (float)anPos.y, 4 * 64, 4 * 64 }, Vector2{ 0, 0 }, 0, WHITE);
-        DrawTexturePro(selSherma, auxRec, Rectangle{ (float)anPos.x, (float)anPos.y + (74 * 4), 4 * 64, 4 * 64 }, Vector2{ 0, 0 }, 0, WHITE);
-        DrawTexturePro(selPaleKing, auxRec, Rectangle{ (float)anPos.x + (71 * 4), (float)anPos.y + (74 * 4), 4 * 64, 4 * 64 }, Vector2{ 0, 0 }, 0, WHITE);
-        DrawTexturePro(selPablo, auxRec, Rectangle{ (float)anPos.x + (71 * 4) * 2, (float)anPos.y + (74 * 4), 4 * 64, 4 * 64 }, Vector2{ 0, 0 }, 0, WHITE);
+        DrawTexturePro(selKnight, frameRecK, Rectangle{ (float)anPos.x, (float)anPos.y, 4 * 64, 4 * 64 }, Vector2{ 0, 0 }, 0, WHITE);
+        DrawTexturePro(selHornet, frameRecH, Rectangle{ (float)anPos.x + (71 * 4), (float)anPos.y, 4 * 64, 4 * 64 }, Vector2{ 0, 0 }, 0, WHITE);
+        DrawTexturePro(selZote, frameRecZ, Rectangle{ (float)anPos.x + (71 * 4) * 2, (float)anPos.y, 4 * 64, 4 * 64 }, Vector2{ 0, 0 }, 0, WHITE);
+        DrawTexturePro(selSherma, frameRecS, Rectangle{ (float)anPos.x, (float)anPos.y + (74 * 4), 4 * 64, 4 * 64 }, Vector2{ 0, 0 }, 0, WHITE);
+        DrawTexturePro(selPaleKing, frameRecP, Rectangle{ (float)anPos.x + (71 * 4), (float)anPos.y + (74 * 4), 4 * 64, 4 * 64 }, Vector2{ 0, 0 }, 0, WHITE);
+        DrawTexturePro(selPablo, frameRecP2, Rectangle{ (float)anPos.x + (71 * 4) * 2, (float)anPos.y + (74 * 4), 4 * 64, 4 * 64 }, Vector2{ 0, 0 }, 0, WHITE);
 
-        switch (*option) {
-        case 1:
-            selText = selKnight;
-            break;
-        case 2:
-            selText = selHornet;
-            break;
-        case 3:
-            selText = selZote;
-            break;
-        case 4:
-            selText = selSherma;
-            break;
-        case 5:
-            selText = selPaleKing;
-            break;
-        case 6:
-            selText = selPablo;
-            break;
-        default:
-            break;
+        if (*option == 1) {
+            frameRecH = { 0, 0, 64, 64 };
+            frameRecZ = { 0, 0, 64, 64 };
+            frameRecS = { 0, 0, 64, 64 };
+            frameRecP = { 0, 0, 64, 64 };
+            frameRecP2 = { 0, 0, 64, 64 };
+            recPoint = &frameRecK;
+        }
+        else if (*option == 2) {
+            frameRecK = { 0, 0, 64, 64 };
+            frameRecZ = { 0, 0, 64, 64 };
+            frameRecS = { 0, 0, 64, 64 };
+            frameRecP = { 0, 0, 64, 64 };
+            frameRecP2 = { 0, 0, 64, 64 };
+            recPoint = &frameRecH;
+        }
+        else if (*option == 3) {
+            frameRecH = { 0, 0, 64, 64 };
+            frameRecK = { 0, 0, 64, 64 };
+            frameRecS = { 0, 0, 64, 64 };
+            frameRecP = { 0, 0, 64, 64 };
+            frameRecP2 = { 0, 0, 64, 64 };
+            recPoint = &frameRecZ;
+        }
+        else if (*option == 4) {
+            frameRecH = { 0, 0, 64, 64 };
+            frameRecZ = { 0, 0, 64, 64 };
+            frameRecK = { 0, 0, 64, 64 };
+            frameRecP = { 0, 0, 64, 64 };
+            frameRecP2 = { 0, 0, 64, 64 };
+            recPoint = &frameRecS;
+        }
+        else if (*option == 5) {
+            frameRecH = { 0, 0, 64, 64 };
+            frameRecZ = { 0, 0, 64, 64 };
+            frameRecS = { 0, 0, 64, 64 };
+            frameRecK = { 0, 0, 64, 64 };
+            frameRecP2 = { 0, 0, 64, 64 };
+            recPoint = &frameRecP;
+        }
+        else {
+            frameRecH = { 0, 0, 64, 64 };
+            frameRecZ = { 0, 0, 64, 64 };
+            frameRecS = { 0, 0, 64, 64 };
+            frameRecP = { 0, 0, 64, 64 };
+            frameRecK = { 0, 0, 64, 64 };
+            recPoint = &frameRecP2;
         }
 
-        if (frameRec.x > 320) {//320 és el nombre de frames. L'he comptat jo de la spritesheeet, però es podria fer com ho vaig fer al Car, que va automàtic.
-            frameRec.x = 0;//Si el frame es passa del maxim de frames torna al 1r frame
+        if (recPoint->x > 320) {//320 és el nombre de frames. L'he comptat jo de la spritesheeet, però es podria fer com ho vaig fer al Car, que va automàtic.
+            recPoint->x = 0;//Si el frame es passa del maxim de frames torna al 1r frame
         }
         if (animTimer.ReadSec() > 0.1f) {//Actualitza el frame quan ha passat el temps (en segons)
-            frameRec.x += 64;
+            recPoint->x += 64;
             animTimer.Start();//Reinicia el timer
         }
     }

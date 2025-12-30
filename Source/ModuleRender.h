@@ -43,7 +43,13 @@ public:
 	Texture2D selPaleKing;
 	Texture2D selPablo;
 
-	Rectangle frameRec;
+	Rectangle frameRec = { 0, 0, 64, 64 };;
+	Rectangle frameRecK = { 0, 0, 64, 64 };;
+	Rectangle frameRecH = { 0, 0, 64, 64 };;
+	Rectangle frameRecZ = { 0, 0, 64, 64 };;
+	Rectangle frameRecS = { 0, 0, 64, 64 };;
+	Rectangle frameRecP = { 0, 0, 64, 64 };;
+	Rectangle frameRecP2 = { 0, 0, 64, 64 };;
 
 	Timer animTimer;
 };
