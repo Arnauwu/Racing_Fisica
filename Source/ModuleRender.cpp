@@ -280,14 +280,7 @@ update_status ModuleRender::Update()
         //4 ÉS LA SCALE:
         DrawTexturePro(rankTexture, frameRec, Rectangle{ (float)rankPos.x, (float)rankPos.y, 6.5 * 64, 6.5 * 64 }, Vector2{ 0, 0 }, 0, WHITE);
 
-        if (App->scene_intro->cars[0] == App->scene_intro->player->myCar) {
-            endTxt = LoadTexture("Assets/UI/Win.png");
-        }
-        else {
-            endTxt = LoadTexture("Assets/UI/Lose.png");
-        }
-
-        DrawTextureEx(endTxt, { 200,440 }, 0.0, 4.0, WHITE);
+        DrawTextureEx(endTxt, { 60,190 }, 0.0, 4.0, WHITE);
     }
 
     DrawFPS(10, 10);
