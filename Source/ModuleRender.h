@@ -31,5 +31,6 @@ public:
 	Texture2D icons;
 	Texture2D menuButton;
 	Texture2D charButton;
+	Texture2D mapButton;
     Camera2D camera;
 };
