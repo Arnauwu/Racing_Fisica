@@ -23,6 +23,7 @@ bool ModuleRender::Init()
     icons = LoadTexture("Assets/Characters/icons_vertical.png");
     menuButton = LoadTexture("Assets/UI/MenuButton.png");
     charButton = LoadTexture("Assets/UI/CharButton.png");
+    mapButton = LoadTexture("Assets/UI/MapButton.png");
 
 	return ret;
 }
@@ -104,6 +105,24 @@ update_status ModuleRender::Update()
             position.y = 22 * 4 - 10 * 2;
         }
         DrawTextureEx(charButton, position, 0, 4, WHITE);
+    }
+    else if (App->scene_intro->currentScreen == Screens::MAP_SELECT) {
+        int* option = &App->scene_intro->selected;
+        Vector2 position = { 280, 55 * 4 }; //x=82, y=52
+
+        if (*option == 1 || *option == 3) {
+            position.x = 280;
+        }
+        else if (*option == 2 || *option == 4) {
+            position.x = 280 + (20 * 2) + (82 * 4);
+        }
+        if (*option > 2) {
+            position.y = 55 * 4 + mapButton.height * 4 + 8;
+        }
+        else {
+            position.y = 55 * 4;
+        }
+        DrawTextureEx(mapButton, position, 0, 4, WHITE);
     }
 
     DrawFPS(10, 10);

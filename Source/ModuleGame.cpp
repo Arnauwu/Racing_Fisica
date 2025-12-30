@@ -133,6 +133,60 @@ update_status ModuleGame::Update()
 		if (IsKeyPressed(KEY_TWO)) {
 			LoadMap(Maps::CRYSTAL_PEAK_1);
 		}
+		if (IsKeyPressed(KEY_ENTER)) {
+			switch (selected) {
+			case 1:
+				LoadMap(Maps::MOSS_GROTTO_1);
+				break;
+			case 2:
+				LoadMap(Maps::CRYSTAL_PEAK_1);
+				break;
+			case 3:
+				LoadMap(Maps::MOSS_GROTTO_1);
+				break;
+			case 4:
+				LoadMap(Maps::CRYSTAL_PEAK_1);
+				break;
+			}
+
+		}
+
+		if(IsKeyPressed(KEY_LEFT) || IsKeyPressed(KEY_A)) {
+			if (selected == 1) {
+				selected = 4;
+			}
+			else {
+				selected--;
+			}
+		}
+		if (IsKeyPressed(KEY_RIGHT) || IsKeyPressed(KEY_D)) {
+			if (selected == 4) {
+				selected = 1;
+			}
+			else {
+				selected++;
+			}
+		}
+		if (IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_W)) {
+			for (int i = 0; i < 2; i++) {
+				if (selected - 1 < 1) {
+					selected = 4;
+				}
+				else {
+					selected--;
+				}
+			}
+		}
+		else if (IsKeyPressed(KEY_DOWN) || IsKeyPressed(KEY_S)) {
+			for (int i = 0; i < 2; i++) {
+				if (selected + 1 > 4) {
+					selected = 1;
+				}
+				else {
+					selected++;
+				}
+			}
+		}
 		break;
 	case Screens::GAME:
 		int playerX, playerY;
@@ -417,7 +471,7 @@ void ModuleGame::LoadScreen() {
 		break;
 	case Screens::MAP_SELECT:
 		selected = 1;
-		App->renderer->backgroundTexture = LoadTexture("Assets/Placeholders/Map_Select.png");
+		App->renderer->backgroundTexture = LoadTexture("Assets/UI/Map_Select.png");
 		break;
 	case Screens::GAME:
 		LoadMap(map); // !!!!!!!!!!!!!!
