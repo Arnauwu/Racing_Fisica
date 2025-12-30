@@ -50,6 +50,7 @@ bool ModuleGame::Start()
 	optSelectFx = audio->LoadFx("Assets/Audio/Fx/salt.wav") - 1;
 	winFX = audio->LoadFx("Assets/Audio/Fx/win.wav") - 1;
 	looseFX = audio->LoadFx("Assets/Audio/Fx/loose.wav") - 1;
+	turboFx = audio->LoadFx("Assets/Audio/Fx/turbo.wav") - 1;
 	currentScreen = Screens::MAIN_MENU;
 	LoadScreen();
 
@@ -220,6 +221,16 @@ update_status ModuleGame::Update()
 		}
 		break;
 	case Screens::GAME:
+		if (playerLaps != player->myCar->laps) 
+		{
+			for (int i = 0; i < wormsPos.size(); i++) {
+				worms.push_back(App->physics->CreateRectangle(wormsPos[i].x, wormsPos[i].y, 32, 32));
+				worms[wormsPos.size() - 1]->ctype = ColliderType::WORM;
+			}
+			wormsPos.clear();
+			playerLaps = player->myCar->laps;
+		}
+
 		int playerX, playerY;
 		player->myCar->body->GetPhysicPosition(playerX, playerY);
 
@@ -308,6 +319,7 @@ update_status ModuleGame::Update()
 void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
 	Car* car = (Car*)bodyA->entity;
+	int x, y;
 	switch (bodyB->ctype)
 	{
 	case ColliderType::CHECKPOINT:
@@ -328,7 +340,10 @@ void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	case ColliderType::WORM:
 		car->maxVelocity = 7.2f;
 		car->turboTime.Start();
+		bodyB->GetPhysicPosition(x, y);
+		wormsPos.push_back(Vector2{ (float)x,(float)y });
 		toDelete.push_back(bodyB);
+		App->audio->PlayFx(turboFx);
 		break;
 	default:
 		break;
@@ -629,7 +644,7 @@ void ModuleGame::UnloadGame() {
 	}
 	App->physics->DeleteBody(EXTERIOR);
 	App->physics->DeleteBody(INTERIOR);
-	App->physics->DeleteBody(EXTRAS);
+	if(map == Maps::MOSS_GROTTO_2) App->physics->DeleteBody(EXTRAS);
 	App->physics->DeleteBody(CheckPoint1);
 	App->physics->DeleteBody(CheckPoint2);
 	App->physics->DeleteBody(CheckPoint3);

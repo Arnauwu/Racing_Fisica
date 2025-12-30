@@ -60,6 +60,7 @@ public:
 	uint32 moveMenuFx;
 	uint32 winFX;
 	uint32 looseFX;
+	uint32 turboFx;
 
 	vec2<int> ray;
 	bool ray_on;
@@ -88,6 +89,9 @@ public:
 	double bestTimeM2;
 	double bestTimeC1;
 	double bestTimeC2;
+
+	int playerLaps;
+	std::vector<Vector2> wormsPos;
 
 	ModuleAudio* audio;
 
