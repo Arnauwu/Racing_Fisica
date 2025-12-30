@@ -4,8 +4,8 @@
 #include "ModuleGame.h"
 
 Enemy::Enemy()
-	: Entity() {  // Llamada al constructor por defecto de Entity
-	// Inicialización específica de Enemy
+	: Entity() {  
+	
 }
 
 // Load assets
@@ -33,14 +33,6 @@ void Enemy::Update()
 }
 
 void Enemy::TurnCar() {
-	/*if (!dashing) {
-		if (IsKeyDown(KEY_A) || IsKeyDown(KEY_LEFT)) {
-			myCar->carRotation -= 2.5f;
-		}
-		else if (IsKeyDown(KEY_D) || IsKeyDown(KEY_RIGHT)) {
-			myCar->carRotation += 2.5f;
-		}
-	}*/
 	if (!turning) {
 		startRotation = myCar->carRotation;
 	}

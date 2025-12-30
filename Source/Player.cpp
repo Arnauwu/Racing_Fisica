@@ -69,24 +69,6 @@ void ModulePlayer::Input() {
 	{
 		Action();
 	}
-	/*if (IsKeyPressed(KEY_ONE)) {
-		character = Characters::KNIGHT;
-	}
-	if (IsKeyPressed(KEY_TWO)) {
-		character = Characters::HORNET;
-	}
-	if (IsKeyPressed(KEY_THREE)) {
-		character = Characters::ZOTE;
-	}
-	if (IsKeyPressed(KEY_FOUR)) {
-		character = Characters::SHERMA;
-	}
-	if (IsKeyPressed(KEY_FIVE)) {
-		character = Characters::P_KING;
-	}
-	if (IsKeyPressed(KEY_SIX)) {
-		character = Characters::PABLO;
-	}*/
 }
 
 void ModulePlayer::Action() 

@@ -626,7 +626,7 @@ void ModuleGame::LoadScreen() {
 		App->renderer->backgroundTexture = LoadTexture("Assets/UI/Map_Select.png");
 		break;
 	case Screens::GAME:
-		LoadMap(map); // !!!!!!!!!!!!!!
+		LoadMap(map); 
 		break;
 	case Screens::END_RANK:
 		App->audio->PlayMusic("Assets/Audio/Music/SelectScreen.mp3");
