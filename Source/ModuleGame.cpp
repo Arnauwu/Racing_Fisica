@@ -596,6 +596,7 @@ void ModuleGame::UnloadGame() {
 	}
 	App->physics->DeleteBody(EXTERIOR);
 	App->physics->DeleteBody(INTERIOR);
+	App->physics->DeleteBody(EXTRAS);
 	App->physics->DeleteBody(CheckPoint1);
 	App->physics->DeleteBody(CheckPoint2);
 	App->physics->DeleteBody(CheckPoint3);
