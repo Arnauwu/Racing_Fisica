@@ -643,7 +643,7 @@ void ModuleGame::LoadScreen() {
 		break;
 	case Screens::END_RANK:
 		App->audio->PlayMusic("Assets/Audio/Music/SelectScreen.mp3");
-		App->renderer->backgroundTexture = LoadTexture("Assets/UI/Ranking.png");
+		App->renderer->backgroundTexture = LoadTexture("Assets/UI/Ranking_black.png");
 		break;
 	}
 }
@@ -675,6 +675,9 @@ void ModuleGame::UnloadGame() {
 	App->physics->DeleteBody(CheckPoint2);
 	App->physics->DeleteBody(CheckPoint3);
 	App->physics->DeleteBody(CheckPoint4);
+	for (Car* car : cars) {
+		carsRanking.push_back(*car); // còpia independent
+	}
 	for (int i = 0; i < enemies.size(); i++) {
 		enemies[i]->DeleteMyCar();
 		for (int j = 0; j < enemies[i]->turnRight.size(); j++) {
@@ -689,9 +692,7 @@ void ModuleGame::UnloadGame() {
 	for (int i = 0; i < worms.size(); i++) {
 		toDelete.push_back(worms[i]);
 	}
-	for (Car* car : cars) {
-		carsRanking.push_back(*car); // còpia independent
-	}
+
 	cars.clear();
 
 }
