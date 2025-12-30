@@ -25,6 +25,13 @@ bool ModuleRender::Init()
     charButton = LoadTexture("Assets/UI/CharButton.png");
     mapButton = LoadTexture("Assets/UI/MapButton.png");
 
+    selKnight = LoadTexture("Assets/Characters/selKnight_spritesheet.png");
+    selHornet = LoadTexture("Assets/Characters/selHornet_spritesheet.png");
+    selZote = LoadTexture("Assets/Characters/selZote_spritesheet.png");
+    selSherma = LoadTexture("Assets/Characters/selSherma_spritesheet.png");
+    selPaleKing = LoadTexture("Assets/Characters/selPaleKing_spritesheet.png");
+    selPablo = LoadTexture("Assets/Characters/selPablo_spritesheet.png");
+
 	return ret;
 }
 
@@ -87,6 +94,9 @@ update_status ModuleRender::Update()
         DrawTextureEx(menuButton, position, 0, 4, WHITE);
     }
     else if (App->scene_intro->currentScreen == Screens::CHAR_SELECT) {
+        
+       
+        
         int* option = &App->scene_intro->selected;
         Vector2 position = { 106, 22 * 4 };
         //7-9x 10y
@@ -106,6 +116,14 @@ update_status ModuleRender::Update()
             position.y = 22 * 4 - 10 * 2;
         }
         DrawTextureEx(charButton, position, 0, 4, WHITE);
+
+        frameRec = { 0,0,64,64 };        
+        Vector2 anPos = { 85,40 };
+        //DrawTextureEx(selKnight, anPos, 0, 4, WHITE);
+        DrawTextureRec(selKnight, frameRec, anPos, WHITE);
+
+
+        //edit
     }
     else if (App->scene_intro->currentScreen == Screens::MAP_SELECT) {
         int* option = &App->scene_intro->selected;
@@ -210,6 +228,33 @@ bool ModuleRender::DrawText(const char * text, int x, int y, Font font, int spac
     Vector2 position = { (float)x, (float)y };
 
     DrawTextEx(font, text, position, (float)font.baseSize, (float)spacing, tint);
+
+    return ret;
+}
+
+bool ModuleRender::Animate(Texture2D texture, Vector2 pos, int totalFrames, int frameSpeed) {
+    bool ret = true;
+    LOG("Entered Animate() successfuly");
+    int* character = &App->scene_intro->selected;
+
+    int currentFrame = 0;
+    int frameContador = 0;
+    frameRec = { 64,64 };
+
+    //Animation loop
+    //frameContador++;
+    //if (frameContador >= (60 / frameSpeed)) {
+    //    frameContador = 0;
+    //    currentFrame++;
+    //    
+    //    if (currentFrame == totalFrames) {
+    //        currentFrame = 0;
+    //    }
+    // frameRec.x = (float)currentFrame * 64;
+    //}
+
+    DrawTextureRec(texture, frameRec, pos, WHITE);
+    LOG("Animated texture drawn");
 
     return ret;
 }

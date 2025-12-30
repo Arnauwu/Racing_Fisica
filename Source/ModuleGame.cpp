@@ -90,7 +90,7 @@ update_status ModuleGame::Update()
 			audio->PlayFx(moveMenuFx);
 		}
 		break;
-	case Screens::CHAR_SELECT:
+	case Screens::CHAR_SELECT: //edit
 		if (IsKeyPressed(KEY_ENTER)) {
 			player->character = (Characters)(selected - 1);
 			audio->PlayFx(optSelectFx);
@@ -565,6 +565,8 @@ void ModuleGame::LoadScreen() {
 		selected = 1;
 		App->audio->PlayMusic("Assets/Audio/Music/SelectScreen.mp3");
 		App->renderer->backgroundTexture = LoadTexture("Assets/UI/Select_Racer.png");
+		App->renderer->Animate(App->renderer->selKnight, Vector2{ 106,22 }, 6, 4);
+		//edit
 		break;
 	case Screens::MAP_SELECT:
 		selected = 1;

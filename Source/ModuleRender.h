@@ -18,8 +18,9 @@ public:
 	void ClearUI();
 
     void SetBackgroundColor(Color color);
+	bool Animate(Texture2D texture, Vector2 pos, int totalFrames, int frameSpeed);
 	bool Draw(Texture2D texture, int x, int y, const Rectangle* section = NULL, double* angle = 0, float scale = 0.0, int pivot_x = 0, int pivot_y = 0) const;
-    bool DrawText(const char* text, int x, int y, Font font, int spacing, Color tint) const;
+	bool DrawText(const char* text, int x, int y, Font font, int spacing, Color tint) const;
 
 	UIElement* CreateButton(int id, Rectangle bounds, const char* text, Module* observer);
 	std::vector<UIElement*> uiElements;
@@ -33,4 +34,13 @@ public:
 	Texture2D charButton;
 	Texture2D mapButton;
     Camera2D camera;
+
+	Texture2D selKnight;
+	Texture2D selHornet;
+	Texture2D selZote;
+	Texture2D selSherma;
+	Texture2D selPaleKing;
+	Texture2D selPablo;
+
+	Rectangle frameRec;
 };
