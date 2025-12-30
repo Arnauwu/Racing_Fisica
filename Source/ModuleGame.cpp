@@ -147,6 +147,14 @@ update_status ModuleGame::Update()
 			audio->PlayFx(optSelectFx);
 			LoadMap(Maps::CRYSTAL_PEAK_1);
 		}
+		if (IsKeyPressed(KEY_THREE)) {
+			audio->PlayFx(optSelectFx);
+			LoadMap(Maps::MOSS_GROTTO_2);
+		}
+		if (IsKeyPressed(KEY_FOUR)) {
+			audio->PlayFx(optSelectFx);
+			LoadMap(Maps::CRYSTAL_PEAK_2);
+		}
 		if (IsKeyPressed(KEY_ENTER)) {
 			audio->PlayFx(optSelectFx);
 			switch (selected) {
