@@ -157,7 +157,7 @@ update_status ModuleGame::Update()
 				LoadMap(Maps::CRYSTAL_PEAK_1);
 				break;
 			case 3:
-				LoadMap(Maps::MOSS_GROTTO_1);
+				LoadMap(Maps::MOSS_GROTTO_2);
 				break;
 			case 4:
 				LoadMap(Maps::CRYSTAL_PEAK_1);
@@ -398,6 +398,22 @@ void ModuleGame::LoadMap(Maps _map) {
 
 	case Maps::MOSS_GROTTO_2:
 		currentScreen = Screens::GAME;
+		App->renderer->backgroundTexture = LoadTexture("Assets/Maps/MossGrotto_2.png");
+		EXTERIOR = App->physics->CreateChain(0, 0, MossGrotto_2EXT, 134);
+		EXTERIOR->body->SetType(b2BodyType::b2_staticBody);
+		INTERIOR = App->physics->CreateChain(0, 0, MossGrotto_2INT, 78);
+		INTERIOR->body->SetType(b2BodyType::b2_staticBody);
+		EXTRAS = App->physics->CreateChain(0, 0, MossGrotto_2EXTRAS, 38);
+		EXTRAS->body->SetType(b2BodyType::b2_staticBody);
+		CheckPoint1 = App->physics->CreateRectangleSensor(155, 620, 210, 30);
+		CheckPoint1->identifier = 1;
+		CheckPoint2 = App->physics->CreateRectangleSensor(1140, 850, 300, 30);
+		CheckPoint3 = App->physics->CreateRectangleSensor(725, 360, 150, 30);
+		CheckPoint4 = App->physics->CreateRectangleSensor(525, 350, 210, 30);
+		CheckPoint1->ctype = ColliderType::CHECKPOINT;
+		CheckPoint2->ctype = ColliderType::CHECKPOINT;
+		CheckPoint3->ctype = ColliderType::CHECKPOINT;
+		CheckPoint4->ctype = ColliderType::CHECKPOINT;
 		break;
 	case Maps::CRYSTAL_PEAK_1:
 		currentScreen = Screens::GAME;
