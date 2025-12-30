@@ -31,12 +31,6 @@ Application::Application()
 	// Scenes
 	AddModule(scene_intro->player);
 	AddModule(scene_intro);
-
-	//// Rendering happens at the end
-	/*AddModule(renderer);*/
-
-	
-	
 }
 
 Application::~Application()
