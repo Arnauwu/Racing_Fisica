@@ -558,9 +558,9 @@ void ModuleGame::LoadMap(Maps _map) {
 			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(900, 1180, 200, 180));
 			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(900, 760, 200, 180));
 			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(1150, 760, 200, 180));
-			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(1100, 470, 200, 180));
-			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(820, 400, 180, 180));
-			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(810, 110, 250, 180));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(1120, 470, 200, 180));
+			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(850, 420, 240, 180));
+			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(810, 100, 300, 180));
 			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(170, 110, 230, 180));
 			enemies[i]->turnLeft.push_back(App->physics->CreateRectangleSensor(170, 300, 230, 180));
 			enemies[i]->turnRight.push_back(App->physics->CreateRectangleSensor(575, 300, 200, 180));
