@@ -406,7 +406,9 @@ void ModuleGame::LoadMap(Maps _map) {
 			enemies[i]->turnLeft[4]->identifier = 0;
 			enemies[i]->turnLeft[5]->identifier = 3;
 			enemies[i]->turnLeft[6]->identifier = 2;
+
 			//Auxiliary
+
 			enemies[i]->turnLeft[7]->identifier = 2;
 			enemies[i]->turnLeft[8]->identifier = 1;
 			enemies[i]->turnLeft[9]->identifier = 1;
