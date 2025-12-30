@@ -75,7 +75,7 @@ public:
 
 	PhysBody* INTERIOR;
 	PhysBody* EXTERIOR;
-	PhysBody* EXTRAS;
+	PhysBody* EXTRAS = nullptr;
 	PhysBody* CheckPoint1;
 	PhysBody* CheckPoint2;
 	PhysBody* CheckPoint3;
