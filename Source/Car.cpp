@@ -17,6 +17,9 @@ void Car::Update()
 	if (drawFrame / 32 > textTiles || body->body->GetLinearVelocity() == b2Vec2_zero) {
 		drawFrame = 0;
 	}
+	if (turboTime.ReadSec() > 1 && maxVelocity == 7.2f) {
+		maxVelocity = 3.6f;
+	}
 	int charFrame = (int)*character;
 	const Rectangle section = { drawFrame, charFrame * 32, 32, 32 };
 	App->renderer->Draw(texture, x, y, &section, &carRotation, scale);

@@ -42,6 +42,7 @@ public:
 	void SetCamera(float zoom, Vector2 offset, Vector2 target);
 	void SetUpCars();
 	void CalculatePositions();
+	void DrawWorms();
 
 public:
 
@@ -82,9 +83,18 @@ public:
 
 	int selected = 1;
 	double playerTime;
-	double bestTime;
+	double* bestTime;
+	double bestTimeM1;
+	double bestTimeM2;
+	double bestTimeC1;
+	double bestTimeC2;
 
 	ModuleAudio* audio;
+
+	std::vector<PhysBody*> worms;
+	std::vector<PhysBody*> toDelete;
+	Texture2D wormTEXT;
+
 
 #pragma region maps
 	const int MossGrottoEXT[196] = {

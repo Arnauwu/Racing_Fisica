@@ -18,11 +18,12 @@
 // Small class to return to other modules to track position and rotation of physics bodies
 class Entity;
 enum class ColliderType {
-	TURBO,
+	WORM,
 	CHECKPOINT,
 	TURN_LEFT,
 	TURN_RIGHT,
-	CAR
+	CAR,
+	NONE
 };
 class PhysBody
 {
@@ -41,7 +42,7 @@ public:
 	int width, height;
 	b2Body* body;
 	Module* listener;
-	ColliderType ctype;
+	ColliderType ctype = ColliderType::NONE;
 	Entity* entity;
 	int identifier;
 };

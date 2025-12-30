@@ -35,6 +35,7 @@ public:
 	Vector2 rectOffset = { -12, 60 };
 
 	Timer timer;
+	Timer turboTime;
 
 private:
 	Texture2D texture;
