@@ -655,12 +655,12 @@ void ModuleGame::LoadScreen() {
 		App->renderer->backgroundTexture = LoadTexture("Assets/UI/Ranking_black.png");
 		App->renderer->frameRec = { 0,0,64,64 };
 		App->renderer->animTimer.Start();
-		if (cars[0] == player->myCar) {
+		/*if (cars[0] == player->myCar) {
 			App->renderer->endTxt = LoadTexture("Assets/UI/Win.png");
 		}
 		else {
 			App->renderer->endTxt = LoadTexture("Assets/UI/Lose.png");
-		}
+		}*/
 		break;
 	}
 }
