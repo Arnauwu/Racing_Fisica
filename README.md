@@ -1,15 +1,21 @@
-# {Project Name}
+# Hollow Kart
 
-## Description
+## Github
 
-{project description}
+ - https://github.com/Arnauwu/Racing_Fisica
 
-## Key Features
+## Itch.io
 
- - {Feature01}
- - {Feature02}
- - {Feature03}
- - {Feature04}
+ - 
+
+
+## Controls
+
+ - A/D or 🡠/🡢 - Movement
+ - Enter - Confirm
+ - Click - Mouse joint
+ - F1 - Show colliders
+ - Esc - Exit game
  
 ## Controls
 
@@ -17,10 +23,10 @@
 
 ## Developers
 
- - {Dev01} - {Role(s)}
- - {Dev02} - {Role(s)}
- - {Dev03} - {Role(s)}
- - {Dev04} - {Role(s)}
+ - Arnau Gonzalez
+ - Elena Ibañez
+ - Marcel Pascual
+ - Marc Port
 
 ## License
 
