@@ -515,11 +515,11 @@ void ModuleGame::LoadMap(Maps _map) {
 		EXTERIOR->body->SetType(b2BodyType::b2_staticBody);
 		INTERIOR = App->physics->CreateChain(0, 0, CrystalPeak_2INT, 134);
 		INTERIOR->body->SetType(b2BodyType::b2_staticBody);
-		CheckPoint1 = App->physics->CreateRectangleSensor(100, 720, 210, 30);
+		CheckPoint1 = App->physics->CreateRectangleSensor(124, 845, 225, 30);
 		CheckPoint1->identifier = 1;
-		CheckPoint2 = App->physics->CreateRectangleSensor(425, 500, 210, 30);
-		CheckPoint3 = App->physics->CreateRectangleSensor(500, 75, 30, 150);
-		CheckPoint4 = App->physics->CreateRectangleSensor(1175, 700, 250, 30);
+		CheckPoint2 = App->physics->CreateRectangleSensor(650, 910, 210, 30);
+		CheckPoint3 = App->physics->CreateRectangleSensor(1150, 640, 230, 30);
+		CheckPoint4 = App->physics->CreateRectangleSensor(306, 105, 30, 195);
 		CheckPoint1->ctype = ColliderType::CHECKPOINT;
 		CheckPoint2->ctype = ColliderType::CHECKPOINT;
 		CheckPoint3->ctype = ColliderType::CHECKPOINT;
