@@ -48,7 +48,7 @@ update_status ModulePlayer::Update()
 				myCar->maxVelocity = 3.6f;
 			}
 		}
-		if (myCar->laps == 2) {
+		if (myCar->laps == 1) {
 			myCar->laps = 0;
 			App->scene_intro->currentScreen = Screens::END_RANK;
 			App->scene_intro->UnloadGame();

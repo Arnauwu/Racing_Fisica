@@ -351,7 +351,8 @@ void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 }
 
 void ModuleGame::LoadMap(Maps _map) {
-
+	wormsPos.clear();
+	carsRanking.clear();
 	switch (_map) {
 	case Maps::MOSS_GROTTO_1:
 		currentScreen = Screens::GAME;
@@ -676,6 +677,11 @@ void ModuleGame::UnloadGame() {
 	for (int i = 0; i < worms.size(); i++) {
 		toDelete.push_back(worms[i]);
 	}
+	for (Car* car : cars) {
+		carsRanking.push_back(*car); // còpia independent
+	}
+	cars.clear();
+
 }
 
 void ModuleGame::SetCamera(float zoom, Vector2 offset, Vector2 target) {
@@ -683,7 +689,8 @@ void ModuleGame::SetCamera(float zoom, Vector2 offset, Vector2 target) {
 	App->renderer->camera.offset = offset;
 	App->renderer->camera.target = target;
 }
-
+//printf("\n%d, ", (int)cars[i]->character);
+//printf("%d\n ", (int)carsRanking[0].character);
 void ModuleGame::SetUpCars() {
 	cars.clear();
 	player->myCar = new Car(App->physics, 100, 600, App->scene_intro, player->carText);

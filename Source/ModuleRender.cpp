@@ -132,6 +132,12 @@ update_status ModuleRender::Update()
     else if (App->scene_intro->currentScreen == Screens::END_RANK) {
         DrawTextPro(GetFontDefault(), TextFormat("%.3f", App->scene_intro->playerTime), { 200, 90 }, { 0,0 }, 0, 30, 4, WHITE);
         DrawTextPro(GetFontDefault(), TextFormat("%.3f", *App->scene_intro->bestTime), { 335, 137 }, { 0,0 }, 0, 30, 4, WHITE);
+        DrawTexturePro(icons, { 0, 0 + (float)(int)*App->scene_intro->carsRanking[0].character * 16, 16, 16 }, { 500, 500, 48, 48 }, { (float)icons.width, (float)icons.height }, 0, WHITE);
+        DrawTexturePro(icons, { 0, 0 + (float)(int)App->scene_intro->carsRanking[1].character * 16, 16, 16 }, { 200, 200, 48, 48 }, { (float)icons.width, (float)icons.height }, 0, WHITE);
+        DrawTexturePro(icons, { 0, 0 + (float)(int)App->scene_intro->carsRanking[2].character * 16, 16, 16 }, { 1245, 196, 48, 48 }, { (float)icons.width, (float)icons.height }, 0, WHITE);
+        DrawTexturePro(icons, { 0, 0 + (float)(int)App->scene_intro->carsRanking[3].character * 16, 16, 16 }, { 1245, 244, 48, 48 }, { (float)icons.width, (float)icons.height }, 0, WHITE);
+        DrawTexturePro(icons, { 0, 0 + (float)(int)App->scene_intro->carsRanking[4].character * 16, 16, 16 }, { 1245, 292, 48, 48 }, { (float)icons.width, (float)icons.height }, 0, WHITE);
+        DrawTexturePro(icons, { 0, 0 + (float)(int)App->scene_intro->carsRanking[5].character * 16, 16, 16 }, { 1245, 340, 48, 48 }, { (float)icons.width, (float)icons.height }, 0, WHITE);
     }
 
     DrawFPS(10, 10);

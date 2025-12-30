@@ -49,6 +49,7 @@ public:
 	std::vector<Entity*> entities;
 	std::vector<Enemy*> enemies;
 	std::vector<Car*> cars;
+	std::vector<Car> carsRanking;
 
 	PhysBody* sensor;
 	bool sensed;
