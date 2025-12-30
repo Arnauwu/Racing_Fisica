@@ -62,6 +62,7 @@ public:
 	uint32 winFX;
 	uint32 looseFX;
 	uint32 turboFx;
+	uint32 dashFx;
 
 	vec2<int> ray;
 	bool ray_on;
@@ -100,7 +101,7 @@ public:
 	std::vector<PhysBody*> toDelete;
 	Texture2D wormTEXT;
 
-
+	bool playerDash = false;
 #pragma region maps
 	const int MossGrottoEXT[196] = {
 72, 237,

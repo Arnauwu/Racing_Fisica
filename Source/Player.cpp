@@ -46,6 +46,7 @@ update_status ModulePlayer::Update()
 			if (dashing) {
 				dashing = false;
 				myCar->maxVelocity = 3.6f;
+				App->scene_intro->playerDash = false;
 			}
 		}
 		if (myCar->laps == 1) {
@@ -79,8 +80,8 @@ void ModulePlayer::Action()
 
 void ModulePlayer::Dash() {
 	myCar->maxVelocity += 3;
-	canAct = false;
 	dashing = true;
+	canAct = false;
 	actTime.Start();
 }
 
